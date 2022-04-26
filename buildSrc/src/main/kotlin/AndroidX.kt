@@ -13,8 +13,10 @@ object AndroidX {
          * @see <a href="https://developer.android.com/jetpack/androidx/releases/lifecycle"> Lifecycle Doc</a>
          */
         private const val lifecycleKtxVersion = "2.4.1"
-        const val lifecycleRuntimeKtx = "androidx.lifecycle:lifecycle-runtime-ktx::$lifecycleKtxVersion"
-        const val lifecycleVmComposeKtx = "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleKtxVersion"
+        const val lifecycleRuntimeKtx =
+            "androidx.lifecycle:lifecycle-runtime-ktx::$lifecycleKtxVersion"
+        const val lifecycleVmComposeKtx =
+            "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleKtxVersion"
     }
 
     object DataStore {

@@ -2,7 +2,7 @@
  * Created by dronpascal on 26.04.2022.
  */
 object Retrofit {
-        /**
+    /**
      * @see <a href="https://github.com/square/retrofit">Retrofit Doc</a>
      */
     private const val retrofitVersion = "2.9.0"
