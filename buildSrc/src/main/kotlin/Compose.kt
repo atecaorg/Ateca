@@ -15,6 +15,9 @@ object Compose {
     const val toolingDebug = "androidx.compose.ui:ui-tooling:$composeVersion"
     const val icons = "androidx.compose.material:material-icons-extended:$composeVersion"
 
+    const val runtime = "androidx.compose.runtime:runtime:$composeVersion"
+    const val livedata = "androidx.compose.runtime:runtime-livedata:$composeVersion"
+
     /**
      * @see <a href="https://developer.android.com/jetpack/compose/navigation#setup">Navigation Doc</a>
      */
@@ -22,7 +25,8 @@ object Compose {
     const val navigation = "androidx.navigation:navigation-compose:$navigationVersion"
 
     private const val hiltNavigationComposeVersion = "1.0.0"
-    const val hiltNavigation = "androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion"
+    const val hiltNavigationCompose =
+        "androidx.hilt:hilt-navigation-compose:$hiltNavigationComposeVersion"
 
     private const val constraintLayoutVersion = "1.0.0"
     const val constraintLayout =

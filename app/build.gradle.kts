@@ -76,7 +76,7 @@ dependencies {
 
     // Android extensions
     implementation(AndroidX.coreKtx)
-    // Navigation library includes RuntimeKtx
+    // Navigation library includes RuntimeKtx by default
     // implementation(AndroidX.Lifecycle.lifecycleRuntimeKtx)
     implementation(AndroidX.Lifecycle.lifecycleVmComposeKtx)
 
@@ -86,13 +86,15 @@ dependencies {
 
     // Compose
     implementation(Compose.activity)
+    implementation(Compose.runtime)
+    implementation(Compose.livedata)
     implementation(Compose.ui)
     implementation(Compose.material)
     implementation(Compose.icons)
     implementation(Compose.toolingPreview)
     debugImplementation(Compose.toolingDebug)
     // Compose/hiltNavigation
-    implementation(Compose.hiltNavigation)
+    implementation(Compose.hiltNavigationCompose)
     // Accompanist
     implementation(Accompanist.animations)
     implementation(Accompanist.insets)
