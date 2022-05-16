@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import com.ateca.domain.core.IEntityModel
 import com.ateca.domain.core.IModel
+import com.ateca.domain.model.NoteRefModel
 
 @Entity(tableName = "notes_refs", primaryKeys = ["noteRefUID"])
 data class NoteRefPojo(
@@ -14,7 +15,10 @@ data class NoteRefPojo(
     @ColumnInfo(name = "refNoteUID")
     val refNoteUID: String
 ) : IEntityModel {
-    override fun convertToModel(): IModel {
-        TODO("Not yet implemented")
-    }
+    override fun convertToModel(): IModel =
+        NoteRefModel(
+            noteRefUID = noteRefUID,
+            noteUID = noteUID,
+            refNoteUID = refNoteUID
+        )
 }

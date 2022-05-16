@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import com.ateca.domain.core.IEntityModel
 import com.ateca.domain.core.IModel
+import com.ateca.domain.model.NoteMediaModel
 
 @Entity(tableName = "notes_media", primaryKeys = ["noteMediaUID"])
 data class NoteMediaPojo(
@@ -14,7 +15,10 @@ data class NoteMediaPojo(
     @ColumnInfo(name = "noteMediaPath")
     val noteMediaPath: String
 ) : IEntityModel {
-    override fun convertToModel(): IModel {
-        TODO("Not yet implemented")
-    }
+    override fun convertToModel(): IModel =
+        NoteMediaModel(
+            noteMediaUID = noteMediaUID,
+            noteUID = noteUID,
+            noteMediaPath = noteMediaPath
+        )
 }
