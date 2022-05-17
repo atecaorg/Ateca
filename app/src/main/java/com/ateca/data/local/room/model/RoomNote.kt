@@ -3,7 +3,6 @@ package com.ateca.data.local.room.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import com.ateca.domain.models.NoteId
-import java.util.*
 
 /**
  * Created by dronpascal on 16.05.2022.
