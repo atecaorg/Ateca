@@ -2,6 +2,7 @@ package com.ateca.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val SpringBud = Color(0xFFCEE4A9) //фон
 //Light Theme
 val White = Color(0xFFFFFFFF) //фон
 val Brown14 = Color(0x14865300) //строка меню
