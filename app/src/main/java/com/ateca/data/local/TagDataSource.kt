@@ -13,19 +13,19 @@ class TagDataSource(
     private val tagDao: TagDao
 ) : ITagDataSource {
 
-    override fun getUniqueTags(): List<String> {
+    override suspend fun getUniqueTags(): List<String> {
         return tagDao.selectDistinct().toModel()
     }
 
-    override fun getTagsById(id: NoteId): List<String> {
+    override suspend fun getTagsById(id: NoteId): List<String> {
         return tagDao.select(id).toModel()
     }
 
-    override fun addTag(id: NoteId, tag: String) {
+    override suspend fun addTag(id: NoteId, tag: String) {
         tagDao.insert(RoomTag(id, tag))
     }
 
-    override fun addTags(id: NoteId, tags: List<String>) {
+    override suspend fun addTags(id: NoteId, tags: List<String>) {
         tags.forEach { addTag(id, it) }
     }
 }

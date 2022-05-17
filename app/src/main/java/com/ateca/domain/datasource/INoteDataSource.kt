@@ -5,11 +5,13 @@ import com.ateca.domain.models.NoteId
 
 interface INoteDataSource {
 
-    fun getAllNotes(): List<Note>
+    suspend fun selectAll(): List<Note>
 
-    fun deleteNoteById(id: NoteId)
+    suspend fun select(id: NoteId): Note
 
-    fun saveNote(note: Note)
+    suspend fun setArchived(id: NoteId, isArchived: Boolean)
 
-    fun setArchived(id: NoteId, isArchived: Boolean)
+    suspend fun saveNote(note: Note)
+
+    suspend fun deleteNoteById(id: NoteId)
 }

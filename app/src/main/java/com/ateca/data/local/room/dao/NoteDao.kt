@@ -11,23 +11,20 @@ import com.ateca.domain.models.NoteId
 interface NoteDao {
 
     @Query("SELECT * FROM $TABLE_NAME")
-    fun selectAll(): List<RoomNote>
+    suspend fun selectAll(): List<RoomNote>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $NOTE_ID = :noteId")
-    fun select(noteId: NoteId): List<RoomNote>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg links: RoomNote)
-
-    @Update
-    fun update(vararg notes: RoomNote)
+    suspend fun select(noteId: NoteId): RoomNote
 
     @Query("UPDATE $TABLE_NAME SET $ARCHIVED = :isArchived WHERE $NOTE_ID = :id")
-    fun setArchived(id: NoteId, isArchived: Boolean)
+    suspend fun setArchived(id: NoteId, isArchived: Boolean)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(vararg notes: RoomNote)
 
     @Delete
-    fun delete(link: RoomNote)
+    suspend fun delete(note: RoomNote)
 
     @Query("DELETE FROM $TABLE_NAME WHERE $NOTE_ID = :noteId")
-    fun deleteByNoteId(noteId: NoteId)
+    suspend fun deleteByNoteId(noteId: NoteId)
 }

@@ -4,11 +4,11 @@ import com.ateca.domain.models.NoteId
 
 interface ITagDataSource {
 
-    fun getUniqueTags(): List<String>
+    suspend fun getUniqueTags(): List<String>
 
-    fun getTagsById(id: NoteId): List<String>
+    suspend fun getTagsById(id: NoteId): List<String>
 
-    fun addTag(id: NoteId, tag: String)
+    suspend fun addTag(id: NoteId, tag: String)
 
-    fun addTags(id: NoteId, tags: List<String>)
+    suspend fun addTags(id: NoteId, tags: List<String>)
 }

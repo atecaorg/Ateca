@@ -11,20 +11,20 @@ import com.ateca.domain.models.NoteId
 interface LinkDao {
 
     @Query("SELECT * FROM $TABLE_NAME")
-    fun selectAll(): List<RoomLink>
+    suspend fun selectAll(): List<RoomLink>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $PRIMARY_NOTE_ID = :primaryNoteId")
-    fun select(primaryNoteId: NoteId): List<RoomLink>
+    suspend fun select(primaryNoteId: NoteId): List<RoomLink>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $LINKED_NOTE_ID = :linkedNoteId")
-    fun selectBacklinks(linkedNoteId: NoteId): List<RoomLink>
+    suspend fun selectBacklinks(linkedNoteId: NoteId): List<RoomLink>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg links: RoomLink)
+    suspend fun insert(vararg links: RoomLink)
 
     @Delete
-    fun delete(link: RoomLink)
+    suspend fun delete(link: RoomLink)
 
     @Query("DELETE FROM $TABLE_NAME WHERE $PRIMARY_NOTE_ID = :noteId")
-    fun deleteByNoteId(noteId: NoteId)
+    suspend fun deleteByNoteId(noteId: NoteId)
 }
