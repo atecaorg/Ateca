@@ -14,8 +14,8 @@ internal fun Note.toEntity() = RoomNote(
     text = this.text,
     folder = this.folder,
     archived = this.archived,
-    created = this.created,
-    modified = this.modified
+    createdAt = this.createdAt.time,
+    modifiedAt = this.modifiedAt.time
 )
 
 internal fun Link.toEntity() = RoomLink(

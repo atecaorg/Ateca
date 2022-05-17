@@ -5,6 +5,7 @@ import com.ateca.data.local.room.model.RoomNote
 import com.ateca.data.local.room.model.RoomTag
 import com.ateca.domain.models.Link
 import com.ateca.domain.models.Note
+import java.util.*
 
 /**
  * Created by dronpascal on 16.05.2022.
@@ -15,8 +16,8 @@ internal fun RoomNote.toModel() = Note(
     text = this.text,
     folder = this.folder,
     archived = this.archived,
-    created = this.created,
-    modified = this.modified
+    createdAt = Date(this.createdAt),
+    modifiedAt = Date(this.modifiedAt)
 )
 
 internal fun RoomLink.toModel() = Link(

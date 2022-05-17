@@ -25,6 +25,6 @@ class LinkDataSource(
     }
 
     override fun addLinks(links: List<Link>) {
-        linkDao.insert(links.toEntity())
+        links.forEach { addLink(it) }
     }
 }

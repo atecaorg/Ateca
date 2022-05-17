@@ -8,8 +8,8 @@ data class Note(
     val text: String = "",
     val folder: String? = null,
     val archived: Boolean = false,
-    val created: Date = Date(System.currentTimeMillis()),
-    val modified: Date = Date(System.currentTimeMillis()),
+    val createdAt: Date = Date(System.currentTimeMillis()),
+    val modifiedAt: Date = Date(System.currentTimeMillis()),
     val links: List<Link> = emptyList(),
     val tags: List<String> = emptyList()
 )

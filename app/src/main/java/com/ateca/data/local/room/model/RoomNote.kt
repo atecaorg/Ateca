@@ -29,10 +29,10 @@ data class RoomNote(
     val archived: Boolean,
 
     @ColumnInfo(name = CREATED)
-    val created: Date,
+    var createdAt: Long,
 
     @ColumnInfo(name = MODIFIED)
-    val modified: Date
+    var modifiedAt: Long
 ) {
 
     companion object {
@@ -44,7 +44,7 @@ data class RoomNote(
         const val TEXT = "text"
         const val FOLDER = "folder"
         const val ARCHIVED = "archived"
-        const val CREATED = "created"
-        const val MODIFIED = "modified"
+        const val CREATED = "created_at"
+        const val MODIFIED = "modified_at"
     }
 }
