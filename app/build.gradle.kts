@@ -83,7 +83,6 @@ dependencies {
     // Hilt
     implementation(Hilt.android)
     kapt(Hilt.compiler)
-
     // Compose
     implementation(Compose.activity)
     implementation(Compose.runtime)
