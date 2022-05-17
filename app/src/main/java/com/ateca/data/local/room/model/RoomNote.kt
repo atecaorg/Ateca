@@ -12,6 +12,7 @@ import com.ateca.domain.models.NoteId
     primaryKeys = [RoomNote.NOTE_ID]
 )
 data class RoomNote(
+
     @ColumnInfo(name = NOTE_ID)
     val id: NoteId,
 
@@ -28,10 +29,10 @@ data class RoomNote(
     val archived: Boolean,
 
     @ColumnInfo(name = CREATED)
-    var createdAt: Long,
+    val createdAt: Long,
 
     @ColumnInfo(name = MODIFIED)
-    var modifiedAt: Long
+    val modifiedAt: Long
 ) {
 
     companion object {

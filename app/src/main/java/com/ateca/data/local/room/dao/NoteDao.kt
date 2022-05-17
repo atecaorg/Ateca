@@ -19,21 +19,8 @@ interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(vararg links: RoomNote)
 
-    fun insertWithTimestamp(note: RoomNote) {
-        insert(note.apply {
-            createdAt = System.currentTimeMillis()
-            modifiedAt = System.currentTimeMillis()
-        })
-    }
-
     @Update
     fun update(vararg notes: RoomNote)
-
-    fun updateWithTimestamp(note: RoomNote) {
-        insert(note.apply {
-            modifiedAt = System.currentTimeMillis()
-        })
-    }
 
     @Query("UPDATE $TABLE_NAME SET $ARCHIVED = :isArchived WHERE $NOTE_ID = :id")
     fun setArchived(id: NoteId, isArchived: Boolean)

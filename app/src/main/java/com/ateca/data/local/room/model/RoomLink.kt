@@ -11,7 +11,7 @@ import com.ateca.domain.models.NoteId
     foreignKeys = [ForeignKey(
         entity = RoomNote::class,
         parentColumns = [RoomNote.NOTE_ID],
-        childColumns = [RoomTag.NOTE_ID],
+        childColumns = [RoomLink.PRIMARY_NOTE_ID],
         onDelete = ForeignKey.CASCADE
     )]
 )
