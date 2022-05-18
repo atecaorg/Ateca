@@ -2,7 +2,6 @@ package com.ateca.di.note
 
 import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.datasource.INoteDataSource
-import com.ateca.domain.datasource.ITagDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
 import com.ateca.domain.entity.MarkdownProcessor
 import com.ateca.domain.interactors.NoteInteractors
@@ -21,11 +20,7 @@ object NoteInteractorsModule {
 
     @Provides
     @Singleton
-    fun provideMarkdownProcessor(
-        processor: MarkdownProcessor
-    ): IMarkdownProcessor {
-        return MarkdownProcessor()
-    }
+    fun provideMarkdownProcessor(): IMarkdownProcessor = MarkdownProcessor()
 
     @Provides
     @Singleton
