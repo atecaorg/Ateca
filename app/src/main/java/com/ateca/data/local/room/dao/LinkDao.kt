@@ -7,6 +7,9 @@ import com.ateca.data.local.room.model.RoomLink.Companion.PRIMARY_NOTE_ID
 import com.ateca.data.local.room.model.RoomLink.Companion.TABLE_NAME
 import com.ateca.domain.models.NoteId
 
+/**
+ * Updated by dronpascal on 18.05.2022.
+ */
 @Dao
 interface LinkDao {
 

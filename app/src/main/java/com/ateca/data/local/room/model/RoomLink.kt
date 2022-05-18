@@ -5,6 +5,9 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import com.ateca.domain.models.NoteId
 
+/**
+ * Updated by dronpascal on 16.05.2022.
+ */
 @Entity(
     tableName = RoomLink.TABLE_NAME,
     primaryKeys = [RoomLink.PRIMARY_NOTE_ID, RoomLink.LINKED_NOTE_ID],

@@ -6,7 +6,7 @@ import androidx.room.ForeignKey
 import com.ateca.domain.models.NoteId
 
 /**
- * Created by dronpascal on 16.05.2022.
+ * Updated by dronpascal on 16.05.2022.
  */
 @Entity(
     tableName = RoomTag.TABLE_NAME,

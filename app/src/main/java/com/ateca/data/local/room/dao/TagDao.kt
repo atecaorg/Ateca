@@ -6,6 +6,9 @@ import com.ateca.data.local.room.model.RoomTag.Companion.NOTE_ID
 import com.ateca.data.local.room.model.RoomTag.Companion.TABLE_NAME
 import com.ateca.domain.models.NoteId
 
+/**
+ * Updated by dronpascal on 18.05.2022.
+ */
 @Dao
 interface TagDao {
 

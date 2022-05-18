@@ -15,7 +15,7 @@ internal fun RoomNote.toModel() = Note(
     title = this.title,
     text = this.text,
     folder = this.folder,
-    archived = this.archived,
+    archived = this.isArchived,
     createdAt = Date(this.createdAt),
     modifiedAt = Date(this.modifiedAt)
 )

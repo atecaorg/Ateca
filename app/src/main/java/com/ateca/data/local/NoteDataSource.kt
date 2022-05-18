@@ -39,6 +39,12 @@ class NoteDataSource(
         }
     }
 
+    override suspend fun selectBaseTitles() =
+        noteDao.selectBaseTitles()
+
+    override suspend fun getIdByTitle(title: String): NoteId =
+        noteDao.selectIdByTitle(title)
+
     override suspend fun deleteNoteById(id: NoteId) {
         noteDao.deleteByNoteId(id)
     }

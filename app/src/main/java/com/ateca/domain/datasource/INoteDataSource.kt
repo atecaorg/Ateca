@@ -11,6 +11,10 @@ interface INoteDataSource {
 
     suspend fun setArchived(id: NoteId, isArchived: Boolean)
 
+    suspend fun selectBaseTitles(): List<String>
+
+    suspend fun getIdByTitle(title: String): NoteId
+
     suspend fun saveNote(note: Note)
 
     suspend fun deleteNoteById(id: NoteId)
