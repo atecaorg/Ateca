@@ -13,15 +13,7 @@ private val LightColorPalette = lightColors(
     primaryVariant = BlackOlive,
     secondary = White,
     secondaryVariant = OliveGrey,
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    onPrimary = BlackOlive
 )
 
 @SuppressLint("ConflictingOnColor")
@@ -31,6 +23,7 @@ private val DarkColorPalette = darkColors(
     primaryVariant = PearlWhite,
     secondary = BlackOliveDark,
     secondaryVariant = GreySilk,
+    onPrimary = PearlWhite
 )
 
 @Composable
