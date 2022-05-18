@@ -19,8 +19,8 @@ private val NOTE_ID_ARGUMENT_KEY = UUID.randomUUID().toString()
 class NoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
-    private val noteId:NoteId =
-        savedStateHandle.get<String>(NOTE_ID_ARGUMENT_KEY)?:UUID.randomUUID().toString()
+    private val noteId: NoteId =
+        savedStateHandle.get<String>(NOTE_ID_ARGUMENT_KEY) ?: UUID.randomUUID().toString()
     private val ioDispatcher = Dispatchers.IO
 
     private var _note: MutableStateFlow<Note> = MutableStateFlow(Note())
@@ -30,6 +30,20 @@ class NoteViewModel @Inject constructor(
         viewModelScope.launch(ioDispatcher) {
             _note.value = getNoteMockUseCase(noteId)
         }
+    }
+
+    fun updateNote(
+        title: String = note.value.title,
+        text: String = note.value.text,
+        folder: String? = note.value.folder,
+        tags: List<String> = note.value.tags
+    ) {
+        _note.value = Note(
+            title = title,
+            text = text,
+            folder = folder,
+            tags = tags
+        )
     }
 
     private fun getNoteMockUseCase(noteId: NoteId): Note =
