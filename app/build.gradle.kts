@@ -104,7 +104,6 @@ dependencies {
 
     // Lifecycle
     implementation(AndroidX.Lifecycle.runtime)
-    //implementation(AndroidX.Lifecycle.extensions)
     implementation(AndroidX.Lifecycle.livedata)
     implementation(AndroidX.Lifecycle.viewmodel)
     implementation(AndroidX.Lifecycle.viewModelCompose)
@@ -120,7 +119,6 @@ dependencies {
     implementation(Compose.material)
     implementation(Compose.Material3.material3)
     implementation(Compose.materialIconsExtended)
-    //implementation(Compose.uiText)
     implementation(Compose.uiUtil)
     implementation(Compose.viewBinding)
     implementation(Compose.runtime)
