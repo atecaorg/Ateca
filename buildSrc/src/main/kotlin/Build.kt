@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 /**
  * Created by dronpascal on 26.04.2022.
  */
@@ -14,5 +16,5 @@ object Build {
 
     const val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
 
-    const val hiltAndroid = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.hiltVersion}"
+    const val hiltAndroid = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.version}"
 }
