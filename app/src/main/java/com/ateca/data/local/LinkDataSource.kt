@@ -14,17 +14,17 @@ class LinkDataSource(
     private val linkDao: LinkDao
 ) : ILinkDataSource {
 
-    override fun getLinksById(id: NoteId): List<Link> =
+    override suspend fun getLinksById(id: NoteId): List<Link> =
         linkDao.select(id).toModel()
 
-    override fun getBacklinksById(id: NoteId): List<Link> =
+    override suspend fun getBacklinksById(id: NoteId): List<Link> =
         linkDao.selectBacklinks(id).toModel()
 
-    override fun addLink(link: Link) {
+    override suspend fun addLink(link: Link) {
         linkDao.insert(link.toEntity())
     }
 
-    override fun addLinks(links: List<Link>) {
+    override suspend fun addLinks(links: List<Link>) {
         links.forEach { addLink(it) }
     }
 }

@@ -13,7 +13,7 @@ internal fun Note.toEntity() = RoomNote(
     title = this.title,
     text = this.text,
     folder = this.folder,
-    archived = this.archived,
+    isArchived = this.archived,
     createdAt = this.createdAt.time,
     modifiedAt = this.modifiedAt.time
 )

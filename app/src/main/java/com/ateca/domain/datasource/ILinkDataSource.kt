@@ -5,11 +5,11 @@ import com.ateca.domain.models.NoteId
 
 interface ILinkDataSource {
 
-    fun getLinksById(id: NoteId): List<Link>
+    suspend fun getLinksById(id: NoteId): List<Link>
 
-    fun getBacklinksById(id: NoteId): List<Link>
+    suspend fun getBacklinksById(id: NoteId): List<Link>
 
-    fun addLink(link: Link)
+    suspend fun addLink(link: Link)
 
-    fun addLinks(links: List<Link>)
+    suspend fun addLinks(links: List<Link>)
 }

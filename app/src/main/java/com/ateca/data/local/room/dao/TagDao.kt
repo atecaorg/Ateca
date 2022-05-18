@@ -6,24 +6,27 @@ import com.ateca.data.local.room.model.RoomTag.Companion.NOTE_ID
 import com.ateca.data.local.room.model.RoomTag.Companion.TABLE_NAME
 import com.ateca.domain.models.NoteId
 
+/**
+ * Updated by dronpascal on 18.05.2022.
+ */
 @Dao
 interface TagDao {
 
     @Query("SELECT * FROM $TABLE_NAME")
-    fun selectAll(): List<RoomTag>
+    suspend fun selectAll(): List<RoomTag>
 
     @Query("SELECT DISTINCT * FROM $TABLE_NAME")
-    fun selectDistinct(): List<RoomTag>
+    suspend fun selectDistinct(): List<RoomTag>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $NOTE_ID = :noteId")
-    fun select(noteId: NoteId): List<RoomTag>
+    suspend fun select(noteId: NoteId): List<RoomTag>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg tags: RoomTag)
+    suspend fun insert(vararg tags: RoomTag)
 
     @Delete
-    fun delete(tag: RoomTag)
+    suspend fun delete(tag: RoomTag)
 
     @Query("DELETE FROM $TABLE_NAME WHERE $NOTE_ID = :noteId")
-    fun deleteByNoteId(noteId: NoteId)
+    suspend fun deleteByNoteId(noteId: NoteId)
 }

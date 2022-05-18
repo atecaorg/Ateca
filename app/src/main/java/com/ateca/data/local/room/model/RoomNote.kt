@@ -5,7 +5,7 @@ import androidx.room.Entity
 import com.ateca.domain.models.NoteId
 
 /**
- * Created by dronpascal on 16.05.2022.
+ * Updated by dronpascal on 16.05.2022.
  */
 @Entity(
     tableName = RoomNote.TABLE_NAME,
@@ -26,7 +26,7 @@ data class RoomNote(
     val folder: String?,
 
     @ColumnInfo(name = ARCHIVED)
-    val archived: Boolean,
+    val isArchived: Boolean,
 
     @ColumnInfo(name = CREATED)
     val createdAt: Long,
@@ -43,7 +43,7 @@ data class RoomNote(
         const val TITLE = "title"
         const val TEXT = "text"
         const val FOLDER = "folder"
-        const val ARCHIVED = "archived"
+        const val ARCHIVED = "is_archived"
         const val CREATED = "created_at"
         const val MODIFIED = "modified_at"
     }
