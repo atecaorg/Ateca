@@ -6,11 +6,12 @@ import com.ateca.data.local.room.toModel
 import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.models.Link
 import com.ateca.domain.models.NoteId
+import javax.inject.Inject
 
 /**
  * Created by dronpascal on 16.05.2022.
  */
-class LinkDataSource(
+class LinkDataSource @Inject constructor(
     private val linkDao: LinkDao
 ) : ILinkDataSource {
 

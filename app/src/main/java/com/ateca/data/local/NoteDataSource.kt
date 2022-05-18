@@ -9,11 +9,12 @@ import com.ateca.data.local.room.toModel
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
+import javax.inject.Inject
 
 /**
  * Created by dronpascal on 16.05.2022.
  */
-class NoteDataSource(
+class NoteDataSource @Inject constructor(
     private val noteDao: NoteDao,
     private val noteDatabase: NoteDatabase
 ) : INoteDataSource {

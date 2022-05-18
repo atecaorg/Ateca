@@ -5,11 +5,12 @@ import com.ateca.data.local.room.model.RoomTag
 import com.ateca.data.local.room.toModel
 import com.ateca.domain.datasource.ITagDataSource
 import com.ateca.domain.models.NoteId
+import javax.inject.Inject
 
 /**
  * Created by dronpascal on 16.05.2022.
  */
-class TagDataSource(
+class TagDataSource @Inject constructor(
     private val tagDao: TagDao
 ) : ITagDataSource {
 
