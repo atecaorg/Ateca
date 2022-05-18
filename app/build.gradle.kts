@@ -22,10 +22,26 @@ android {
         }
     }
 
+    signingConfigs {
+        getByName("debug") {
+            storeFile = rootProject.file("debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+        create("release") {
+            storeFile = rootProject.file("release.keystore")
+            storePassword = "keystore password"
+            keyAlias = "release"
+            keyPassword = "release key password"
+        }
+    }
+
     buildTypes {
         getByName("debug") {
             isMinifyEnabled = false
             isCrunchPngs = false
+            signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "$project.rootDir/proguard-rules.pro"
@@ -34,6 +50,7 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "$project.rootDir/proguard-rules.pro"
@@ -43,10 +60,17 @@ android {
 
     buildFeatures {
         compose = true
+        viewBinding = true
+
+        // Disable unused AGP features
+        aidl = false
+        renderScript = false
+        resValues = false
+        shaders = false
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = Compose.composeVersion
+        kotlinCompilerExtensionVersion = Compose.version
     }
 
     compileOptions {
@@ -66,47 +90,62 @@ android {
     kapt {
         // Allow references to generated code
         correctErrorTypes = true
+        useBuildCache = true
     }
 }
 
 dependencies {
-    // Kotlin
-    implementation(KotlinX.coroutinesCore)
-    implementation(KotlinX.coroutinesAndroid)
+    // Google
+    implementation(Google.Material.material3)
 
-    // Android extensions
-    implementation(AndroidX.coreKtx)
-    // Navigation library includes RuntimeKtx by default
-    // implementation(AndroidX.Lifecycle.lifecycleRuntimeKtx)
-    implementation(AndroidX.Lifecycle.lifecycleVmComposeKtx)
+    // Kotlin
+    implementation(KotlinX.Coroutines.core)
+    implementation(KotlinX.Coroutines.android)
+
+    // Lifecycle
+    implementation(AndroidX.Lifecycle.runtime)
+    //implementation(AndroidX.Lifecycle.extensions)
+    implementation(AndroidX.Lifecycle.livedata)
+    implementation(AndroidX.Lifecycle.viewmodel)
+    implementation(AndroidX.Lifecycle.viewModelCompose)
 
     // Hilt
     implementation(Hilt.android)
     kapt(Hilt.compiler)
+
     // Compose
-    implementation(Compose.activity)
-    implementation(Compose.runtime)
-    implementation(Compose.livedata)
+    implementation(Compose.foundation)
+    implementation(Compose.layout)
     implementation(Compose.ui)
     implementation(Compose.material)
-    implementation(Compose.icons)
-    implementation(Compose.toolingPreview)
+    implementation(Compose.Material3.material3)
+    implementation(Compose.materialIconsExtended)
+    //implementation(Compose.uiText)
+    implementation(Compose.uiUtil)
+    implementation(Compose.viewBinding)
+    implementation(Compose.runtime)
+    implementation(Compose.runtimeLivedata)
+    implementation(Compose.activity)
     debugImplementation(Compose.toolingDebug)
+    implementation(Compose.toolingPreview)
     // Compose/hiltNavigation
     implementation(Compose.hiltNavigationCompose)
     // Accompanist
     implementation(Accompanist.animations)
+    implementation(Accompanist.permissions)
 
     // Navigation
     implementation(Compose.navigation)
+    implementation(AndroidX.Navigation.fragment)
+    implementation(AndroidX.Navigation.uiKtx)
 
     // Coil
     implementation(Coil.coil)
 
     // Room
-    implementation(AndroidX.Room.roomRuntime)
-    implementation(AndroidX.Room.roomKtx)
-    kapt(AndroidX.Room.roomCompiler)
+    implementation(AndroidX.Room.runtime)
+    implementation(AndroidX.Room.ktx)
+    kapt(AndroidX.Room.compiler)
 
     // Retrofit
     implementation(Retrofit.retrofit)
@@ -120,13 +159,30 @@ dependencies {
     // Markdown processor
     implementation(Markdown.flexmark)
 
+    // Window
+    implementation(AndroidX.Window.window)
+
     // Test
     androidTestImplementation(Junit.junit4)
+    // Test/androidx
+    androidTestImplementation(AndroidX.Test.core)
+    androidTestImplementation(AndroidX.Test.espressoCore)
+    androidTestImplementation(AndroidX.Test.rules)
+    androidTestImplementation(AndroidX.Test.Ext.junit)
+    // Test/coroutines
+    testImplementation(KotlinX.Coroutines.test)
     // Test/compose
+    androidTestImplementation(Compose.Test.test)
     androidTestImplementation(Compose.Test.uiTestJunit4)
     debugImplementation(Compose.Test.uiTestManifest)
     // Test/hilt
     androidTestImplementation(Hilt.Test.hiltAndroidTesting)
     kaptAndroidTest(Hilt.compiler)
 
+    // androidx.test is forcing JUnit, 4.12. This forces it to use 4.13
+    configurations.configureEach {
+        resolutionStrategy {
+            force(Junit.junit4)
+        }
+    }
 }
