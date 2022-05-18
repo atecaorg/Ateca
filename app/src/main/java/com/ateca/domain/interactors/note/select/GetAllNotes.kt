@@ -1,39 +1,32 @@
-package com.ateca.domain.interactors
+package com.ateca.domain.interactors.note.select
 
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
-import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.datasource.INoteDataSource
-import com.ateca.domain.datasource.ITagDataSource
 import com.ateca.domain.models.Note
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 /**
- * Created by dronpascal on 17.05.2022.
+ * Created by dronpascal on 16.05.2022.
  */
-class SaveNote(
+class GetAllNotes(
     private val noteSource: INoteDataSource,
-    private val linkSource: ILinkDataSource,
-    private val tagSource: ITagDataSource
 ) {
-    fun execute(note: Note): Flow<DataState<Nothing>> = flow {
+    fun execute(): Flow<DataState<List<Note>>> = flow {
         try {
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
-            noteSource.deleteNoteById(note.id)
-            noteSource.saveNote(note)
-            linkSource.addLinks(note.links)
-            tagSource.addTags(note.id, note.tags)
+            val notes: List<Note> = noteSource.selectAll()
+            emit(DataState.Data(notes))
         } catch (e: Exception) {
-            noteSource.deleteNoteById(note.id)
             e.printStackTrace()
             emit(
                 @Suppress("RemoveExplicitTypeArguments")  // Error without Response type
-                DataState.Response<Nothing>(
+                DataState.Response<List<Note>>(
                     uiComponent = UIComponent.Dialog(
                         title = "Error",
-                        description = e.message ?: "Failed to save note"
+                        description = e.message ?: "Failed to get notes"
                     )
                 )
             )

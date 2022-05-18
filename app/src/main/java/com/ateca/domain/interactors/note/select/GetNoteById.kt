@@ -1,32 +1,33 @@
-package com.ateca.domain.interactors
+package com.ateca.domain.interactors.note.select
 
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.models.Note
+import com.ateca.domain.models.NoteId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 /**
- * Created by dronpascal on 16.05.2022.
+ * Created by dronpascal on 17.05.2022.
  */
-class GetAllNotes(
+class GetNoteById(
     private val noteSource: INoteDataSource,
 ) {
-    fun execute(): Flow<DataState<List<Note>>> = flow {
+    fun execute(id: NoteId): Flow<DataState<Note>> = flow {
         try {
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
-            val notes: List<Note> = noteSource.getAllNotes()
-            emit(DataState.Data(notes))
+            val note: Note = noteSource.select(id)
+            emit(DataState.Data(note))
         } catch (e: Exception) {
             e.printStackTrace()
             emit(
                 @Suppress("RemoveExplicitTypeArguments")  // Error without Response type
-                DataState.Response<List<Note>>(
+                DataState.Response<Note>(
                     uiComponent = UIComponent.Dialog(
                         title = "Error",
-                        description = e.message ?: "Failed to get notes"
+                        description = e.message ?: "Failed to get note"
                     )
                 )
             )
