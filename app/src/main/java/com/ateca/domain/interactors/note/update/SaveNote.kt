@@ -1,8 +1,10 @@
 package com.ateca.domain.interactors.note.update
 
+import com.ateca.R
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
+import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
 import com.ateca.domain.models.Link
@@ -43,8 +45,10 @@ class SaveNote(
                 @Suppress("RemoveExplicitTypeArguments")  // Error without Response type
                 DataState.Response<Nothing>(
                     uiComponent = UIComponent.Dialog(
-                        title = "Error",
-                        description = e.message ?: "Failed to save note"
+                        title = UIText.StringResource(R.string.error),
+                        description = e.message
+                            ?.let { UIText.DynamicString(it) }
+                            ?: UIText.StringResource(R.string.save_note_error_msg)
                     )
                 )
             )

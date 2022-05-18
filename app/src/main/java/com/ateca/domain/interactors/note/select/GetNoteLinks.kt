@@ -1,8 +1,10 @@
 package com.ateca.domain.interactors.note.select
 
+import com.ateca.R
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
+import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.models.Link
 import com.ateca.domain.models.NoteId
@@ -26,8 +28,10 @@ class GetNoteLinks(
                 @Suppress("RemoveExplicitTypeArguments")  // Error without Response type
                 DataState.Response<List<Link>>(
                     uiComponent = UIComponent.Dialog(
-                        title = "Error",
-                        description = e.message ?: "Failed to get note links"
+                        title = UIText.StringResource(R.string.error),
+                        description = e.message
+                            ?.let { UIText.DynamicString(it) }
+                            ?: UIText.StringResource(R.string.get_note_links_error_msg)
                     )
                 )
             )

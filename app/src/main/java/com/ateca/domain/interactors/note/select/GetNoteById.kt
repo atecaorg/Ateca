@@ -1,8 +1,10 @@
 package com.ateca.domain.interactors.note.select
 
+import com.ateca.R
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
+import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
@@ -26,8 +28,10 @@ class GetNoteById(
                 @Suppress("RemoveExplicitTypeArguments")  // Error without Response type
                 DataState.Response<Note>(
                     uiComponent = UIComponent.Dialog(
-                        title = "Error",
-                        description = e.message ?: "Failed to get note"
+                        title = UIText.StringResource(R.string.error),
+                        description = e.message
+                            ?.let { UIText.DynamicString(it) }
+                            ?: UIText.StringResource(R.string.get_note_error_msg)
                     )
                 )
             )
