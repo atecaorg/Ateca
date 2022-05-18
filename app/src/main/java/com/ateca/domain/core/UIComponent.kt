@@ -6,11 +6,11 @@ package com.ateca.domain.core
 sealed class UIComponent {
 
     data class Dialog(
-        val title: String,
-        val description: String,
+        val title: UIText,
+        val description: UIText,
     ) : UIComponent()
 
     data class None(
-        val message: String,
+        val message: UIText,
     ) : UIComponent()
 }
