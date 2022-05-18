@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 /**
  * Created by dronpascal on 26.04.2022.
  */
@@ -7,6 +9,6 @@ object Coil {
      */
     private const val version = "2.0.0-rc03"
     const val coil = "io.coil-kt:coil-compose:$version"
-    const val coilSvg = "io.coil-kt:coil-svg:$version"
-    const val coilGif = "io.coil-kt:coil-gif:$version"
+    const val svg = "io.coil-kt:coil-svg:$version"
+    const val gif = "io.coil-kt:coil-gif:$version"
 }
