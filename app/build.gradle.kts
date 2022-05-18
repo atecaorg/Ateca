@@ -96,7 +96,6 @@ dependencies {
     implementation(Compose.hiltNavigationCompose)
     // Accompanist
     implementation(Accompanist.animations)
-    implementation(Accompanist.insets)
 
     // Navigation
     implementation(Compose.navigation)
@@ -117,6 +116,9 @@ dependencies {
 
     // DataStore
     implementation(AndroidX.DataStore.dataStore)
+
+    // Markdown processor
+    implementation(Markdown.flexmark)
 
     // Test
     androidTestImplementation(Junit.junit4)
