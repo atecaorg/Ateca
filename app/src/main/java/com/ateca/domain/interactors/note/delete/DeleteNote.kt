@@ -1,4 +1,4 @@
-package com.ateca.domain.interactors
+package com.ateca.domain.interactors.note.delete
 
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
