@@ -2,7 +2,6 @@ package com.ateca.domain.interactors
 
 import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.datasource.INoteDataSource
-import com.ateca.domain.datasource.ITagDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
 import com.ateca.domain.interactors.note.delete.DeleteNote
 import com.ateca.domain.interactors.note.insert.CreateNote

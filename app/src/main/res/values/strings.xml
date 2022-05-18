@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Ateca</string>
+
+    <!-- General -->
+    <string name="error">Error</string>
+
+    <!-- Dialogs error messages -->
+    <string name="get_all_notes_error_msg">Failed to get notes</string>
+    <string name="get_note_error_msg">Failed to get note</string>
+    <string name="create_note_error_msg">Failed to create note</string>
+    <string name="save_note_error_msg">Failed to save note</string>
+    <string name="archive_note_error_msg">Failed to archive note</string>
+    <string name="delete_note_error_msg">Failed to delete note</string>
+    <string name="get_note_links_error_msg">Failed to get note links</string>
+    <string name="get_note_backlinks_error_msg">Failed to get note backlinks</string>
+
 </resources>
