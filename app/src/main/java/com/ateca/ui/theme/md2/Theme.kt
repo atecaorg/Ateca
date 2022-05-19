@@ -1,4 +1,4 @@
-package com.ateca.ui.theme
+package com.ateca.ui.theme.md2
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme

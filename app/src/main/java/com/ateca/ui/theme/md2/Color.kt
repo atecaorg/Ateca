@@ -1,4 +1,4 @@
-package com.ateca.ui.theme
+package com.ateca.ui.theme.md2
 
 import androidx.compose.ui.graphics.Color
 
