@@ -103,7 +103,7 @@ dependencies {
     implementation(KotlinX.Coroutines.android)
 
     // Lifecycle
-    implementation(AndroidX.Lifecycle.runtime)
+    //implementation(AndroidX.Lifecycle.runtime)
     implementation(AndroidX.Lifecycle.livedata)
     implementation(AndroidX.Lifecycle.viewmodel)
     implementation(AndroidX.Lifecycle.viewModelCompose)
