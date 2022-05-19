@@ -48,7 +48,7 @@ class NoteViewModel @Inject constructor(
 
     private fun getNoteMockUseCase(noteId: NoteId): Note =
         Note(
-            title = "SpaceX",
+            title = "SpaceXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
             text = "Space Exploration Technologies Corp. is an American space manufacturer, a provider of space transportation services, and a communications corporation headquartered in Hawthorne, California. SpaceX was founded in 2002 by Elon Musk with the goal of reducing space transportation costs to enable the colonization of Mars.",
             folder = "spaceX",
             tags = listOf("spaceX", "Elon Mask", "space", "космос", "mars")
