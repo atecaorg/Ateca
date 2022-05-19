@@ -1,4 +1,4 @@
-package com.ateca.ui.theme
+package com.ateca.ui.theme.md3
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

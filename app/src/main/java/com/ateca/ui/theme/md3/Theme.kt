@@ -1,4 +1,4 @@
-package com.ateca.ui.theme
+package com.ateca.ui.theme.md3
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
