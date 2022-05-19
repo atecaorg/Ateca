@@ -4,15 +4,12 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,11 +24,14 @@ fun NoteContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(5.dp)
+            .padding(10.dp)
+            .border(
+                BorderStroke(
+                    width = 1.dp,
+                    color = MaterialTheme.colors.onPrimary
+                ), shape = RoundedCornerShape(10.dp)
+            )
     ) {
-        NoteTitleField(title = note.value.title) { value ->
-            viewModel.updateNote(title = value.trim())
-        }
         NoteTextField(text = note.value.text) { value ->
             viewModel.updateNote(text = value.trim())
         }
@@ -45,29 +45,6 @@ private fun NoteContentPreview() {
 }
 
 @Composable
-private fun NoteTitleField(
-    title: String,
-    onValueChange: (String) -> Unit
-) {
-    OutlinedTextField(
-        value = title,
-        maxLines = 1,
-        onValueChange = onValueChange,
-        textStyle = MaterialTheme.typography.h6,
-        modifier = Modifier
-            .padding(5.dp)
-            .fillMaxWidth()
-            .border(BorderStroke(width = 0.dp, color = Color.Transparent))
-    )
-}
-
-@Preview(backgroundColor = 0xFF00FF00, showBackground = true)
-@Composable
-private fun NoteTitlePreview() {
-    NoteTitleField(title = "Title") {}
-}
-
-@Composable
 private fun NoteTextField(
     text: String,
     onValueChange: (String) -> Unit
@@ -76,8 +53,11 @@ private fun NoteTextField(
         value = text,
         onValueChange = onValueChange,
         textStyle = MaterialTheme.typography.body1,
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            unfocusedBorderColor = Color.Transparent,
+            focusedBorderColor = Color.Transparent
+        ),
         modifier = Modifier
-            .padding(5.dp)
             .fillMaxSize()
     )
 }
@@ -85,5 +65,5 @@ private fun NoteTextField(
 @Preview(backgroundColor = 0xFF00FF00, showBackground = true)
 @Composable
 private fun NoteTextPreview() {
-    NoteTitleField(title = "Text") {}
+    NoteTextField(text = "Text") {}
 }

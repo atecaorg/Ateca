@@ -24,7 +24,9 @@ fun NoteScreen(
                 paddingValues = systemPaddingValues,
                 title = viewModel.note.collectAsState().value.title,
                 onNavigationButtonClick = { navController.popBackStack() },
-                onSettingButtonClick = {}
+                onTitleValueChange = { value ->
+                    viewModel.updateNote(title = value)
+                }
             )
         }
     ) {
