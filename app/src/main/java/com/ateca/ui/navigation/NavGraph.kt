@@ -10,6 +10,7 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.ateca.domain.util.NOTE_ID_ARGUMENT_KEY
 import com.ateca.ui.screens.mock_screen.MockScreen
+import com.ateca.ui.screens.note_screen.NoteScreen
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 
@@ -53,7 +54,7 @@ fun SetUpNavGraph(navController: NavHostController) {
                 exitTransition
             }
         ) {
-            MockScreen("NOTE_SCREEN")
+            NoteScreen(navController = navController)
         }
         composable(
             route = Screen.SettingsScreen.route,

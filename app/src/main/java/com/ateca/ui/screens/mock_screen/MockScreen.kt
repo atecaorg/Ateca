@@ -10,19 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 
 @Composable
 fun MockScreen(screenTitle: String) {
-    val systemPaddingValues = rememberInsetsPaddingValues(
-        insets = LocalWindowInsets.current.systemBars
-    )
 
     Surface(
         modifier = Modifier
             .fillMaxSize()
-            .padding(paddingValues = systemPaddingValues)
     ) {
         Text(
             text = screenTitle,

@@ -2,9 +2,7 @@ package com.ateca.ui.screens.note_screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -17,6 +15,7 @@ import com.ateca.ui.screens.note_screen.veiwmodel.NoteViewModel
 
 @Composable
 fun NoteContent(
+    paddingValues: PaddingValues = PaddingValues(5.dp),
     viewModel: NoteViewModel
 ) {
     val note = viewModel.note.collectAsState()
@@ -24,17 +23,24 @@ fun NoteContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(10.dp)
-            .border(
-                BorderStroke(
-                    width = 1.dp,
-                    color = MaterialTheme.colors.onPrimary
-                ), shape = RoundedCornerShape(10.dp)
-            )
+            .padding(paddingValues)
     ) {
-        NoteTextField(text = note.value.text) { value ->
-            viewModel.updateNote(text = value.trim())
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(15.dp)
+                .border(
+                    BorderStroke(
+                        width = 1.dp,
+                        color = MaterialTheme.colors.onPrimary
+                    ), shape = RoundedCornerShape(10.dp)
+                )
+        ) {
+            NoteTextField(text = note.value.text) { value ->
+                viewModel.updateNote(text = value.trim())
+            }
         }
+
     }
 }
 

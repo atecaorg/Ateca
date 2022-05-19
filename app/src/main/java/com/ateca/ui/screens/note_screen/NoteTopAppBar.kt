@@ -2,9 +2,7 @@ package com.ateca.ui.screens.note_screen
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -13,17 +11,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ateca.R
-import com.google.accompanist.insets.LocalWindowInsets
-import com.google.accompanist.insets.rememberInsetsPaddingValues
 
 @Composable
 fun NoteTopAppBar(
-    paddingValues: PaddingValues,
     title: String,
     onTitleValueChange: (String) -> Unit,
     onNavigationButtonClick: () -> Unit
 ) {
-
     val showMenu = remember { mutableStateOf(false) }
 
     TopAppBar(
@@ -68,9 +62,7 @@ fun NoteTopAppBar(
                 }
             }
         },
-        elevation = 0.dp,
-        modifier = Modifier
-            .padding(top = paddingValues.calculateTopPadding())
+        elevation = 0.dp
     )
 }
 
@@ -78,10 +70,6 @@ fun NoteTopAppBar(
 @Composable
 private fun NoteTopAppBarPreview() {
     NoteTopAppBar(
-        rememberInsetsPaddingValues(
-            insets = LocalWindowInsets.current.systemBars,
-            applyBottom = false
-        ),
         title = "SpaceX",
         onNavigationButtonClick = {},
         onTitleValueChange = {}
