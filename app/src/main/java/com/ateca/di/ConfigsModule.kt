@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 /**
  * Created by dronpascal on 18.05.2022.
@@ -15,6 +16,7 @@ import dagger.hilt.components.SingletonComponent
 object ConfigsModule {
 
     @Provides
+    @Singleton
     fun provideBuildConfigProvider(): BuildConfigProvider =
         BuildConfigProvider(
             debug = BuildConfig.DEBUG,
