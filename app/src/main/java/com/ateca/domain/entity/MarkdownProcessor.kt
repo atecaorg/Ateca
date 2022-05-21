@@ -25,7 +25,7 @@ class MarkdownProcessor : IMarkdownProcessor {
             }
             .toList()
 
-    companion object Regexps {
+    private companion object Regexps {
         /**
          * @see <a href="https://regexr.com/"> Regexp check</a>
          */
@@ -38,7 +38,7 @@ class MarkdownProcessor : IMarkdownProcessor {
         // [[sample]], [[sample|spl]]
         // To extract pure link name we have to split by '|',
         // select last element and remove all '[[',']]' substrings
-        // TODO: Link can contain single [ or ]. Example [[t]e[s]t]].
+        // TODO: Link can contain single '[' or ']'. Example '[[t]e[s]t]]'.
         const val CROSS_LINK_REGEX = """\[{2}([^\[\]\|]+)\]{2}"""
         const val LINK_TRASH_SYMBOLS_REGEX = """\[{2}|\]{2}"""
     }
