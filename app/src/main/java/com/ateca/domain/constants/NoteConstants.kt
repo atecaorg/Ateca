@@ -7,3 +7,4 @@ object NoteConstants {
 
     const val BASE_TITLE = "Untitled"
 }
+
