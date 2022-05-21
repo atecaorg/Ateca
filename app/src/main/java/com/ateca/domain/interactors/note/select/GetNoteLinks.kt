@@ -6,6 +6,7 @@ import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.ILinkDataSource
+import com.ateca.domain.interactors.NoteInteractor
 import com.ateca.domain.models.Link
 import com.ateca.domain.models.NoteId
 import kotlinx.coroutines.flow.Flow
@@ -16,8 +17,9 @@ import kotlinx.coroutines.flow.flow
  */
 class GetNoteLinks(
     private val linkSource: ILinkDataSource,
-) {
-    fun execute(id: NoteId): Flow<DataState<List<Link>>> = flow {
+) : NoteInteractor.IGetNoteLinks {
+
+    override fun execute(id: NoteId): Flow<DataState<List<Link>>> = flow {
         try {
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
             val links = linkSource.getLinksById(id)

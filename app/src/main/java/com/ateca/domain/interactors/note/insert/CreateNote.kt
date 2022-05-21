@@ -8,6 +8,7 @@ import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
+import com.ateca.domain.interactors.NoteInteractor
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
 import kotlinx.coroutines.flow.Flow
@@ -19,8 +20,9 @@ import java.util.*
  */
 class CreateNote(
     private val noteSource: INoteDataSource,
-) {
-    fun execute(id: NoteId? = null, title: String? = null): Flow<DataState<Note>> = flow {
+) : NoteInteractor.ICreateNote {
+
+    override fun execute(id: NoteId?, title: String?): Flow<DataState<Note>> = flow {
         try {
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
 
