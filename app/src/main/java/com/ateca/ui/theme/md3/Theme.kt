@@ -4,8 +4,11 @@ import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import com.ateca.ui.theme.LocalSpacing
+import com.ateca.ui.theme.Spacing
 
 private val AtecaLightColorScheme = lightColorScheme(
     primary = Blue40,
@@ -83,10 +86,14 @@ fun AtecaTheme(
         else -> AtecaLightColorScheme
     }
 
-    MaterialTheme(
-        colorScheme = atecaColorScheme,
-        typography = AtecaTypography,
-        shapes = AtecaShapes,
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalSpacing provides Spacing()
+    ) {
+        MaterialTheme(
+            colorScheme = atecaColorScheme,
+            typography = AtecaTypography,
+            shapes = AtecaShapes,
+            content = content
+        )
+    }
 }
