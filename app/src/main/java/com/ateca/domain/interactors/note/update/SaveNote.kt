@@ -7,11 +7,11 @@ import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
+import com.ateca.domain.interactors.NoteInteractor
 import com.ateca.domain.models.Link
 import com.ateca.domain.models.Note
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.util.*
 
 /**
  * Created by dronpascal on 17.05.2022.
@@ -19,8 +19,9 @@ import java.util.*
 class SaveNote(
     private val noteSource: INoteDataSource,
     private val markdownParser: IMarkdownProcessor
-) {
-    fun execute(note: Note): Flow<DataState<Nothing>> = flow {
+) : NoteInteractor.ISaveNote {
+
+    override fun execute(note: Note): Flow<DataState<Nothing>> = flow {
         try {
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
             val tags = markdownParser.getTagSubstrings(note.text)
@@ -34,7 +35,7 @@ class SaveNote(
                 }
             noteSource.saveNote(
                 note.copy(
-                    modifiedAt = Date(System.currentTimeMillis()),
+                    modifiedAt = System.currentTimeMillis(),
                     links = links,
                     tags = tags
                 )

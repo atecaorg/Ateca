@@ -1,8 +1,8 @@
 package com.ateca.data.local
 
 import com.ateca.data.local.room.dao.LinkDao
-import com.ateca.data.local.room.toEntity
-import com.ateca.data.local.room.toModel
+import com.ateca.data.local.room.mappers.toEntity
+import com.ateca.data.local.room.mappers.toModel
 import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.models.Link
 import com.ateca.domain.models.NoteId

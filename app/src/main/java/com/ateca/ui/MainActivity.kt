@@ -3,7 +3,8 @@ package com.ateca.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.ateca.ui.app.AtecaApp
+import androidx.compose.foundation.layout.Box
+import com.ateca.ui.components.app.AtecaApp
 import com.ateca.ui.theme.md2.AtecaTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -14,7 +15,9 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AtecaTheme {
-                AtecaApp()
+                Box {
+                    AtecaApp()
+                }
             }
         }
     }

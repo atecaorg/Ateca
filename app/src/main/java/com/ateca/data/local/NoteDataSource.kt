@@ -3,9 +3,9 @@ package com.ateca.data.local
 import androidx.room.withTransaction
 import com.ateca.data.local.room.NoteDatabase
 import com.ateca.data.local.room.dao.NoteDao
+import com.ateca.data.local.room.mappers.toEntity
+import com.ateca.data.local.room.mappers.toModel
 import com.ateca.data.local.room.model.RoomTag
-import com.ateca.data.local.room.toEntity
-import com.ateca.data.local.room.toModel
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId

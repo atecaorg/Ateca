@@ -1,8 +1,8 @@
 package com.ateca.data.local
 
 import com.ateca.data.local.room.dao.TagDao
+import com.ateca.data.local.room.mappers.toModel
 import com.ateca.data.local.room.model.RoomTag
-import com.ateca.data.local.room.toModel
 import com.ateca.domain.datasource.ITagDataSource
 import com.ateca.domain.models.NoteId
 import javax.inject.Inject
