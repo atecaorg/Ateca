@@ -1,4 +1,4 @@
-package com.ateca.ui.app
+package com.ateca.ui.components.app
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
@@ -8,6 +8,7 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AtecaApp() {
+
     val navController = rememberAnimatedNavController()
 
     SetUpNavGraph(
