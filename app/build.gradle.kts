@@ -80,6 +80,9 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+
+        @Suppress("SuspiciousCollectionReassignment")
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
     }
 
     packagingOptions {
@@ -103,7 +106,6 @@ dependencies {
     implementation(KotlinX.Coroutines.android)
 
     // Lifecycle
-    //implementation(AndroidX.Lifecycle.runtime)
     implementation(AndroidX.Lifecycle.livedata)
     implementation(AndroidX.Lifecycle.viewmodel)
     implementation(AndroidX.Lifecycle.viewModelCompose)
@@ -131,6 +133,7 @@ dependencies {
     // Accompanist
     implementation(Accompanist.animations)
     implementation(Accompanist.permissions)
+    implementation(Accompanist.systemUiController)
 
     // Navigation
     implementation(Compose.navigation)
