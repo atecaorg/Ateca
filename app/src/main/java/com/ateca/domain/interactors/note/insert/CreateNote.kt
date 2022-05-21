@@ -31,12 +31,13 @@ class CreateNote(
                 e.printStackTrace()
                 throw Exception("Failed to find unique title")
             }
-            val note = Note(
+            val newNote = Note(
                 id = noteId,
                 title = noteTitle
             )
-            noteSource.saveNote(note)
+            noteSource.saveNote(newNote)
 
+            emit(DataState.Data(newNote))
         } catch (e: Exception) {
             e.printStackTrace()
             emit(
