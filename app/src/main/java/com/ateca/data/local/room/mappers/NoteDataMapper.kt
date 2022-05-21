@@ -1,4 +1,4 @@
-package com.ateca.data.local.room
+package com.ateca.data.local.room.mappers
 
 import com.ateca.data.local.room.model.RoomLink
 import com.ateca.data.local.room.model.RoomNote
@@ -14,8 +14,8 @@ internal fun Note.toEntity() = RoomNote(
     text = this.text,
     folder = this.folder,
     isArchived = this.archived,
-    createdAt = this.createdAt.time,
-    modifiedAt = this.modifiedAt.time
+    createdAt = this.createdAt,
+    modifiedAt = this.modifiedAt
 )
 
 internal fun Link.toEntity() = RoomLink(

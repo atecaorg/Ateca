@@ -11,7 +11,6 @@ import com.ateca.domain.models.Link
 import com.ateca.domain.models.Note
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.util.*
 
 /**
  * Created by dronpascal on 17.05.2022.
@@ -34,7 +33,7 @@ class SaveNote(
                 }
             noteSource.saveNote(
                 note.copy(
-                    modifiedAt = Date(System.currentTimeMillis()),
+                    modifiedAt = System.currentTimeMillis(),
                     links = links,
                     tags = tags
                 )
