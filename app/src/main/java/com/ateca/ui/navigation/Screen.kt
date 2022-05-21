@@ -1,16 +1,40 @@
 package com.ateca.ui.navigation
 
-sealed class Screen(val route: String) {
-    object HomeScreen : Screen(route = HOME_ROUTE)
-    object NoteScreen : Screen(route = "$NOTE_ROUTE/{noteID}") {
-        fun passNoteId(noteId: String) = "$NOTE_ROUTE/$noteId"
-    }
+import androidx.navigation.NamedNavArgument
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.ateca.domain.constants.NavigationConstants.NOTE_ID_ARGUMENT_KEY
+import com.ateca.domain.constants.NavigationConstants.Rotes.NOTE_LIST_ROUTE
+import com.ateca.domain.constants.NavigationConstants.Rotes.NOTE_ROUTE
+import com.ateca.domain.constants.NavigationConstants.Rotes.SETTINGS_ROUTE
+import com.ateca.domain.constants.NavigationConstants.Rotes.STUB_ROUTE
 
-    object SettingsScreen : Screen(route = SETTINGS_ROUTE)
+sealed class Screen(
+    val route: String,
+    val arguments: List<NamedNavArgument>
+) {
 
-    companion object {
-        private const val HOME_ROUTE = "home_route"
-        private const val NOTE_ROUTE = "note_route"
-        private const val SETTINGS_ROUTE = "settings_route"
-    }
+    object StubScreen : Screen(
+        route = STUB_ROUTE,
+        arguments = emptyList()
+    )
+
+    object NoteList : Screen(
+        route = NOTE_LIST_ROUTE,
+        arguments = emptyList()
+    )
+
+    object Note : Screen(
+        route = NOTE_ROUTE,
+        arguments = listOf(
+            navArgument(NOTE_ID_ARGUMENT_KEY) {
+                type = NavType.StringType
+            }
+        )
+    )
+
+    object Settings : Screen(
+        route = SETTINGS_ROUTE,
+        arguments = emptyList()
+    )
 }
