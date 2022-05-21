@@ -2,21 +2,22 @@ package com.ateca.ui.theme.md2
 
 import androidx.compose.ui.graphics.Color
 
-val SpringBud = Color(0xFFCEE4A9) //фон
-
-//Light Theme
-val White = Color(0xFFFFFFFF) //фон
-val Brown14 = Color(0x14865300) //строка меню
-val Brown = Color(0xFF865300) //иконки в строке меню
-val BlackOlive = Color(0xFF1F1B16) //текст темы карточки
-val MediumGrey = Color(0xFF827568) //окантовка карточки
-val OliveGrey = Color(0xFF504539) //текст карточки
-
-//Dark Theme
-val TransportBlack = Color(0xFF1F1F1F) //фон
-val RedOrange14 = Color(0x14FFB95B) //строка меню
-val RedOrange = Color(0xFFFFB95B) //строка меню
-val GreySilk = Color(0xFFD4C4B5) //текст карточки //иконки в строке меню
-val BlackOliveDark = Color(0xFF1F1B16) //фон карточки
-val Quartz = Color(0xFF9C8E80) //окантовка карточки
-val PearlWhite = Color(0xFFEBE1D9) //текст темы карточки
+val SpringBud = Color(0xFFCEE4A9)
+val LightGrayishOrange = Color(0xFFf3eee8)
+val White = Color(0xFFffffff)
+val LightGrayishBlue = Color(0xFFe8eaf6)
+val GrayishBlue = Color(0xFFb6b8c3)
+val LightGrayishBlue100 = Color(0xFFcfd8dc)
+val LightGrayishOrange100 = Color(0xFFebe1d9)
+val GrayishOrange = Color(0xFFc0bcb6)
+val GrayishOrange100 = Color(0xFFd4c4b5)
+val DarkGrayishCyan = Color(0xFF9ea7aa)
+val DarkGrayishBlue = Color(0xFF37474f)
+val VeryDarkGrayishBlue = Color(0xFF263238)
+val DarkGrayishOrange = Color(0xFF887c6e)
+val VeryDarkGrayishOrange = Color(0xFF5b5043)
+val VeryDarkGray = Color(0xFF484848)
+val VeryDarkGrayishOrangeText = Color(0xFF443e3b)
+val MostlyBlackOrange = Color(0xFF31281c)
+val VeryMostlyBlack = Color(0xFF212121)
+val Black = Color(0xFF000000)
