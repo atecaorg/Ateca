@@ -3,6 +3,16 @@
 
     <!-- General -->
     <string name="error">Error</string>
+    <string name="close">Close</string>
+    <string name="select_all">Select all</string>
+    <string name="back">Back</string>
+    <string name="search">Search</string>
+
+    <!-- Stub -->
+    <string name="single_line_preview_text">Lorem ipsum</string>
+    <string name="multi_line_preview_text">Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.\n Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum.</string>
+    <string name="work_in_progress">This is currently work in progress</string>
+    <string name="grab_beverage">Grab a beverage and check back later!</string>
 
     <!-- Dialogs error messages -->
     <string name="get_all_notes_error_msg">Failed to get notes</string>
@@ -13,5 +23,12 @@
     <string name="delete_note_error_msg">Failed to delete note</string>
     <string name="get_note_links_error_msg">Failed to get note links</string>
     <string name="get_note_backlinks_error_msg">Failed to get note backlinks</string>
+
+    <!-- Stub Popup -->
+    <string name="stub_popup">Functionality not available 🙈</string>
+
+    <!-- SearchBar -->
+    <string name="search_note">Search note</string>
+
 
 </resources>
