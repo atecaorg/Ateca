@@ -10,7 +10,7 @@ object Compose {
     /**
      * @see <a href="https://developer.android.com/jetpack/androidx/releases/compose">Compose Doc</a>
      */
-    const val version = "1.1.1"
+    const val version = "1.2.0-beta02"
     const val foundation = "androidx.compose.foundation:foundation:$version"
     const val layout = "androidx.compose.foundation:foundation-layout:$version"
     const val ui = "androidx.compose.ui:ui:$version"
