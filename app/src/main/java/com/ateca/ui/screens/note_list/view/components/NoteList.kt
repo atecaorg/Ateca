@@ -35,6 +35,9 @@ fun NoteList(
     val lazyListState: LazyListState = rememberLazyListState()
 
     LazyColumn(state = lazyListState) {
+        item {
+            Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
+        }
         items(noteItems) { noteItem ->
             val isSelected: Boolean = selectedIds.contains(noteItem.id)
             NoteListItem(

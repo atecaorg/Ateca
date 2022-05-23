@@ -45,9 +45,8 @@ fun SearchBar(
     val hintColor = MaterialTheme.colors.onSurface.copy(alpha = 0.4f)
 
     Surface(
-        color = MaterialTheme.colors.surface,
+        color = MaterialTheme.colors.onSurface.copy(alpha = 0.025f),
         contentColor = MaterialTheme.colors.onSurface,
-        elevation = 2.dp,
         shape = SearchBarShape,
         modifier = modifier
             .fillMaxWidth()

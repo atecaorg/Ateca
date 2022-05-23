@@ -39,9 +39,9 @@ fun NoteListItem(
 ) {
     Box(modifier = modifier) {
         val backgroundColor: Color = if (isSelected) {
-            MaterialTheme.colors.surface//.copy(alpha = 0.4f)
+            MaterialTheme.colors.onSurface.copy(alpha = 0.05f)
         } else {
-            Color.Transparent
+            MaterialTheme.colors.onSurface.copy(alpha = 0.025f)
         }
         val shape = MaterialTheme.shapes.large
         val borderWidth = if (isSelected) 1.dp else 0.dp
