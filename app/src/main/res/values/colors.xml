@@ -19,4 +19,7 @@
     <color name="quartz">#FF9C8E80</color>
     <color name="pearl_white">#FFEBE1D9</color>
     <color name="spring_bud">#FFCEE4A9</color>
+
+    <color name="windowBackgroundDarkMode">#FF1F1F1F</color>
+    <color name="windowBackgroundLightMode">#FFFFFFFF</color>
 </resources>
