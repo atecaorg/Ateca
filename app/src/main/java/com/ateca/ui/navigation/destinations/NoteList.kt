@@ -4,8 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import com.ateca.domain.constants.NavigationConstants.Rotes.NOTE_ROUTE
-import com.ateca.domain.constants.NavigationConstants.Rotes.STUB_ROUTE
+import com.ateca.domain.constants.NavigationConstants.Rotes.NOTE_ROUTE_TEMPLATE
 import com.ateca.ui.navigation.Animations
 import com.ateca.ui.navigation.Screen
 import com.ateca.ui.screens.note_list.view.NoteListScreen
@@ -34,7 +33,9 @@ fun NavGraphBuilder.addNoteList(
             events = viewModel::onTriggerEvent,
             onNavigateToSettingsScreen = {},
             onNavigateToNoteDetailed = { noteId ->
-                navController.navigate("$NOTE_ROUTE/$noteId")
+                navController.navigate(
+                    NOTE_ROUTE_TEMPLATE.format(noteId)
+                )
             }
         )
     }
