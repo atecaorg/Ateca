@@ -14,8 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
+import com.ateca.ui.components.AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_FONT_SCALE
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR
+import com.ateca.ui.screens.note_list.view.constants.NoteListPreviewConstants
 import com.ateca.ui.theme.md2.AtecaTheme
 import com.ateca.ui.theme.spacing
 
@@ -58,19 +60,21 @@ fun NoteList(
 @Preview(
     name = "ListDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
 )
 @Preview(
     name = "SearchBarLargeFont",
     fontScale = PREVIEW_FONT_SCALE,
     backgroundColor = PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
-    showBackground = true,
+    showBackground = true
 )
 @Composable
 private fun NoteListPreview() {
     AtecaTheme {
         NoteList(
-            noteItems = com.ateca.ui.screens.note_list.view.constants.NoteListPreviewConstants.items,
-            selectedIds = com.ateca.ui.screens.note_list.view.constants.NoteListPreviewConstants.selectedIds,
+            noteItems = NoteListPreviewConstants.items,
+            selectedIds = NoteListPreviewConstants.selectedIds,
             {}
         ) {}
     }

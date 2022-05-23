@@ -12,8 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.ateca.domain.models.Note
-import com.ateca.ui.components.AppPreviewConstants
+import com.ateca.ui.components.AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_FONT_SCALE
+import com.ateca.ui.components.AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.dialog.StubPopup
 import com.ateca.ui.components.screen.DefaultScreenUI
 import com.ateca.ui.screens.note_list.view.components.NoteList
@@ -99,17 +100,19 @@ fun NoteListScreen(
 
 @Preview(
     name = "NoteListScreenLight",
-    backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
+    backgroundColor = PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true
 )
 @Preview(
     name = "NoteListScreenDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
 )
 @Preview(
     name = "NoteListScreenLargeFont",
     fontScale = PREVIEW_FONT_SCALE,
-    backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
+    backgroundColor = PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true,
 )
 @Composable

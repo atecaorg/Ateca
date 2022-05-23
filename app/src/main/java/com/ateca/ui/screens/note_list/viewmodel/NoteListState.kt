@@ -15,6 +15,5 @@ data class NoteListState(
     val selectedIds: List<NoteId> = emptyList(),
     val selectedNote: Note? = null, // selected only one => != null
     val errorQueue: Queue<UIComponent> = Queue(mutableListOf()),
-) {
-}
+)
 
