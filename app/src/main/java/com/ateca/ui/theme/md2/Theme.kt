@@ -9,6 +9,7 @@ import com.ateca.ui.theme.Spacing
 import com.ateca.ui.theme.mappers.toMD2
 import com.ateca.ui.theme.md3.AtecaDarkColorScheme
 import com.ateca.ui.theme.md3.AtecaLightColorScheme
+import com.ateca.ui.theme.md3.AtecaShapes
 
 private val LightGrayishTheme = AtecaLightColorScheme.toMD2()
 
@@ -28,7 +29,7 @@ fun AtecaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
         MaterialTheme(
             colors = colors,
             typography = Typography,
-            shapes = Shapes,
+            shapes = AtecaShapes.toMD2(),
             content = content
         )
     }
