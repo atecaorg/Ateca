@@ -2,6 +2,7 @@ package com.ateca.ui.components.screen
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -28,6 +29,7 @@ fun StubScreen(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
+            .background(MaterialTheme.colors.background)
             .fillMaxSize()
             .wrapContentSize()
             .padding(MaterialTheme.spacing.large)
