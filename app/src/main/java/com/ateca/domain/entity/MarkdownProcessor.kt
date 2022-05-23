@@ -29,13 +29,13 @@ class MarkdownProcessor : IMarkdownProcessor {
         /**
          * @see <a href="https://regexr.com/"> Regexp check</a>
          */
-        // #sample, [Tab]#sample, [\n]#sample, [space]#sample
+        // Matches: #sample, [Tab]#sample, [\n]#sample, [space]#sample
         // To extract pure tag we have to remove all [` `,`\n`,`\t`,`#`] symbols
         const val TAG_REGEX =
             """(^| |\n|\t)(#{1}([^~!@#'$'{}%^&*()=+`'\-\|\\\/\[\]\{\}\t\n\r ])+)"""
         const val TAG_TRASH_SYMBOLS_REGEX = """[ \n\t#]"""
 
-        // [[sample]], [[sample|spl]]
+        // Matches: [[sample]], [[sample|spl]]
         // To extract pure link name we have to split by '|',
         // select last element and remove all '[[',']]' substrings
         // TODO: Link can contain single '[' or ']'. Example '[[t]e[s]t]]'.
