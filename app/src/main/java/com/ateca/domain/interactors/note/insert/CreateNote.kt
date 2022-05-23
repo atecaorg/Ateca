@@ -11,8 +11,11 @@ import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.interactors.NoteInteractor
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.withContext
 import java.util.*
 
 /**
@@ -27,12 +30,10 @@ class CreateNote(
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
 
             val noteId = id ?: UUID.randomUUID().toString()
-            val noteTitle = title ?: try {
-                getLessUniqueTitle()
-            } catch (e: Exception) {
-                e.printStackTrace()
-                throw Exception("Failed to find unique title")
-            }
+            val noteTitle = title
+                ?: withContext(Dispatchers.Default) {
+                    getLessUniqueTitle()
+                }
             val newNote = Note(
                 id = noteId,
                 title = noteTitle
@@ -70,17 +71,23 @@ class CreateNote(
      * TODO: Try to use kotlin sequence
      */
     private suspend fun getLessUniqueTitle(): String {
-        val baseTitles = noteSource.selectBaseTitles()
-        val secondParts = baseTitles.map { it.split(" ").last() }
-        val onlyDigits = secondParts.filter { it.isDigitsOnly() }
-        val onlyNumbers = listOf(-1) + onlyDigits.map { it.toInt() }
+        try {
+            val baseTitles = noteSource.selectBaseTitles()
+            val secondParts = baseTitles.map { it.split(" ").last() }
+            val onlyDigits = secondParts.filter { it.isDigitsOnly() }
+            val onlyNumbers = listOf(-1) + onlyDigits.map { it.toInt() }
 
-        if (onlyNumbers.isEmpty()) return "$BASE_TITLE 0"
-        for (i in 1 until onlyNumbers.size) {
-            val expectedNum = onlyNumbers[i - 1] + 1
-            if (onlyNumbers[i] != expectedNum)
-                return "$BASE_TITLE $expectedNum"
+            if (onlyNumbers.isEmpty()) return "$BASE_TITLE 0"
+            for (i in 1 until onlyNumbers.size) {
+                val expectedNum = onlyNumbers[i - 1] + 1
+                if (onlyNumbers[i] != expectedNum)
+                    return "$BASE_TITLE $expectedNum"
+            }
+            return "$BASE_TITLE ${onlyNumbers.last() + 1}"
+        } catch (e: Exception) {
+            if (e is CancellationException) throw e
+            e.printStackTrace()
+            throw Exception("Failed to find unique title")
         }
-        return "$BASE_TITLE ${onlyNumbers.last() + 1}"
     }
 }
