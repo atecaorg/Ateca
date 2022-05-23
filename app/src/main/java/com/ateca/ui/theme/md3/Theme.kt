@@ -2,10 +2,11 @@ package com.ateca.ui.theme.md3
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Colors
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import com.ateca.ui.theme.LocalSpacing
 import com.ateca.ui.theme.Spacing
@@ -97,3 +98,19 @@ fun AtecaTheme(
         )
     }
 }
+
+fun ColorScheme.toMD2 () = Colors(
+primary = this.primary,
+primaryVariant = this.primaryContainer,
+secondary = this.secondary,
+secondaryVariant= this.secondaryContainer,
+background= this.background,
+surface = this.surface,
+error = this.error,
+onPrimary = this.onPrimary,
+onSecondary= this.onSecondary,
+onBackground = this.onBackground,
+onSurface = this.onSurface,
+onError = this.onError,
+isLight = this.background.luminance() > 0.5
+)
