@@ -3,5 +3,6 @@
 
     <style name="Theme.Ateca" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/transport_black</item>
+        <item name="android:windowBackground">@color/windowBackgroundDarkMode</item>
     </style>
 </resources>

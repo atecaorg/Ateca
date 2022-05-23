@@ -4,5 +4,6 @@
     <style name="Theme.Ateca" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/windowBackgroundLightMode</item>
     </style>
 </resources>
