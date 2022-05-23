@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.ateca.R
+import com.ateca.ui.components.AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_FONT_SCALE
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.icon.ThemedIcon
@@ -87,6 +88,8 @@ fun EditModeTopBar(
 @Preview(
     name = "EditModeTopBarDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
 )
 @Preview(
     name = "SearchBarLargeFont",

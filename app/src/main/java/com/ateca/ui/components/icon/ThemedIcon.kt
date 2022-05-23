@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.ateca.ui.components.AppPreviewConstants
+import com.ateca.ui.components.AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR
 import com.ateca.ui.theme.md2.AtecaTheme
 
@@ -46,6 +47,8 @@ fun ThemedIcon(
 @Preview(
     name = "ThemedIconDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
 )
 @Preview(
     name = "StubScreenLargeFont",

@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.ateca.ui.components.AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR
 import com.ateca.ui.theme.md2.AtecaTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -82,6 +83,8 @@ fun ScrollAwareTopAppBar(
 @Preview(
     name = "ScrollAwareTopAppBarDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
 )
 @Composable
 private fun ScrollAwareTopAppBarPreview() {

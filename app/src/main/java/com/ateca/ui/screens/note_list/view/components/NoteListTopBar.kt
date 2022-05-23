@@ -12,6 +12,7 @@ import com.ateca.BuildConfig
 import com.ateca.R
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
+import com.ateca.ui.components.AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_FONT_SCALE
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.icon.ThemedIcon
@@ -72,6 +73,8 @@ fun NoteListTopBar(
 @Preview(
     name = "NoteListTopBarDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
 )
 @Preview(
     name = "SearchBarLargeFont",
@@ -101,6 +104,8 @@ private fun NoteListTopBarPreview() {
 @Preview(
     name = "NoteListTopBarEditModeDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
 )
 @Preview(
     name = "SearchBarLargeFont",

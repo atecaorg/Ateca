@@ -17,6 +17,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ateca.R
+import com.ateca.ui.components.AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_FONT_SCALE
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.icon.ThemedIcon
@@ -44,7 +45,7 @@ fun SearchBar(
     val hintColor = MaterialTheme.colors.onSurface.copy(alpha = 0.4f)
 
     Surface(
-        color = MaterialTheme.colors.surface,
+        color = MaterialTheme.colors.onSurface.copy(alpha = 0.025f),
         contentColor = MaterialTheme.colors.onSurface,
         shape = SearchBarShape,
         modifier = modifier
@@ -130,6 +131,8 @@ private fun SearchHint() {
 @Preview(
     name = "SearchBarDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
 )
 @Preview(
     name = "SearchBarLargeFont",
@@ -159,6 +162,8 @@ private fun SearchBarPreview() {
 @Preview(
     name = "SearchBarFocusedDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
 )
 @Preview(
     name = "SearchBarFocusedLargeFont",

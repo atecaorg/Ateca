@@ -17,8 +17,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ateca.domain.models.Note
+import com.ateca.ui.components.AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_FONT_SCALE
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR
+import com.ateca.ui.screens.note_list.view.constants.NoteListItemPreviewConstants
 import com.ateca.ui.theme.md2.AtecaTheme
 import com.ateca.ui.theme.spacing
 import com.ateca.ui.util.getFormatDate
@@ -31,15 +33,15 @@ import com.ateca.ui.util.getFormatDate
 fun NoteListItem(
     noteItem: Note,
     modifier: Modifier = Modifier,
-    isSelected: Boolean,
+    isSelected: Boolean = false,
     onNoteClicked: (Note) -> Unit,
     onNoteLongPress: (Note) -> Unit,
 ) {
     Box(modifier = modifier) {
         val backgroundColor: Color = if (isSelected) {
-            MaterialTheme.colors.surface//.copy(alpha = 0.4f)
+            MaterialTheme.colors.onSurface.copy(alpha = 0.05f)
         } else {
-            Color.Transparent
+            MaterialTheme.colors.onSurface.copy(alpha = 0.025f)
         }
         val shape = MaterialTheme.shapes.large
         val borderWidth = if (isSelected) 1.dp else 0.dp
@@ -53,7 +55,7 @@ fun NoteListItem(
                 )
                 .border(
                     width = borderWidth,
-                    color = MaterialTheme.colors.primary,
+                    color = MaterialTheme.colors.surface,
                     shape = shape
                 )
                 .clip(shape)
@@ -110,7 +112,7 @@ fun NoteListItem(
 @Preview(
     name = "ItemDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    backgroundColor = 0xFF000000,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
     showBackground = true
 )
 @Composable
@@ -137,7 +139,7 @@ private fun NoteListItemPreview() {
 @Preview(
     name = "SelectedItemDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
-    backgroundColor = 0xFF000000,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
     showBackground = true
 )
 @Preview(
@@ -151,7 +153,7 @@ private fun SelectedNoteListItemPreview() {
     AtecaTheme {
         NoteListItem(
             modifier = Modifier.padding(horizontal = MaterialTheme.spacing.small),
-            noteItem = com.ateca.ui.screens.note_list.view.constants.NoteListItemPreviewConstants.item,
+            noteItem = NoteListItemPreviewConstants.item,
             isSelected = true,
             onNoteClicked = {},
             onNoteLongPress = {}

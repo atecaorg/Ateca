@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.Queue
 import com.ateca.domain.core.UIComponent
+import com.ateca.ui.components.AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR
 import com.ateca.ui.components.dialog.GenericDialog
 import com.ateca.ui.components.progress.CircularIndeterminateProgressBar
@@ -63,6 +64,8 @@ fun DefaultScreenUI(
 @Preview(
     name = "DefaultScreenUIDark",
     uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
 )
 @Composable
 private fun DefaultScreenUIPreview() {
