@@ -37,7 +37,6 @@ private val AtecaLightColorScheme = lightColorScheme(
     inverseOnSurface = md_theme_light_inverseOnSurface,
     inverseSurface = md_theme_light_inverseSurface,
     inversePrimary = md_theme_light_inversePrimary,
-    shadow = md_theme_light_shadow,
 )
 
 private val AtecaDarkColorScheme = darkColorScheme(
@@ -67,7 +66,6 @@ private val AtecaDarkColorScheme = darkColorScheme(
     inverseOnSurface = md_theme_dark_inverseOnSurface,
     inverseSurface = md_theme_dark_inverseSurface,
     inversePrimary = md_theme_dark_inversePrimary,
-    shadow = md_theme_dark_shadow,
 )
 
 @Composable
