@@ -1,40 +1,26 @@
 package com.ateca.ui.theme.md2
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import com.ateca.ui.theme.LocalSpacing
 import com.ateca.ui.theme.Spacing
+import com.ateca.ui.theme.mappers.toMD2
+import com.ateca.ui.theme.md3.AtecaDarkColorScheme
+import com.ateca.ui.theme.md3.AtecaLightColorScheme
+import com.ateca.ui.theme.md3.AtecaShapes
 
-private val LightColorPalette = lightColors(
-    background = White,
-    primary = Brown14,
-    primaryVariant = BlackOlive,
-    secondary = White,
-    secondaryVariant = OliveGrey,
-    onPrimary = BlackOlive
-)
+private val LightGrayishTheme = AtecaLightColorScheme.toMD2()
 
-@SuppressLint("ConflictingOnColor")
-private val DarkColorPalette = darkColors(
-    background = TransportBlack,
-    primary = RedOrange14,
-    primaryVariant = PearlWhite,
-    secondary = BlackOliveDark,
-    secondaryVariant = GreySilk,
-    onPrimary = PearlWhite
-)
+private val DarkGrayishTheme = AtecaDarkColorScheme.toMD2()
 
 @Composable
 fun AtecaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        DarkGrayishTheme
     } else {
-        LightColorPalette
+        LightGrayishTheme
     }
 
     CompositionLocalProvider(
@@ -43,7 +29,7 @@ fun AtecaTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable 
         MaterialTheme(
             colors = colors,
             typography = Typography,
-            shapes = Shapes,
+            shapes = AtecaShapes.toMD2(),
             content = content
         )
     }

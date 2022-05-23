@@ -15,7 +15,6 @@ private val RobotoFontFamily = FontFamily(
     Font(R.font.roboto_bold, FontWeight.Bold)
 )
 
-// Set of Material typography styles to start with
 val Typography = Typography(
     defaultFontFamily = RobotoFontFamily,
     h1 = TextStyle(

@@ -6,7 +6,7 @@
 object Google {
 
     object Material {
-        private const val version = "1.6.0-alpha03"
+        private const val version = "1.6.0"
         const val material3 = "com.google.android.material:material:$version"
     }
 
