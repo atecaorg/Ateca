@@ -6,8 +6,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
-import com.ateca.ui.theme.LocalSpacing
-import com.ateca.ui.theme.Spacing
+import com.ateca.ui.theme.*
 
 val AtecaLightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
