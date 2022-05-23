@@ -2,16 +2,14 @@ package com.ateca.ui.theme.md3
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.Colors
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.platform.LocalContext
 import com.ateca.ui.theme.LocalSpacing
 import com.ateca.ui.theme.Spacing
 
-private val AtecaLightColorScheme = lightColorScheme(
+val AtecaLightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
     onPrimary = md_theme_light_onPrimary,
     primaryContainer = md_theme_light_primaryContainer,
@@ -40,7 +38,7 @@ private val AtecaLightColorScheme = lightColorScheme(
     inversePrimary = md_theme_light_inversePrimary,
 )
 
-private val AtecaDarkColorScheme = darkColorScheme(
+val AtecaDarkColorScheme = darkColorScheme(
     primary = md_theme_dark_primary,
     onPrimary = md_theme_dark_onPrimary,
     primaryContainer = md_theme_dark_primaryContainer,
@@ -98,19 +96,3 @@ fun AtecaTheme(
         )
     }
 }
-
-fun ColorScheme.toMD2 () = Colors(
-primary = this.primary,
-primaryVariant = this.primaryContainer,
-secondary = this.secondary,
-secondaryVariant= this.secondaryContainer,
-background= this.background,
-surface = this.surface,
-error = this.error,
-onPrimary = this.onPrimary,
-onSecondary= this.onSecondary,
-onBackground = this.onBackground,
-onSurface = this.onSurface,
-onError = this.onError,
-isLight = this.background.luminance() > 0.5
-)
