@@ -83,7 +83,10 @@ class NoteListViewModel @Inject constructor(
         state.value = newState
     }
 
+    var isAddProcessing = false
     private fun onAddTestNote() {
+        if (isAddProcessing) return
+        isAddProcessing = true
         noteInteractors.createNote.execute().onEach { dataState ->
             when (dataState) {
                 is DataState.Response -> {
@@ -104,6 +107,7 @@ class NoteListViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+            .invokeOnCompletion { isAddProcessing = false }
     }
 
     private fun onSelectAll() {

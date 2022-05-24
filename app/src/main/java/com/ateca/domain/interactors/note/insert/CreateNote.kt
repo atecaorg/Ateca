@@ -25,7 +25,7 @@ import java.util.*
 class CreateNote(
     private val noteSource: INoteDataSource,
 ) : NoteInteractor.ICreateNote {
-    // TODO Bug after note remove
+
     override fun execute(id: NoteId?, title: String?): Flow<DataState<Note>> = flow {
         try {
             debugBehavior()
@@ -76,7 +76,7 @@ class CreateNote(
             val baseTitles = noteSource.selectBaseTitles()
             val secondParts = baseTitles.map { it.split(" ").last() }
             val onlyDigits = secondParts.filter { it.isDigitsOnly() }
-            val onlyNumbers = listOf(-1) + onlyDigits.map { it.toInt() }
+            val onlyNumbers = listOf(-1) + onlyDigits.map { it.toInt() }.sorted().distinct()
 
             if (onlyNumbers.isEmpty()) return "$BASE_TITLE 0"
             for (i in 1 until onlyNumbers.size) {
