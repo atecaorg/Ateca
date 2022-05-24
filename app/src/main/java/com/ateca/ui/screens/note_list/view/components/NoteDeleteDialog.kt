@@ -6,6 +6,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.ateca.R
@@ -15,10 +16,10 @@ import com.ateca.R
  */
 @Composable
 fun NoteDeleteDialog(
-    isShowing: Boolean,
-    onDismiss: () -> Unit,
+    state: MutableState<Boolean>,
     onConfirmClicked: () -> Unit
 ) {
+    val onDismiss = { state.value = false }
     AlertDialog(
         modifier = Modifier.background(
             color = MaterialTheme.colors.background,

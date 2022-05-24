@@ -9,7 +9,9 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -66,14 +68,13 @@ fun NoteListScreen(
     ) {
         val lazyListState: LazyListState = rememberLazyListState()
         val isInSelectMode = state.selectedIds.isNotEmpty()
-        var showStubPopup by remember { mutableStateOf(false) }
-        if (showStubPopup) StubPopup {
-            showStubPopup = false
-        }
-        var showDeleteConfirmDialog by remember { mutableStateOf(false) }
-        if (showDeleteConfirmDialog) NoteDeleteDialog(
-            isShowing = showDeleteConfirmDialog,
-            onDismiss = { showDeleteConfirmDialog = false },
+
+        val showStubPopup = rememberSaveable { mutableStateOf(false) }
+        if (showStubPopup.value) StubPopup(state = showStubPopup)
+
+        val showDeleteConfirmDialog = rememberSaveable { mutableStateOf(false) }
+        if (showDeleteConfirmDialog.value) NoteDeleteDialog(
+            state = showDeleteConfirmDialog,
             onConfirmClicked = { events(NoteListEvents.DeleteSelected) }
         )
 
@@ -84,9 +85,8 @@ fun NoteListScreen(
                     selectedIds = state.selectedIds,
                     selectedNote = state.selectedNote,
                     isScrollInInitialState = { lazyListState.isScrollInInitialState() },
-                    onDeleteSelectedClicked = { showDeleteConfirmDialog = true },
                     onSettingIconClicked = {
-                        showStubPopup = true
+                        showStubPopup.value = true
                         /**onNavigateToSettingsScreen()**/
                     },
                     onAddTestNoteClicked = { events(NoteListEvents.OnAddTestNoteClicked) },
@@ -133,7 +133,7 @@ fun NoteListScreen(
             bottomBar = {
                 if (isInSelectMode) {
                     NoteListBottomBar(
-                        onDeleteClicked = { showDeleteConfirmDialog = true }
+                        onDeleteClicked = { showDeleteConfirmDialog.value = true }
                     )
                 }
             }

@@ -82,7 +82,7 @@ android {
         jvmTarget = "1.8"
 
         @Suppress("SuspiciousCollectionReassignment")
-        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
     }
 
     packagingOptions {
