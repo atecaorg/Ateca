@@ -49,4 +49,12 @@ class NoteDataSource @Inject constructor(
     override suspend fun deleteNoteById(id: NoteId) {
         noteDao.deleteByNoteId(id)
     }
+
+    override suspend fun deleteNotesByIds(ids: List<NoteId>) {
+        noteDatabase.withTransaction {
+            ids.forEach {
+                noteDao.deleteByNoteId(it)
+            }
+        }
+    }
 }

@@ -15,6 +15,10 @@ sealed interface NoteInteractor {
         fun execute(id: NoteId): Flow<DataState<Nothing>>
     }
 
+    interface IDeleteNotes : NoteInteractor {
+        fun execute(ids: List<NoteId>): Flow<DataState<Nothing>>
+    }
+
     interface ICreateNote : NoteInteractor {
         fun execute(id: NoteId? = null, title: String? = null): Flow<DataState<Note>>
     }

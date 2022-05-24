@@ -20,7 +20,7 @@ object NoteListPreviewConstants {
     }
 
     val selectedIds by lazy {
-        listOf("2", "4", "5")
+        listOf("1", "3", "4")
     }
 
     val state by lazy {

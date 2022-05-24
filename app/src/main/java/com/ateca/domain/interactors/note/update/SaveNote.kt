@@ -8,6 +8,7 @@ import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
 import com.ateca.domain.interactors.NoteInteractor
+import com.ateca.domain.interactors.debugBehavior
 import com.ateca.domain.models.Link
 import com.ateca.domain.models.Note
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,7 @@ class SaveNote(
 
     override fun execute(note: Note): Flow<DataState<Nothing>> = flow {
         try {
+            debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
             val tags = markdownParser.getTagSubstrings(note.text)
             val links = markdownParser.getCrossLinkSubstrings(note.text)
@@ -43,8 +45,7 @@ class SaveNote(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(
-                @Suppress("RemoveExplicitTypeArguments")  // Error without Response type
-                DataState.Response<Nothing>(
+                DataState.Response(
                     uiComponent = UIComponent.Dialog(
                         title = UIText.StringResource(R.string.error),
                         description = e.message

@@ -18,4 +18,6 @@ interface INoteDataSource {
     suspend fun saveNote(note: Note)
 
     suspend fun deleteNoteById(id: NoteId)
+
+    suspend fun deleteNotesByIds(ids: List<NoteId>)
 }

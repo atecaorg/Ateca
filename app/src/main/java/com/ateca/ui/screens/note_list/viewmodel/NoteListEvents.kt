@@ -13,6 +13,10 @@ sealed class NoteListEvents {
 
     object DeleteSelected : NoteListEvents()
 
+    object SelectAll : NoteListEvents()
+
+    object UnselectAll : NoteListEvents()
+
     data class OnNoteLongPress(val note: Note) : NoteListEvents()
 
     object OnAddTestNoteClicked : NoteListEvents()

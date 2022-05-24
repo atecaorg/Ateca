@@ -10,9 +10,11 @@ import com.ateca.domain.core.DataState
 import com.ateca.domain.core.Queue
 import com.ateca.domain.core.UIComponent
 import com.ateca.domain.interactors.NoteInteractors
+import com.ateca.domain.models.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -33,17 +35,13 @@ class NoteListViewModel @Inject constructor(
 
     fun onTriggerEvent(event: NoteListEvents) {
         when (event) {
-            is NoteListEvents.GetAllNotes -> {
-                getNoteItems()
-            }
-            is NoteListEvents.OnRemoveHeadFromQueue -> {
-                removeHeadMessage()
-            }
-            is NoteListEvents.OnAddTestNoteClicked -> {
-                onAddTestWishClicked()
-            }
-            else -> {
-            }
+            is NoteListEvents.GetAllNotes -> getNoteItems()
+            is NoteListEvents.OnRemoveHeadFromQueue -> removeHeadMessage()
+            is NoteListEvents.OnAddTestNoteClicked -> onAddTestNote()
+            is NoteListEvents.OnNoteLongPress -> onNoteLongPress(event.note)
+            is NoteListEvents.SelectAll -> onSelectAll()
+            is NoteListEvents.UnselectAll -> onUnselectAll()
+            is NoteListEvents.DeleteSelected -> onDeleteSelected()
         }
     }
 
@@ -52,9 +50,7 @@ class NoteListViewModel @Inject constructor(
             when (dataState) {
                 is DataState.Response -> {
                     when (val uiComponent = dataState.uiComponent) {
-                        is UIComponent.Dialog -> {
-                            appendToMessageQueue(uiComponent)
-                        }
+                        is UIComponent.Dialog -> appendToMessageQueue(uiComponent)
                         else -> {}
                     }
                 }
@@ -68,14 +64,31 @@ class NoteListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun onAddTestWishClicked() {
+    private fun onNoteLongPress(note: Note) {
+        val oldState = state.value
+        val noteId = note.id
+        val newState = if (oldState.selectedIds.isEmpty()) {
+            val selectedIds = listOf(noteId)
+            oldState.copy(selectedIds = selectedIds)
+        } else {
+            val oldSelectedIds = oldState.selectedIds.toMutableList()
+            val alreadySelected = oldSelectedIds.contains(noteId)
+            val selectedIds = if (alreadySelected) {
+                oldSelectedIds - noteId
+            } else {
+                oldSelectedIds + noteId
+            }
+            oldState.copy(selectedIds = selectedIds)
+        }
+        state.value = newState
+    }
+
+    private fun onAddTestNote() {
         noteInteractors.createNote.execute().onEach { dataState ->
             when (dataState) {
                 is DataState.Response -> {
                     when (val uiComponent = dataState.uiComponent) {
-                        is UIComponent.Dialog -> {
-                            appendToMessageQueue(uiComponent)
-                        }
+                        is UIComponent.Dialog -> appendToMessageQueue(uiComponent)
                         else -> {}
                     }
                 }
@@ -91,6 +104,37 @@ class NoteListViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun onSelectAll() {
+        val selectedIds = state.value.noteItems.map { it.id }
+        state.value = state.value.copy(selectedIds = selectedIds)
+    }
+
+    private fun onUnselectAll() {
+        state.value = state.value.copy(selectedIds = emptyList())
+    }
+
+    private fun onDeleteSelected() {
+        viewModelScope.launch {
+            val selectedIds = state.value.selectedIds
+            state.value = state.value.copy(selectedIds = emptyList())
+            noteInteractors.deleteNotes.execute(selectedIds).onEach { dataState ->
+                when (dataState) {
+                    is DataState.Response -> {
+                        when (val uiComponent = dataState.uiComponent) {
+                            is UIComponent.Dialog -> appendToMessageQueue(uiComponent)
+                            else -> {}
+                        }
+                    }
+                    is DataState.Data -> {
+                        onTriggerEvent(NoteListEvents.GetAllNotes)
+                    }
+                    is DataState.Loading -> state.value =
+                        state.value.copy(progressBarState = dataState.progressBarState)
+                }
+            }.launchIn(viewModelScope)
+        }
     }
 
     private fun appendToMessageQueue(uiComponent: UIComponent) {
