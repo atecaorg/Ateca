@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -34,23 +35,34 @@ fun NoteListItem(
     noteItem: Note,
     modifier: Modifier = Modifier,
     isSelected: Boolean = false,
+    isInSelectMode: Boolean = false,
     onNoteClicked: (Note) -> Unit,
     onNoteLongPress: (Note) -> Unit,
 ) {
     Box(modifier = modifier) {
-        val backgroundColor: Color = if (isSelected) {
-            MaterialTheme.colors.onSurface.copy(alpha = 0.05f)
-        } else {
-            MaterialTheme.colors.onSurface.copy(alpha = 0.025f)
+        val itemBackgroundColorWhenSelected = MaterialTheme.colors.onSurface.copy(alpha = 0.075f)
+        val itemBackgroundColor: Color = when (isSelected) {
+            true -> itemBackgroundColorWhenSelected
+            false -> MaterialTheme.colors.onSurface.copy(alpha = 0.025f)
         }
         val shape = MaterialTheme.shapes.large
         val borderWidth = if (isSelected) 1.dp else 0.dp
 
+        if (isSelected || isInSelectMode) {
+            NoteListItemChecker(
+                isSelected = isSelected,
+                isInSelectMode = isInSelectMode,
+                colorInSelectMode = itemBackgroundColorWhenSelected,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(horizontal = MaterialTheme.spacing.medium)
+            )
+        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(
-                    color = backgroundColor,
+                    color = itemBackgroundColor,
                     shape = shape
                 )
                 .border(
@@ -119,12 +131,33 @@ fun NoteListItem(
 private fun NoteListItemPreview() {
     AtecaTheme {
         NoteListItem(
-            noteItem = Note(
-                title = "Lorem ipsum",
-                text = "lorem ipsum ".repeat(10).replaceFirst("l", "L")
-            ),
+            noteItem = NoteListItemPreviewConstants.item,
             modifier = Modifier.padding(horizontal = MaterialTheme.spacing.small),
             isSelected = false,
+            onNoteClicked = {},
+            onNoteLongPress = {}
+        )
+    }
+}
+
+@Preview(
+    name = "SelectModeItemLight",
+    backgroundColor = PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
+    showBackground = true
+)
+@Preview(
+    name = "SelectModeItemDark",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
+)
+@Composable
+private fun SelectModeNoteListItemPreview() {
+    AtecaTheme {
+        NoteListItem(
+            noteItem = NoteListItemPreviewConstants.item,
+            modifier = Modifier.padding(horizontal = MaterialTheme.spacing.small),
+            isInSelectMode = true,
             onNoteClicked = {},
             onNoteLongPress = {}
         )
