@@ -104,6 +104,7 @@ dependencies {
     // Kotlin
     implementation(KotlinX.Coroutines.core)
     implementation(KotlinX.Coroutines.android)
+    implementation(KotlinX.Json.json)
 
     // Lifecycle
     implementation(AndroidX.Lifecycle.livedata)
@@ -128,8 +129,10 @@ dependencies {
     implementation(Compose.activity)
     debugImplementation(Compose.toolingDebug)
     implementation(Compose.toolingPreview)
+
     // Compose/hiltNavigation
     implementation(Compose.hiltNavigationCompose)
+
     // Accompanist
     implementation(Accompanist.animations)
     implementation(Accompanist.permissions)
@@ -165,17 +168,21 @@ dependencies {
 
     // Test
     androidTestImplementation(Junit.junit4)
+
     // Test/androidx
     androidTestImplementation(AndroidX.Test.core)
     androidTestImplementation(AndroidX.Test.espressoCore)
     androidTestImplementation(AndroidX.Test.rules)
     androidTestImplementation(AndroidX.Test.Ext.junit)
+
     // Test/coroutines
     testImplementation(KotlinX.Coroutines.test)
+
     // Test/compose
     androidTestImplementation(Compose.Test.test)
     androidTestImplementation(Compose.Test.uiTestJunit4)
     debugImplementation(Compose.Test.uiTestManifest)
+
     // Test/hilt
     androidTestImplementation(Hilt.Test.hiltAndroidTesting)
     kaptAndroidTest(Hilt.compiler)

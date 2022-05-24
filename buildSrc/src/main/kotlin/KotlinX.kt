@@ -15,4 +15,11 @@ object KotlinX {
         const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$version"
     }
 
+    object Json {
+        private const val version = "1.3.2"
+
+        // KotlinX Serialization
+        const val json = "org.jetbrains.kotlinx:kotlinx-serialization-json:$version"
+    }
+
 }

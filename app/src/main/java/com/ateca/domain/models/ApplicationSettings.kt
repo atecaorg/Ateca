@@ -1,14 +1,9 @@
 package com.ateca.domain.models
 
+import com.ateca.domain.core.Theme
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Settings(
+data class ApplicationSettings(
     val theme: Theme = Theme.SYSTEM
 )
-
-enum class Theme {
-    LIGHT,
-    DARK,
-    SYSTEM
-}
