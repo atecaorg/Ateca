@@ -7,6 +7,7 @@ import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.interactors.NoteInteractor
+import com.ateca.domain.interactors.debugBehavior
 import com.ateca.domain.models.Note
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,14 +21,14 @@ class GetAllNotes(
 
     override fun execute(): Flow<DataState<List<Note>>> = flow {
         try {
+            debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
             val notes: List<Note> = noteSource.selectAll()
             emit(DataState.Data(notes))
         } catch (e: Exception) {
             e.printStackTrace()
             emit(
-                @Suppress("RemoveExplicitTypeArguments")  // Error without Response type
-                DataState.Response<List<Note>>(
+                DataState.Response(
                     uiComponent = UIComponent.Dialog(
                         title = UIText.StringResource(R.string.error),
                         description = e.message

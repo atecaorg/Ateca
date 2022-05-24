@@ -7,6 +7,7 @@ import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.interactors.NoteInteractor
+import com.ateca.domain.interactors.debugBehavior
 import com.ateca.domain.models.NoteId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,13 +21,13 @@ class DeleteNote(
 
     override fun execute(id: NoteId): Flow<DataState<Nothing>> = flow {
         try {
+            debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
             noteSource.deleteNoteById(id)
         } catch (e: Exception) {
             e.printStackTrace()
             emit(
-                @Suppress("RemoveExplicitTypeArguments")  // Error without Response type
-                DataState.Response<Nothing>(
+                DataState.Response(
                     uiComponent = UIComponent.Dialog(
                         title = UIText.StringResource(R.string.error),
                         description = e.message

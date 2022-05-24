@@ -9,6 +9,7 @@ import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.interactors.NoteInteractor
+import com.ateca.domain.interactors.debugBehavior
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
 import kotlinx.coroutines.CancellationException
@@ -24,9 +25,10 @@ import java.util.*
 class CreateNote(
     private val noteSource: INoteDataSource,
 ) : NoteInteractor.ICreateNote {
-
+    // TODO Bug after note remove
     override fun execute(id: NoteId?, title: String?): Flow<DataState<Note>> = flow {
         try {
+            debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
 
             val noteId = id ?: UUID.randomUUID().toString()
@@ -44,8 +46,7 @@ class CreateNote(
         } catch (e: Exception) {
             e.printStackTrace()
             emit(
-                @Suppress("RemoveExplicitTypeArguments")  // Error without Response type
-                DataState.Response<Note>(
+                DataState.Response(
                     uiComponent = UIComponent.Dialog(
                         title = UIText.StringResource(R.string.error),
                         description = e.message
