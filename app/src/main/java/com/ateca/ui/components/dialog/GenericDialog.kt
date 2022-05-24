@@ -1,6 +1,8 @@
 package com.ateca.ui.components.dialog
 
+import androidx.compose.foundation.background
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,7 +18,10 @@ fun GenericDialog(
     onRemoveHeadFromQueue: () -> Unit,
 ) {
     AlertDialog(
-        modifier = modifier,
+        modifier = modifier.background(
+            color = MaterialTheme.colors.background,
+            shape = MaterialTheme.shapes.medium
+        ),
         onDismissRequest = {
             onRemoveHeadFromQueue()
         },
