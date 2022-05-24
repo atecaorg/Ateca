@@ -35,7 +35,6 @@ fun NoteListTopBar(
     onAddTestNoteClicked: () -> Unit,
     onCloseSelectModeClicked: () -> Unit,
     onSelectAllClicked: () -> Unit,
-    onDeleteSelectedClicked: () -> Unit,
 ) {
     if (selectedIds.isEmpty()) {
         val title = selectedNote?.title ?: stringResource(R.string.app_name)
@@ -99,7 +98,6 @@ private fun NoteListTopBarPreview() {
             {},
             {},
             {},
-            {}
         )
     }
 }
@@ -132,7 +130,6 @@ private fun NoteListTopBarEditModePreview() {
             {},
             {},
             {},
-            {}
         )
     }
 }
