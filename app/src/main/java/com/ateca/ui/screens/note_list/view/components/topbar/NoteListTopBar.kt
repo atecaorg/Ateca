@@ -1,11 +1,14 @@
-package com.ateca.ui.screens.note_list.view.components
+package com.ateca.ui.screens.note_list.view.components.topbar
 
 import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.ateca.BuildConfig
@@ -27,10 +30,12 @@ import com.ateca.ui.theme.md2.AtecaTheme
 fun NoteListTopBar(
     selectedIds: List<NoteId>,
     selectedNote: Note?,
-    onSettingIconClicked: () -> Unit,
-    onDeleteSelectedClicked: () -> Unit,
-    onAddTestNoteClicked: () -> Unit,
     isScrollInInitialState: (() -> Boolean)?,
+    onSettingIconClicked: () -> Unit,
+    onAddTestNoteClicked: () -> Unit,
+    onCloseSelectModeClicked: () -> Unit,
+    onSelectAllClicked: () -> Unit,
+    onDeleteSelectedClicked: () -> Unit,
 ) {
     if (selectedIds.isEmpty()) {
         val title = selectedNote?.title ?: stringResource(R.string.app_name)
@@ -39,7 +44,9 @@ fun NoteListTopBar(
             isScrollInInitialState = isScrollInInitialState,
             actions = {
                 if (BuildConfig.DEBUG) {
-                    IconButton(onClick = { onAddTestNoteClicked() }) {
+                    IconButton(
+                        modifier = Modifier.background(color = Color.Magenta),
+                        onClick = { onAddTestNoteClicked() }) {
                         ThemedIcon(
                             Icons.Filled.Add,
                             contentDescription = "Add test note"
@@ -57,9 +64,8 @@ fun NoteListTopBar(
     } else {
         EditModeTopBar(
             selectedCount = selectedIds.size,
-            onCloseEditModeClicked = {},//{ onCloseEditModeClicked() },
-            onDeleteSelectedClicked = onDeleteSelectedClicked,
-            onSelectAllClicked = {},//{ onSelectAllClicked() },
+            onCloseSelectModeClicked = onCloseSelectModeClicked,
+            onSelectAllClicked = onSelectAllClicked,
             isScrollInInitialState = isScrollInInitialState
         )
     }
@@ -88,10 +94,12 @@ private fun NoteListTopBarPreview() {
         NoteListTopBar(
             emptyList(),
             null,
+            null,
             {},
             {},
             {},
-            null
+            {},
+            {}
         )
     }
 }
@@ -119,10 +127,12 @@ private fun NoteListTopBarEditModePreview() {
         NoteListTopBar(
             NoteListPreviewConstants.selectedIds,
             null,
+            null,
             {},
             {},
             {},
-            null
+            {},
+            {}
         )
     }
 }

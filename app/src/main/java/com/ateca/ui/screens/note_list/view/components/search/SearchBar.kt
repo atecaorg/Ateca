@@ -110,7 +110,7 @@ private fun SearchHint() {
             .wrapContentSize()
     ) {
         val hintColor = MaterialTheme.colors.onSurface.copy(alpha = 0.4f)
-        Icon(
+        ThemedIcon(
             imageVector = Icons.Outlined.Search,
             tint = hintColor,
             contentDescription = stringResource(R.string.search)
