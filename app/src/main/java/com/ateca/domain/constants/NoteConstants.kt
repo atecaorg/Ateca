@@ -6,5 +6,6 @@ package com.ateca.domain.constants
 object NoteConstants {
 
     const val BASE_TITLE = "Untitled"
+    const val BLANK_NOTE_ID = " "
 }
 
