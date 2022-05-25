@@ -11,6 +11,7 @@ buildscript {
         classpath(Build.kotlinGradlePlugin)
         classpath(Build.kotlinSerialization)
         classpath(Build.hiltAndroid)
+        classpath(Build.protobuf)
     }
 
 }

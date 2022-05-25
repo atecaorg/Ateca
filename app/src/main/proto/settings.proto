@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "com.ateca";
+option java_multiple_files = true;
+
+message UserSettings {
+  enum Theme{
+    LIGHT = 0;
+    DARK = 1;
+    SYSTEM = 2;
+  }
+  Theme theme = 1;
+}

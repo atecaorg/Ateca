@@ -30,6 +30,11 @@ object AndroidX {
         const val dataStore = "androidx.datastore:datastore-preferences:$version"
     }
 
+    object Preference {
+        private const val version = "1.2.0"
+        const val preference = "androidx.preference:preference-ktx:$version"
+    }
+
     object Room {
         /**
          * @see <a href="https://developer.android.com/jetpack/androidx/releases/room"> Room Doc</a>
