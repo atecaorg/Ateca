@@ -1,10 +1,10 @@
 package com.ateca.domain.datasource
 
-import com.ateca.domain.core.Theme
-import com.ateca.domain.models.ApplicationSettings
+import com.ateca.UserSettings
+import kotlinx.coroutines.flow.Flow
 
 
 interface ISettingsDataSource {
-    suspend fun getSetting(): ApplicationSettings
-    suspend fun setSetting(settings: ApplicationSettings)
+    suspend fun getSetting(): Flow<UserSettings>
+    suspend fun setSetting(settings: UserSettings)
 }
