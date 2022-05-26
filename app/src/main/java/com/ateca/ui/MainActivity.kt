@@ -8,8 +8,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
-import com.ateca.domain.core.Theme
 import com.ateca.domain.datasource.ISettingsDataSource
+import com.ateca.domain.entity.Theme
 import com.ateca.domain.models.ApplicationSettings
 import com.ateca.ui.components.app.AtecaApp
 import com.ateca.ui.theme.md2.AtecaTheme

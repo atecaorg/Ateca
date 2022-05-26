@@ -1,6 +1,6 @@
 package com.ateca.domain.models
 
-import com.ateca.domain.core.Theme
+import com.ateca.domain.entity.Theme
 import kotlinx.serialization.Serializable
 
 @Serializable
