@@ -1,12 +1,9 @@
-import com.google.protobuf.gradle.*
-
 plugins {
     id("com.android.application")
     kotlin("android")
     id("kotlinx-serialization")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
-    id("com.google.protobuf")
 }
 
 android {
@@ -162,8 +159,6 @@ dependencies {
 
     // DataStore
     implementation(AndroidX.DataStore.dataStore)
-    implementation(Protobuf.JavaLite.javalite)
-    implementation(AndroidX.Preference.preference)
 
     // Markdown processor
     implementation(Markdown.flexmark)
@@ -196,23 +191,6 @@ dependencies {
     configurations.configureEach {
         resolutionStrategy {
             force(Junit.junit4)
-        }
-    }
-}
-
-protobuf.protobuf.run {
-
-    protoc {
-        artifact = Protoc.protoc
-    }
-
-    generateProtoTasks {
-        all().forEach { task ->
-            task.builtins {
-                id("java") {
-                    option("lite")
-                }
-            }
         }
     }
 }

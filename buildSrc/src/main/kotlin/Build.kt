@@ -17,6 +17,4 @@ object Build {
     const val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
 
     const val hiltAndroid = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.version}"
-
-    const val protobuf = "com.google.protobuf:protobuf-gradle-plugin:${Protobuf.version}"
 }
