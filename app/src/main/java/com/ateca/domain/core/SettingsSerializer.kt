@@ -1,5 +1,6 @@
 package com.ateca.domain.core
 
+import android.util.Log
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import com.ateca.domain.models.ApplicationSettings
@@ -10,6 +11,7 @@ import java.io.InputStream
 import java.io.OutputStream
 
 object SettingsSerializer : Serializer<ApplicationSettings> {
+    private const val TAG = "SettingsSerializer"
     override val defaultValue: ApplicationSettings = ApplicationSettings()
 
     override suspend fun readFrom(input: InputStream): ApplicationSettings =
@@ -19,14 +21,19 @@ object SettingsSerializer : Serializer<ApplicationSettings> {
                 input.readBytes().decodeToString()
             )
         } catch (ex: SerializationException) {
-            throw CorruptionException("Unable to read application settings...", ex)
+            Log.e(TAG, ex.message.toString())
+            defaultValue
         }
 
 
     override suspend fun writeTo(t: ApplicationSettings, output: OutputStream) {
         try {
             output.write(
-                Json.encodeToString(ApplicationSettings.serializer(), t).encodeToByteArray()
+                Json.encodeToString(
+                    serializer = ApplicationSettings.serializer(),
+                    value = t
+                )
+                    .encodeToByteArray()
             )
         } catch (ex: Exception) {
             when (ex) {
