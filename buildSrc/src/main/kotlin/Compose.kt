@@ -26,6 +26,11 @@ object Compose {
     const val toolingDebug = "androidx.compose.ui:ui-tooling:$version"
     const val toolingPreview = "androidx.compose.ui:ui-tooling-preview:$version"
 
+    object ConstraintLayout {
+        const val version = "1.0.1"
+        const val composeConstraint = "androidx.constraintlayout:constraintlayout-compose:$version"
+    }
+
     object Material3 {
         private const val version = "1.0.0-alpha10"
 

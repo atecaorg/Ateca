@@ -22,4 +22,7 @@
 
     <color name="windowBackgroundDarkMode">#FF1F1F1F</color>
     <color name="windowBackgroundLightMode">#FFFFFFFF</color>
+
+    <color name="primary">#FF6e5e00</color>
+    <color name="transparent">#00000000</color>
 </resources>
