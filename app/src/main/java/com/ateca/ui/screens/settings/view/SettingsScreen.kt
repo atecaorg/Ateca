@@ -1,7 +1,10 @@
 package com.ateca.ui.screens.settings.view
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -16,11 +19,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.ateca.R
+import com.ateca.domain.entity.Theme
 import com.ateca.ui.components.topappbar.NoteAppTopBar
-import com.ateca.ui.screens.settings.view.components.SettingsCard
-import com.ateca.ui.screens.settings.view.components.SoftwareInfoDialog
-import com.ateca.ui.screens.settings.view.components.ThemePicker
-import com.ateca.ui.screens.settings.view.components.ThemeSettingBlock
+import com.ateca.ui.screens.settings.view.components.*
 import com.ateca.ui.screens.settings.viewmodel.SettingsViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -29,6 +30,28 @@ fun SettingsScreen(
     navController: NavHostController,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
+    val currentTheme = viewModel.settings.collectAsState().value.theme
+    val showThemeDialog = remember { mutableStateOf(false) }
+    val themeName = remember { mutableStateOf(" ") }
+
+    themeName.value = when (currentTheme) {
+        Theme.DARK -> stringResource(R.string.dark)
+        Theme.LIGHT -> stringResource(R.string.light)
+        else -> stringResource(R.string.system)
+    }
+
+    if (showThemeDialog.value) {
+        ThemeSettingsDialog(
+            currentTheme = currentTheme,
+            onThemeChoose = { theme ->
+                viewModel.setThemeSetting(theme = theme)
+                showThemeDialog.value = false
+            }
+        ) {
+            showThemeDialog.value = false
+        }
+    }
+
     var showLicenseDialog: Boolean by rememberSaveable { mutableStateOf(false) }
 
     if (showLicenseDialog) {
@@ -41,44 +64,33 @@ fun SettingsScreen(
                 withBackIcon = true,
                 onBackPressed = { navController.popBackStack() }
             )
-        },
-        content = { paddingValues ->
-            Column(
-                modifier = Modifier.padding(paddingValues = paddingValues)
+        }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier.padding(paddingValues = paddingValues)
+        ) {
+            SettingsTitleText(
+                text = stringResource(R.string.settings)
+            )
+            SettingsRow(
+                settingsTitle = stringResource(R.string.theme),
+                settingsValue = themeName.value
             ) {
-                ThemePicker(viewModel = viewModel)
-
-                Text(
-                    text = stringResource(R.string.theme),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(
-                        start = 16.dp,
-                        top = 16.dp,
-                        end = 16.dp,
-                        bottom = 8.dp
-                    )
-                )
-                ThemeSettingBlock(
-                    selectedTheme = viewModel.settings.collectAsState().value.theme,
-                    onThemeClicked = { theme ->
-                        viewModel.setThemeSetting(theme = theme)
-                    }
-                )
-
-                Divider(modifier = Modifier.padding(5.dp))
-
-                SettingsCard(
-                    cardTitleText = stringResource(R.string.About),
-                    cardText = stringResource(R.string.software_license),
-                    cardTextColor = MaterialTheme.colors.error
-                ) {
-                    showLicenseDialog = true
-                }
+                showThemeDialog.value = true
             }
 
+            Divider(modifier = Modifier.padding(5.dp))
+
+            SettingsTitleText(
+                text = stringResource(R.string.About)
+            )
+            SettingsRow(
+                settingsTitle = stringResource(R.string.software_license),
+                onClick = { showLicenseDialog = true }
+            )
         }
-    )
+
+    }
 }
 
 @Preview(backgroundColor = 0xFF64dd17, showBackground = true)
