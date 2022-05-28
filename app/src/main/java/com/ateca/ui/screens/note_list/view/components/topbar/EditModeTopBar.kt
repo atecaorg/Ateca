@@ -80,7 +80,7 @@ fun EditModeTopBar(
     showBackground = true
 )
 @Preview(
-    name = "SearchBarLargeFont",
+    name = "EditModeTopBarLargeFont",
     fontScale = PREVIEW_FONT_SCALE,
     backgroundColor = PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true

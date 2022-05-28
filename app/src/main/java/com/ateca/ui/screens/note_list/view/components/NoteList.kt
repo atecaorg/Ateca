@@ -67,7 +67,7 @@ fun NoteList(
     showBackground = true
 )
 @Preview(
-    name = "SearchBarLargeFont",
+    name = "ListLargeFont",
     fontScale = PREVIEW_FONT_SCALE,
     backgroundColor = PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true
@@ -78,7 +78,8 @@ private fun NoteListPreview() {
         NoteList(
             noteItems = NoteListPreviewConstants.items,
             selectedIds = NoteListPreviewConstants.selectedIds,
+            {},
             {}
-        ) {}
+        )
     }
 }

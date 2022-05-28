@@ -82,7 +82,7 @@ fun NoteListTopBar(
     showBackground = true
 )
 @Preview(
-    name = "SearchBarLargeFont",
+    name = "NoteListTopBarLargeFont",
     backgroundColor = PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true,
     fontScale = PREVIEW_FONT_SCALE
@@ -114,7 +114,7 @@ private fun NoteListTopBarPreview() {
     showBackground = true
 )
 @Preview(
-    name = "SearchBarLargeFont",
+    name = "NoteListTopBarEditModeLargeFont",
     fontScale = PREVIEW_FONT_SCALE,
     backgroundColor = PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true,

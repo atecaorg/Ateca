@@ -176,7 +176,7 @@ private fun SelectModeNoteListItemPreview() {
     showBackground = true
 )
 @Preview(
-    name = "SearchBarLargeFont",
+    name = "SelectedItemLargeFont",
     fontScale = PREVIEW_FONT_SCALE,
     backgroundColor = PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true,
