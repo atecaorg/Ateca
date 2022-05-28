@@ -129,6 +129,7 @@ dependencies {
     implementation(Compose.activity)
     debugImplementation(Compose.toolingDebug)
     implementation(Compose.toolingPreview)
+    implementation(Compose.ConstraintLayout.composeConstraint)
 
     // Compose/hiltNavigation
     implementation(Compose.hiltNavigationCompose)

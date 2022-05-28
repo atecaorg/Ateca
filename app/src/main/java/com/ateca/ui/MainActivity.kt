@@ -14,8 +14,11 @@ import com.ateca.domain.models.ApplicationSettings
 import com.ateca.ui.components.app.AtecaApp
 import com.ateca.ui.theme.md2.AtecaTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint

@@ -67,7 +67,7 @@ fun NoteAppTopBar(
     showBackground = true
 )
 @Preview(
-    name = "SearchBarLargeFont",
+    name = "NoteAppTopBarLargeFont",
     backgroundColor = PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true,
     fontScale = PREVIEW_FONT_SCALE

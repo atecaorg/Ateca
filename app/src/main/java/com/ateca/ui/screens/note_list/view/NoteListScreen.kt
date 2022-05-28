@@ -85,10 +85,7 @@ fun NoteListScreen(
                     selectedIds = state.selectedIds,
                     selectedNote = state.selectedNote,
                     isScrollInInitialState = { lazyListState.isScrollInInitialState() },
-                    onSettingIconClicked = {
-                        showStubPopup.value = true
-                        /**onNavigateToSettingsScreen()**/
-                    },
+                    onSettingIconClicked = onNavigateToSettingsScreen,
                     onAddTestNoteClicked = { events(NoteListEvents.OnAddTestNoteClicked) },
                     onCloseSelectModeClicked = { events(NoteListEvents.UnselectAll) },
                     onSelectAllClicked = { events(NoteListEvents.SelectAll) }

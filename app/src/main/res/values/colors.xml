@@ -22,4 +22,5 @@
 
     <color name="windowBackgroundDarkMode">#FF1F1F1F</color>
     <color name="windowBackgroundLightMode">#FFFFFFFF</color>
+
 </resources>

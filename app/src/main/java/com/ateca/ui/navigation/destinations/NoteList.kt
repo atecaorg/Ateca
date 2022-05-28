@@ -31,7 +31,9 @@ fun NavGraphBuilder.addNoteList(
         NoteListScreen(
             state = viewModel.state.value,
             events = viewModel::onTriggerEvent,
-            onNavigateToSettingsScreen = {},
+            onNavigateToSettingsScreen = {
+                navController.navigate(Screen.Settings.route)
+            },
             onNavigateToNoteDetailed = { noteId ->
                 navController.navigate(
                     NOTE_ROUTE_TEMPLATE.format(noteId)
