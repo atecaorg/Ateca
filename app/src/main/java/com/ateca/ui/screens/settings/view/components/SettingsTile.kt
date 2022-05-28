@@ -1,8 +1,8 @@
 package com.ateca.ui.screens.settings.view.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.MaterialTheme
@@ -15,9 +15,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ateca.R
 import com.ateca.ui.components.AppPreviewConstants
+import com.ateca.ui.theme.md2.AtecaTheme
+import com.ateca.ui.theme.spacing
 
 @Composable
-fun SettingsRow(
+fun SettingsTile(
     settingsTitle: String,
     settingsValue: String = "",
     onClick: () -> Unit
@@ -28,17 +30,21 @@ fun SettingsRow(
     ) {
         Text(
             text = settingsTitle,
+            color = MaterialTheme.colors.onBackground,
+            style = MaterialTheme.typography.body1,
             modifier = Modifier
-                .padding(start = 16.dp, top = 10.dp, bottom = 10.dp)
+                .padding(start = MaterialTheme.spacing.medium)
+                .padding(vertical = 10.dp)
                 .weight(1f)
-                .wrapContentSize(align = Alignment.CenterStart),
-            style = MaterialTheme.typography.body1
+                .wrapContentSize(align = Alignment.CenterStart)
         )
         Text(
             text = settingsValue,
+            color = MaterialTheme.colors.onBackground,
             style = MaterialTheme.typography.body1,
             modifier = Modifier
-                .padding(top = 10.dp, bottom = 10.dp, end = 16.dp)
+                .padding(end = MaterialTheme.spacing.medium)
+                .padding(vertical = 10.dp)
                 .weight(1f)
                 .wrapContentSize(align = Alignment.CenterEnd)
         )
@@ -46,27 +52,29 @@ fun SettingsRow(
 }
 
 @Preview(
-    name = "SettingsRowLight",
+    name = "SettingsTileLight",
     backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true
 )
-@Composable
-private fun SettingsRowLightPrewiew() {
-    SettingsRow(
-        settingsTitle = stringResource(R.string.theme),
-        settingsValue = stringResource(R.string.dark)
-    ) {}
-}
-
 @Preview(
-    name = "SettingsRowDark",
+    name = "SettingsTileDark",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
     backgroundColor = AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR,
     showBackground = true
 )
+@Preview(
+    name = "SettingsTileLargeFont",
+    fontScale = AppPreviewConstants.PREVIEW_FONT_SCALE,
+    backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
+    showBackground = true,
+)
 @Composable
-private fun SettingsRowDarkPrewiew() {
-    SettingsRow(
-        settingsTitle = stringResource(R.string.theme),
-        settingsValue = stringResource(R.string.dark)
-    ) {}
+private fun SettingsTilePreview() {
+    AtecaTheme {
+        SettingsTile(
+            settingsTitle = stringResource(R.string.theme),
+            settingsValue = stringResource(R.string.dark),
+            onClick = {}
+        )
+    }
 }

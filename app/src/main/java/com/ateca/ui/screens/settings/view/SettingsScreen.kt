@@ -1,36 +1,39 @@
 package com.ateca.ui.screens.settings.view
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.clickable
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
+import androidx.compose.material.Divider
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.ateca.R
 import com.ateca.domain.entity.Theme
+import com.ateca.domain.models.ApplicationSettings
+import com.ateca.ui.components.AppPreviewConstants
 import com.ateca.ui.components.topappbar.NoteAppTopBar
-import com.ateca.ui.screens.settings.view.components.*
-import com.ateca.ui.screens.settings.viewmodel.SettingsViewModel
+import com.ateca.ui.screens.settings.view.components.SettingsGroup
+import com.ateca.ui.screens.settings.view.components.SettingsTile
+import com.ateca.ui.screens.settings.view.components.SoftwareInfoDialog
+import com.ateca.ui.screens.settings.view.components.ThemeSettingsDialog
+import com.ateca.ui.theme.md2.AtecaTheme
+import com.ateca.ui.theme.spacing
+import kotlinx.coroutines.flow.StateFlow
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun SettingsScreen(
-    navController: NavHostController,
-    viewModel: SettingsViewModel = hiltViewModel()
+    navController: NavHostController? = null,
+    getSettingsFlow: () -> StateFlow<ApplicationSettings>? = { null },
+    setThemeSetting: (Theme) -> Unit = {}
 ) {
-    val currentTheme = viewModel.settings.collectAsState().value.theme
+    val currentTheme = getSettingsFlow()?.run { collectAsState().value.theme }
     val showThemeDialog = remember { mutableStateOf(false) }
     val themeName = remember { mutableStateOf(" ") }
 
@@ -42,9 +45,9 @@ fun SettingsScreen(
 
     if (showThemeDialog.value) {
         ThemeSettingsDialog(
-            currentTheme = currentTheme,
+            currentTheme = currentTheme!!,
             onThemeChoose = { theme ->
-                viewModel.setThemeSetting(theme = theme)
+                setThemeSetting(theme)
                 showThemeDialog.value = false
             }
         ) {
@@ -62,29 +65,35 @@ fun SettingsScreen(
         topBar = {
             NoteAppTopBar(
                 withBackIcon = true,
-                onBackPressed = { navController.popBackStack() }
+                onBackPressed = { navController?.popBackStack() }
             )
         }
     ) { paddingValues ->
         Column(
             modifier = Modifier.padding(paddingValues = paddingValues)
         ) {
-            SettingsTitleText(
+            SettingsGroup(
                 text = stringResource(R.string.settings)
             )
-            SettingsRow(
+            SettingsTile(
                 settingsTitle = stringResource(R.string.theme),
                 settingsValue = themeName.value
             ) {
                 showThemeDialog.value = true
             }
 
-            Divider(modifier = Modifier.padding(5.dp))
+            Divider(
+                modifier = Modifier
+                    .padding(
+                        vertical = MaterialTheme.spacing.small,
+                        horizontal = MaterialTheme.spacing.medium
+                    )
+            )
 
-            SettingsTitleText(
+            SettingsGroup(
                 text = stringResource(R.string.About)
             )
-            SettingsRow(
+            SettingsTile(
                 settingsTitle = stringResource(R.string.software_license),
                 onClick = { showLicenseDialog = true }
             )
@@ -93,8 +102,32 @@ fun SettingsScreen(
     }
 }
 
-@Preview(backgroundColor = 0xFF64dd17, showBackground = true)
+@Preview(
+    name = "SelectedNoteListScreenLight",
+    backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
+    showBackground = true,
+    widthDp = 400,
+    heightDp = 300
+)
+@Preview(
+    name = "SelectedNoteListScreenDark",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true,
+    widthDp = 400,
+    heightDp = 300
+)
+@Preview(
+    name = "SelectedNoteListScreenLargeFont",
+    fontScale = AppPreviewConstants.PREVIEW_FONT_SCALE,
+    backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
+    showBackground = true,
+    widthDp = 400,
+    heightDp = 300
+)
 @Composable
 private fun SettingsScreenPreview() {
-    SettingsScreen(navController = rememberNavController())
+    AtecaTheme {
+        SettingsScreen()
+    }
 }
