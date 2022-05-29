@@ -23,6 +23,7 @@
     <string name="get_note_error_msg">Failed to get note</string>
     <string name="create_note_error_msg">Failed to create note</string>
     <string name="save_note_error_msg">Failed to save note</string>
+    <string name="filter_note_error_msg">Failed to filter note</string>
     <string name="archive_note_error_msg">Failed to archive note</string>
     <string name="delete_note_error_msg">Failed to delete note</string>
     <string name="get_note_links_error_msg">Failed to get note links</string>
