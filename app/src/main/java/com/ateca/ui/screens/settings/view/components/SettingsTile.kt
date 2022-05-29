@@ -34,7 +34,7 @@ fun SettingsTile(
             style = MaterialTheme.typography.body1,
             modifier = Modifier
                 .padding(start = MaterialTheme.spacing.medium)
-                .padding(vertical = 10.dp)
+                .padding(vertical = 12.dp)
                 .weight(1f)
                 .wrapContentSize(align = Alignment.CenterStart)
         )
@@ -44,7 +44,7 @@ fun SettingsTile(
             style = MaterialTheme.typography.body1,
             modifier = Modifier
                 .padding(end = MaterialTheme.spacing.medium)
-                .padding(vertical = 10.dp)
+                .padding(vertical = 12.dp)
                 .weight(1f)
                 .wrapContentSize(align = Alignment.CenterEnd)
         )
