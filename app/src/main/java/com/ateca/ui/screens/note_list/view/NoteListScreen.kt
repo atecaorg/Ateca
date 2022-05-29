@@ -51,6 +51,7 @@ fun NoteListScreen(
     onNavigateToNoteDetailed: (String) -> Unit = {},
     onBackPressed: () -> Unit = {},
 ) {
+    val searchState: SearchState = rememberSearchState()
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
     val handleBackPressed: () -> Unit = {
@@ -58,7 +59,10 @@ fun NoteListScreen(
         if (state.selectedIds.isNotEmpty()) {
             events(NoteListEvents.UnselectAll)
             focusManager.clearFocus(true)
-        } else {
+        } else if (searchState.query.text.isNotEmpty()) {
+            searchState.query = TextFieldValue("")
+            focusManager.clearFocus(true)
+        }else {
             onBackPressed()
         }
     }
@@ -101,7 +105,6 @@ fun NoteListScreen(
                         false -> onNavigateToNoteDetailed(note.id)
                     }
                 }
-                val searchState: SearchState = rememberSearchState()
 
                 Column(
                     modifier = Modifier
