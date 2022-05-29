@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,10 +52,12 @@ fun NoteListScreen(
     onBackPressed: () -> Unit = {},
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val focusManager = LocalFocusManager.current
     val handleBackPressed: () -> Unit = {
         keyboardController?.hide()
         if (state.selectedIds.isNotEmpty()) {
             events(NoteListEvents.UnselectAll)
+            focusManager.clearFocus(true)
         } else {
             onBackPressed()
         }
@@ -107,14 +110,21 @@ fun NoteListScreen(
                 ) {
                     SearchBar(
                         query = searchState.query,
-                        onQueryChange = { searchState.query = it },
+                        onQueryChange = {
+                            searchState.query = it
+                            events(NoteListEvents.OnQueryChanged(it.text))
+                        },
                         searchFocused = searchState.focused,
                         onSearchFocusChange = { searchState.focused = it },
                         onClearQuery = { searchState.query = TextFieldValue("") },
                         searching = searchState.searching
                     )
                     NoteList(
-                        noteItems = state.noteItems,
+                        noteItems = if (searchState.query.text.isEmpty()) {
+                            state.noteItems
+                        } else {
+                            state.filteredNoteItems
+                        },
                         selectedIds = state.selectedIds,
                         onNoteClicked = onNoteClicked,
                         onNoteLongPress = { note -> events(NoteListEvents.OnNoteLongPress(note)) }

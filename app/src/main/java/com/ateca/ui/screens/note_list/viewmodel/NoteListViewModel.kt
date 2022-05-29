@@ -3,17 +3,16 @@ package com.ateca.ui.screens.note_list.viewmodel
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ateca.domain.core.DataState
-import com.ateca.domain.core.Queue
-import com.ateca.domain.core.UIComponent
+import com.ateca.domain.core.*
 import com.ateca.domain.interactors.NoteInteractors
 import com.ateca.domain.models.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -23,29 +22,47 @@ import javax.inject.Inject
 @HiltViewModel
 class NoteListViewModel @Inject constructor(
     private val noteInteractors: NoteInteractors,
-    // for future state revival after process death
-    @Suppress("UNUSED_PARAMETER") savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     val state: MutableState<NoteListState> = mutableStateOf(NoteListState())
 
+    private val currentQuery = MutableStateFlow("")
+    private var currentSearchJob: Job? = null
+
     init {
         onTriggerEvent(NoteListEvents.GetAllNotes)
+        initSearchFlow()
+
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun initSearchFlow() {
+        currentQuery
+            .debounce(300)
+            .distinctUntilChanged()
+            .flowOn(Dispatchers.IO)
+            .onEach { query ->
+                // Interrupt previous search job before new one.
+                currentSearchJob?.cancel()
+                getFilteredNotes(query)
+            }
+            .launchIn(viewModelScope)
     }
 
     fun onTriggerEvent(event: NoteListEvents) {
         when (event) {
-            is NoteListEvents.GetAllNotes -> getNoteItems()
+            is NoteListEvents.GetAllNotes -> getAllNoteItems()
             is NoteListEvents.OnRemoveHeadFromQueue -> removeHeadMessage()
             is NoteListEvents.OnAddTestNoteClicked -> onAddTestNote()
             is NoteListEvents.OnNoteLongPress -> onNoteLongPress(event.note)
             is NoteListEvents.SelectAll -> onSelectAll()
             is NoteListEvents.UnselectAll -> onUnselectAll()
             is NoteListEvents.DeleteSelected -> onDeleteSelected()
+            is NoteListEvents.OnQueryChanged -> onQueryChanged(event.query)
         }
     }
 
-    private fun getNoteItems() {
+    private fun getAllNoteItems() {
         noteInteractors.getAllNotes.execute().onEach { dataState ->
             when (dataState) {
                 is DataState.Response -> {
@@ -56,6 +73,42 @@ class NoteListViewModel @Inject constructor(
                 }
                 is DataState.Data -> {
                     state.value = state.value.copy(noteItems = dataState.data ?: listOf())
+                    state.value = state.value.copy(filteredNoteItems = state.value.noteItems)
+                }
+                is DataState.Loading -> {
+                    state.value = state.value.copy(progressBarState = dataState.progressBarState)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun onQueryChanged(newQuery: String) {
+        currentQuery.value = newQuery
+    }
+
+    /**
+     * TODO Optimization - Handle case when list is only shrinking.
+     *  In this case we have to use notesToFilter = state.value.filteredNoteItems
+     *  Otherwise notesToFilter = state.value.noteItems
+     */
+    private fun getFilteredNotes(query: String) {
+        currentSearchJob = noteInteractors.filterNotes.execute(
+            notesToFilter = state.value.noteItems,
+            textFilter = query,
+            sortType = SortType.Modified,
+            sortOrder = SortOrder.Descending
+        ).onEach { dataState ->
+            when (dataState) {
+                is DataState.Response -> {
+                    when (val uiComponent = dataState.uiComponent) {
+                        is UIComponent.Dialog -> appendToMessageQueue(uiComponent)
+                        else -> {}
+                    }
+                }
+                is DataState.Data -> {
+                    state.value = state.value.copy(
+                        filteredNoteItems = dataState.data ?: emptyList()
+                    )
                 }
                 is DataState.Loading -> {
                     state.value = state.value.copy(progressBarState = dataState.progressBarState)
@@ -97,7 +150,7 @@ class NoteListViewModel @Inject constructor(
                 }
                 is DataState.Data -> {
                     val newList = state.value.noteItems.toMutableList()
-                    dataState.data?.let { newList.add(it) }
+                    dataState.data?.let { newList.add(0, it) }
                     state.value = state.value.copy(
                         noteItems = newList
                     )

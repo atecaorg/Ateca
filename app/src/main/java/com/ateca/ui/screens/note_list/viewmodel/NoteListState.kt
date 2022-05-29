@@ -11,9 +11,15 @@ import com.ateca.domain.models.NoteId
  */
 data class NoteListState(
     val progressBarState: ProgressBarState = ProgressBarState.Idle,
+    val errorQueue: Queue<UIComponent> = Queue(mutableListOf()),
+
     val noteItems: List<Note> = emptyList(),
+    val filteredNoteItems: List<Note> = emptyList(),
+
     val selectedIds: List<NoteId> = emptyList(),
     val selectedNote: Note? = null, // selected only one => != null
-    val errorQueue: Queue<UIComponent> = Queue(mutableListOf()),
+
+    val isSearchActive: Boolean = true,
+    val isSelectingActive: Boolean = true,
 )
 

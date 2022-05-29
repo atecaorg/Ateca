@@ -1,6 +1,8 @@
 package com.ateca.domain.interactors
 
 import com.ateca.domain.core.DataState
+import com.ateca.domain.core.SortOrder
+import com.ateca.domain.core.SortType
 import com.ateca.domain.models.Link
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
@@ -45,5 +47,14 @@ sealed interface NoteInteractor {
 
     interface ISaveNote : NoteInteractor {
         fun execute(note: Note): Flow<DataState<Nothing>>
+    }
+
+    interface IFilterNotes : NoteInteractor {
+        fun execute(
+            notesToFilter: List<Note>,
+            textFilter: String,
+            sortType: SortType,
+            sortOrder: SortOrder
+        ): Flow<DataState<List<Note>>>
     }
 }

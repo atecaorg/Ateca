@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
@@ -43,6 +45,8 @@ fun SearchBar(
     modifier: Modifier = Modifier
 ) {
     val hintColor = MaterialTheme.colors.onSurface.copy(alpha = 0.4f)
+    val focusManager = LocalFocusManager.current
+    val onClearFocus = { focusManager.clearFocus(true) }
 
     Surface(
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.025f),
@@ -67,7 +71,10 @@ fun SearchBar(
                     .wrapContentHeight()
             ) {
                 if (searchFocused) {
-                    IconButton(onClick = onClearQuery) {
+                    IconButton(onClick = {
+                        onClearQuery()
+                        onClearFocus()
+                    }) {
                         ThemedIcon(
                             imageVector = mirroringBackIcon(),
                             tint = hintColor,
@@ -78,6 +85,7 @@ fun SearchBar(
                 BasicTextField(
                     value = query,
                     onValueChange = onQueryChange,
+                    cursorBrush = SolidColor(MaterialTheme.colors.onSurface.copy(alpha = 0.5f)),
                     textStyle = TextStyle(color = MaterialTheme.colors.onSurface),
                     singleLine = true,
                     modifier = Modifier

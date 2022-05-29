@@ -3,6 +3,7 @@ package com.ateca.domain.interactors
 import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
+import com.ateca.domain.interactors.note.FilterNotes
 import com.ateca.domain.interactors.note.delete.DeleteNote
 import com.ateca.domain.interactors.note.delete.DeleteNotes
 import com.ateca.domain.interactors.note.insert.CreateNote
@@ -17,19 +18,21 @@ import com.ateca.domain.interactors.note.update.SaveNote
  * Created by dronpascal on 18.05.2022.
  */
 data class NoteInteractors(
-    // select
+    // Select
     val getAllNotes: NoteInteractor.IGetAllNotes,
     val getNoteById: NoteInteractor.IGetNoteById,
     val getNoteLinks: NoteInteractor.IGetNoteLinks,
     val getNoteBacklinks: NoteInteractor.IGetNoteBacklinks,
-    // insert
+    // Insert
     val createNote: NoteInteractor.ICreateNote,
-    // update
+    // Update
     val archiveNote: NoteInteractor.IArchiveNote,
     val saveNote: NoteInteractor.ISaveNote,
-    // delete
+    // Delete
     val deleteNote: NoteInteractor.IDeleteNote,
-    val deleteNotes: NoteInteractor.IDeleteNotes
+    val deleteNotes: NoteInteractor.IDeleteNotes,
+    // Filter
+    val filterNotes: NoteInteractor.IFilterNotes,
 ) {
     companion object Factory {
         fun build(
@@ -46,7 +49,8 @@ data class NoteInteractors(
                 archiveNote = ArchiveNote(noteDataSource),
                 saveNote = SaveNote(noteDataSource, markdownProcessor),
                 deleteNote = DeleteNote(noteDataSource),
-                deleteNotes = DeleteNotes(noteDataSource)
+                deleteNotes = DeleteNotes(noteDataSource),
+                filterNotes = FilterNotes(),
             )
     }
 }
