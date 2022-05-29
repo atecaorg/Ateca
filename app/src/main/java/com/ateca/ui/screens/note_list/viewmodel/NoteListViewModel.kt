@@ -9,7 +9,6 @@ import com.ateca.domain.core.*
 import com.ateca.domain.interactors.NoteInteractors
 import com.ateca.domain.models.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
@@ -40,7 +39,6 @@ class NoteListViewModel @Inject constructor(
         currentQuery
             .debounce(300)
             .distinctUntilChanged()
-            .flowOn(Dispatchers.IO)
             .onEach { query ->
                 // Interrupt previous search job before new one.
                 currentSearchJob?.cancel()
@@ -65,19 +63,12 @@ class NoteListViewModel @Inject constructor(
     private fun getAllNoteItems() {
         noteInteractors.getAllNotes.execute().onEach { dataState ->
             when (dataState) {
-                is DataState.Response -> {
-                    when (val uiComponent = dataState.uiComponent) {
-                        is UIComponent.Dialog -> appendToMessageQueue(uiComponent)
-                        else -> {}
-                    }
-                }
+                is DataState.Response -> dataState.handle()
                 is DataState.Data -> {
                     state.value = state.value.copy(noteItems = dataState.data ?: listOf())
                     state.value = state.value.copy(filteredNoteItems = state.value.noteItems)
                 }
-                is DataState.Loading -> {
-                    state.value = state.value.copy(progressBarState = dataState.progressBarState)
-                }
+                is DataState.Loading -> dataState applyTo state
             }
         }.launchIn(viewModelScope)
     }
@@ -99,22 +90,34 @@ class NoteListViewModel @Inject constructor(
             sortOrder = SortOrder.Descending
         ).onEach { dataState ->
             when (dataState) {
-                is DataState.Response -> {
-                    when (val uiComponent = dataState.uiComponent) {
-                        is UIComponent.Dialog -> appendToMessageQueue(uiComponent)
-                        else -> {}
-                    }
-                }
+                is DataState.Response -> dataState.handle()
                 is DataState.Data -> {
                     state.value = state.value.copy(
                         filteredNoteItems = dataState.data ?: emptyList()
                     )
                 }
-                is DataState.Loading -> {
-                    state.value = state.value.copy(progressBarState = dataState.progressBarState)
-                }
+                is DataState.Loading -> dataState applyTo state
             }
         }.launchIn(viewModelScope)
+    }
+
+    var isAddProcessing = false
+    private fun onAddTestNote() {
+        if (isAddProcessing) return
+        noteInteractors.createNote.execute()
+            .onStart { isAddProcessing = true }
+            .onEach { dataState ->
+                when (dataState) {
+                    is DataState.Response -> dataState.handle()
+                    is DataState.Data -> {
+                        val newList = state.value.noteItems.toMutableList()
+                        dataState.data?.let { newList.add(0, it) }
+                        state.value = state.value.copy(noteItems = newList)
+                    }
+                    is DataState.Loading -> dataState applyTo state
+                }
+            }.launchIn(viewModelScope)
+            .invokeOnCompletion { isAddProcessing = false }
     }
 
     private fun onNoteLongPress(note: Note) {
@@ -136,33 +139,6 @@ class NoteListViewModel @Inject constructor(
         state.value = newState
     }
 
-    var isAddProcessing = false
-    private fun onAddTestNote() {
-        if (isAddProcessing) return
-        isAddProcessing = true
-        noteInteractors.createNote.execute().onEach { dataState ->
-            when (dataState) {
-                is DataState.Response -> {
-                    when (val uiComponent = dataState.uiComponent) {
-                        is UIComponent.Dialog -> appendToMessageQueue(uiComponent)
-                        else -> {}
-                    }
-                }
-                is DataState.Data -> {
-                    val newList = state.value.noteItems.toMutableList()
-                    dataState.data?.let { newList.add(0, it) }
-                    state.value = state.value.copy(
-                        noteItems = newList
-                    )
-                }
-                is DataState.Loading -> {
-                    state.value = state.value.copy(progressBarState = dataState.progressBarState)
-                }
-            }
-        }.launchIn(viewModelScope)
-            .invokeOnCompletion { isAddProcessing = false }
-    }
-
     private fun onSelectAll() {
         val selectedIds = state.value.noteItems.map { it.id }
         state.value = state.value.copy(selectedIds = selectedIds)
@@ -178,17 +154,9 @@ class NoteListViewModel @Inject constructor(
             state.value = state.value.copy(selectedIds = emptyList())
             noteInteractors.deleteNotes.execute(selectedIds).onEach { dataState ->
                 when (dataState) {
-                    is DataState.Response -> {
-                        when (val uiComponent = dataState.uiComponent) {
-                            is UIComponent.Dialog -> appendToMessageQueue(uiComponent)
-                            else -> {}
-                        }
-                    }
-                    is DataState.Data -> {
-                        onTriggerEvent(NoteListEvents.GetAllNotes)
-                    }
-                    is DataState.Loading -> state.value =
-                        state.value.copy(progressBarState = dataState.progressBarState)
+                    is DataState.Response -> dataState.handle()
+                    is DataState.Data -> onTriggerEvent(NoteListEvents.GetAllNotes)
+                    is DataState.Loading -> dataState applyTo state
                 }
             }.launchIn(viewModelScope)
         }
@@ -213,4 +181,16 @@ class NoteListViewModel @Inject constructor(
             Log.i("NoteListViewModel", "Nothing to remove from MessageQueue")
         }
     }
+
+    private fun <T> DataState.Response<T>.handle() {
+        when (val uiComponent = this.uiComponent) {
+            is UIComponent.Dialog -> appendToMessageQueue(uiComponent)
+            else -> {}
+        }
+    }
+
+    private infix fun <T> DataState.Loading<T>.applyTo(state: MutableState<NoteListState>) {
+        state.value = state.value.copy(progressBarState = this.progressBarState)
+    }
 }
+
