@@ -7,7 +7,7 @@ import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
-import com.ateca.domain.interactors.NoteInteractor
+import com.ateca.domain.interactors.ISaveNote
 import com.ateca.domain.interactors.debugBehavior
 import com.ateca.domain.models.Link
 import com.ateca.domain.models.Note
@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.flow
 class SaveNote(
     private val noteSource: INoteDataSource,
     private val markdownParser: IMarkdownProcessor
-) : NoteInteractor.ISaveNote {
+) : ISaveNote {
 
     override fun execute(note: Note): Flow<DataState<Nothing>> = flow {
         try {

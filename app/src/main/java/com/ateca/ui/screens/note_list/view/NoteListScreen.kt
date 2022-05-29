@@ -62,7 +62,7 @@ fun NoteListScreen(
         } else if (searchState.query.text.isNotEmpty()) {
             searchState.query = TextFieldValue("")
             focusManager.clearFocus(true)
-        }else {
+        } else {
             onBackPressed()
         }
     }

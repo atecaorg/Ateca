@@ -19,20 +19,20 @@ import com.ateca.domain.interactors.note.update.SaveNote
  */
 data class NoteInteractors(
     // Select
-    val getAllNotes: NoteInteractor.IGetAllNotes,
-    val getNoteById: NoteInteractor.IGetNoteById,
-    val getNoteLinks: NoteInteractor.IGetNoteLinks,
-    val getNoteBacklinks: NoteInteractor.IGetNoteBacklinks,
+    val getAllNotes: IGetAllNotes,
+    val getNoteById: IGetNoteById,
+    val getNoteLinks: IGetNoteLinks,
+    val getNoteBacklinks: IGetNoteBacklinks,
     // Insert
-    val createNote: NoteInteractor.ICreateNote,
+    val createNote: ICreateNote,
     // Update
-    val archiveNote: NoteInteractor.IArchiveNote,
-    val saveNote: NoteInteractor.ISaveNote,
+    val archiveNote: IArchiveNote,
+    val saveNote: ISaveNote,
     // Delete
-    val deleteNote: NoteInteractor.IDeleteNote,
-    val deleteNotes: NoteInteractor.IDeleteNotes,
+    val deleteNote: IDeleteNote,
+    val deleteNotes: IDeleteNotes,
     // Filter
-    val filterNotes: NoteInteractor.IFilterNotes,
+    val filterNotes: IFilterNotes,
 ) {
     companion object Factory {
         fun build(

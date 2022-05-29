@@ -8,7 +8,7 @@ import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
-import com.ateca.domain.interactors.NoteInteractor
+import com.ateca.domain.interactors.ICreateNote
 import com.ateca.domain.interactors.debugBehavior
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
@@ -24,9 +24,14 @@ import java.util.*
  */
 class CreateNote(
     private val noteSource: INoteDataSource,
-) : NoteInteractor.ICreateNote {
+) : ICreateNote {
 
-    override fun execute(id: NoteId?, title: String?): Flow<DataState<Note>> = flow {
+    override fun execute(
+        param: ICreateNote.Parameter
+    ): Flow<DataState<Note>> = flow {
+        val id: NoteId? = param.id
+        val title: String? = param.title
+
         try {
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))

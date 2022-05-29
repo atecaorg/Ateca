@@ -6,7 +6,7 @@ import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
-import com.ateca.domain.interactors.NoteInteractor
+import com.ateca.domain.interactors.IGetAllNotes
 import com.ateca.domain.interactors.debugBehavior
 import com.ateca.domain.models.Note
 import kotlinx.coroutines.flow.Flow
@@ -17,9 +17,9 @@ import kotlinx.coroutines.flow.flow
  */
 class GetAllNotes(
     private val noteSource: INoteDataSource,
-) : NoteInteractor.IGetAllNotes {
+) : IGetAllNotes {
 
-    override fun execute(): Flow<DataState<List<Note>>> = flow {
+    override fun execute(param: Unit): Flow<DataState<List<Note>>> = flow {
         try {
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
