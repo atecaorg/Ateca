@@ -40,7 +40,8 @@ fun NoteListItem(
     onNoteLongPress: (Note) -> Unit,
 ) {
     Box(modifier = modifier) {
-        val itemBackgroundColorWhenSelected = MaterialTheme.colors.onSurface.copy(alpha = 0.075f)
+        val itemBackgroundColorWhenSelected =
+            MaterialTheme.colors.onSurface.copy(alpha = 0.075f)
         val itemBackgroundColor: Color = when (isSelected) {
             true -> itemBackgroundColorWhenSelected
             false -> MaterialTheme.colors.onSurface.copy(alpha = 0.025f)

@@ -1,6 +1,8 @@
 package com.ateca.ui.screens.note_list.view.components
 
 import android.content.res.Configuration
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,6 +26,7 @@ import com.ateca.ui.theme.spacing
 /**
  * Created by dronpascal on 20.05.2022.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun NoteList(
     noteItems: List<Note>,
@@ -38,10 +41,15 @@ fun NoteList(
         item {
             Spacer(modifier = Modifier.height(MaterialTheme.spacing.small))
         }
-        items(noteItems) { noteItem ->
+        items(
+            items = noteItems,
+            key = { note -> note.id }
+        ) { noteItem ->
             val isSelected: Boolean = selectedIds.contains(noteItem.id)
             NoteListItem(
-                modifier = Modifier.padding(horizontal = MaterialTheme.spacing.small),
+                modifier = Modifier
+                    .padding(horizontal = MaterialTheme.spacing.small)
+                    .animateItemPlacement(tween(durationMillis = 250)),
                 noteItem = noteItem,
                 isSelected = isSelected,
                 onNoteClicked = onNoteClicked,
