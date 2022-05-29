@@ -11,13 +11,15 @@ sealed class NoteListEvents {
 
     object OnRemoveHeadFromQueue : NoteListEvents()
 
-    object DeleteSelected : NoteListEvents()
+    data class OnNoteLongPress(val note: Note) : NoteListEvents()
 
     object SelectAll : NoteListEvents()
 
     object UnselectAll : NoteListEvents()
 
-    data class OnNoteLongPress(val note: Note) : NoteListEvents()
+    object DeleteSelected : NoteListEvents()
+
+    data class OnQueryChanged(val query: String) : NoteListEvents()
 
     object OnAddTestNoteClicked : NoteListEvents()
 }

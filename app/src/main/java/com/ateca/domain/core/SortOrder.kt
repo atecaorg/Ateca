@@ -5,9 +5,9 @@ package com.ateca.domain.core
  */
 sealed class SortOrder {
 
-    object Ascending: SortOrder()
+    object Ascending : SortOrder()
 
-    object Descending: SortOrder()
+    object Descending : SortOrder()
 
-    object Idle: SortOrder()
+    object Idle : SortOrder()
 }

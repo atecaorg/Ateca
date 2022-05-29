@@ -11,5 +11,5 @@ sealed class SortType {
 
     object Name : SortType()
 
-    object Idle: SortType()
+    object Idle : SortType()
 }
