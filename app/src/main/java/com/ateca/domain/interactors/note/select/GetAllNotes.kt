@@ -24,6 +24,7 @@ class GetAllNotes(
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
             val notes: List<Note> = noteSource.selectAll()
+                .sortedByDescending { it.createdAt }
             emit(DataState.Data(notes))
         } catch (e: Exception) {
             e.printStackTrace()

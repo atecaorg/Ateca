@@ -14,13 +14,11 @@ class TagDataSource @Inject constructor(
     private val tagDao: TagDao
 ) : ITagDataSource {
 
-    override suspend fun getUniqueTags(): List<String> {
-        return tagDao.selectDistinct().toModel()
-    }
+    override suspend fun getUniqueTags(): List<String> =
+        tagDao.selectDistinct().toModel()
 
-    override suspend fun getTagsById(id: NoteId): List<String> {
-        return tagDao.select(id).toModel()
-    }
+    override suspend fun getTagsById(id: NoteId): List<String> =
+        tagDao.select(id).toModel()
 
     override suspend fun addTag(id: NoteId, tag: String) {
         tagDao.insert(RoomTag(id, tag))
