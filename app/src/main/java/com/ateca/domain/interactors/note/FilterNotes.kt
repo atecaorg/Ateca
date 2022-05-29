@@ -5,8 +5,11 @@ import com.ateca.domain.core.*
 import com.ateca.domain.interactors.NoteInteractor
 import com.ateca.domain.interactors.debugBehavior
 import com.ateca.domain.models.Note
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import java.util.*
 
 /**
  * Created by dronpascal on 29.05.2022.
@@ -48,7 +51,7 @@ class FilterNotes : NoteInteractor.IFilterNotes {
                 }
             }
 
-            emit(DataState.Data(filteredList))
+            emit(DataState.Data(Collections.unmodifiableList(filteredList)))
         } catch (e: Exception) {
             e.printStackTrace()
             emit(
@@ -64,7 +67,8 @@ class FilterNotes : NoteInteractor.IFilterNotes {
         } finally {
             emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }
-    }
+    }.flowOn(Dispatchers.Default)
+
 
     private fun <T, R : Comparable<R>> MutableList<T>.applySortOrder(
         sortOrder: SortOrder,
