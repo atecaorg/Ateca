@@ -5,27 +5,28 @@ import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
-import com.ateca.domain.datasource.INoteDataSource
-import com.ateca.domain.interactors.IGetNoteById
+import com.ateca.domain.datasource.ILinkDataSource
+import com.ateca.domain.interactors.IGetNoteBacklinks
+import com.ateca.domain.interactors.INoteInteractor
 import com.ateca.domain.interactors.debugBehavior
-import com.ateca.domain.models.Note
+import com.ateca.domain.models.Link
 import com.ateca.domain.models.NoteId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 /**
- * Created by dronpascal on 17.05.2022.
+ * Created by dronpascal on 18.05.2022.
  */
-class GetNoteById(
-    private val noteSource: INoteDataSource,
-) : IGetNoteById {
+class GetNoteBacklinks(
+    private val linkSource: ILinkDataSource,
+) : IGetNoteBacklinks {
 
-    override fun execute(id: NoteId): Flow<DataState<Note>> = flow {
+    override fun execute(id: NoteId): Flow<DataState<List<Link>>> = flow {
         try {
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
-            val note: Note = noteSource.select(id)
-            emit(DataState.Data(note))
+            val links = linkSource.getBacklinksById(id)
+            emit(DataState.Data(links))
         } catch (e: Exception) {
             e.printStackTrace()
             emit(
@@ -34,7 +35,7 @@ class GetNoteById(
                         title = UIText.StringResource(R.string.error),
                         description = e.message
                             ?.let { UIText.DynamicString(it) }
-                            ?: UIText.StringResource(R.string.get_note_error_msg)
+                            ?: UIText.StringResource(R.string.get_note_backlinks_error_msg)
                     )
                 )
             )

@@ -2,7 +2,7 @@ package com.ateca.domain.interactors.note
 
 import com.ateca.R
 import com.ateca.domain.core.*
-import com.ateca.domain.interactors.NoteInteractor
+import com.ateca.domain.interactors.IFilterNotes
 import com.ateca.domain.interactors.debugBehavior
 import com.ateca.domain.models.Note
 import kotlinx.coroutines.Dispatchers
@@ -17,14 +17,15 @@ import java.util.*
  * Does not access any DataSources.
  * This helps to keep the filtering logic isolated.
  */
-class FilterNotes : NoteInteractor.IFilterNotes {
+class FilterNotes : IFilterNotes {
 
     override fun execute(
-        notesToFilter: List<Note>,
-        textFilter: String,
-        sortType: SortType,
-        sortOrder: SortOrder,
+        param: IFilterNotes.Parameter
     ): Flow<DataState<List<Note>>> = flow {
+        val notesToFilter = param.notesToFilter
+        val textFilter = param.textFilter
+        val sortType = param.sortType
+        val sortOrder = param.sortOrder
 
         try {
             debugBehavior()
@@ -34,22 +35,7 @@ class FilterNotes : NoteInteractor.IFilterNotes {
                 val fullText = it.text + " " + it.title
                 fullText.lowercase().contains(textFilter.lowercase())
             }.toMutableList()
-
-            when (sortType) {
-                is SortType.Idle -> {}
-                is SortType.Created -> {
-                    val sortLambda = { note: Note -> note.createdAt }
-                    filteredList.applySortOrder(sortOrder, sortLambda)
-                }
-                is SortType.Modified -> {
-                    val sortLambda = { note: Note -> note.modifiedAt }
-                    filteredList.applySortOrder(sortOrder, sortLambda)
-                }
-                is SortType.Name -> {
-                    val sortLambda = { note: Note -> note.title }
-                    filteredList.applySortOrder(sortOrder, sortLambda)
-                }
-            }
+            applySort(filteredList, sortType, sortOrder)
 
             emit(DataState.Data(Collections.unmodifiableList(filteredList)))
         } catch (e: Exception) {
@@ -69,6 +55,27 @@ class FilterNotes : NoteInteractor.IFilterNotes {
         }
     }.flowOn(Dispatchers.Default)
 
+    private fun applySort(
+        filteredList: MutableList<Note>,
+        sortType: SortType,
+        sortOrder: SortOrder
+    ) {
+        when (sortType) {
+            is SortType.Idle -> {}
+            is SortType.Created -> {
+                val sortLambda = { note: Note -> note.createdAt }
+                filteredList.applySortOrder(sortOrder, sortLambda)
+            }
+            is SortType.Modified -> {
+                val sortLambda = { note: Note -> note.modifiedAt }
+                filteredList.applySortOrder(sortOrder, sortLambda)
+            }
+            is SortType.Name -> {
+                val sortLambda = { note: Note -> note.title }
+                filteredList.applySortOrder(sortOrder, sortLambda)
+            }
+        }
+    }
 
     private fun <T, R : Comparable<R>> MutableList<T>.applySortOrder(
         sortOrder: SortOrder,

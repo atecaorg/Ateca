@@ -65,5 +65,4 @@ class Queue<T>(list: MutableList<T>) {
     fun clear() {
         items.removeAll { true }
     }
-
 }

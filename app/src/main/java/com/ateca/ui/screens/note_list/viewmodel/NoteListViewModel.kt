@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ateca.domain.core.*
+import com.ateca.domain.interactors.ICreateNote
+import com.ateca.domain.interactors.IFilterNotes
 import com.ateca.domain.interactors.NoteInteractors
 import com.ateca.domain.models.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,7 +33,6 @@ class NoteListViewModel @Inject constructor(
     init {
         onTriggerEvent(NoteListEvents.GetAllNotes)
         initSearchFlow()
-
     }
 
     @OptIn(FlowPreview::class)
@@ -61,7 +62,7 @@ class NoteListViewModel @Inject constructor(
     }
 
     private fun getAllNoteItems() {
-        noteInteractors.getAllNotes.execute().onEach { dataState ->
+        noteInteractors.getAllNotes.execute(Unit).onEach { dataState ->
             when (dataState) {
                 is DataState.Response -> dataState.handle()
                 is DataState.Data -> {
@@ -84,10 +85,12 @@ class NoteListViewModel @Inject constructor(
      */
     private fun getFilteredNotes(query: String) {
         currentSearchJob = noteInteractors.filterNotes.execute(
-            notesToFilter = state.value.noteItems,
-            textFilter = query,
-            sortType = SortType.Modified,
-            sortOrder = SortOrder.Descending
+            IFilterNotes.Parameter(
+                notesToFilter = state.value.noteItems,
+                textFilter = query,
+                sortType = SortType.Modified,
+                sortOrder = SortOrder.Descending
+            )
         ).onEach { dataState ->
             when (dataState) {
                 is DataState.Response -> dataState.handle()
@@ -104,7 +107,7 @@ class NoteListViewModel @Inject constructor(
     var isAddProcessing = false
     private fun onAddTestNote() {
         if (isAddProcessing) return
-        noteInteractors.createNote.execute()
+        noteInteractors.createNote.execute(ICreateNote.Parameter())
             .onStart { isAddProcessing = true }
             .onEach { dataState ->
                 when (dataState) {
