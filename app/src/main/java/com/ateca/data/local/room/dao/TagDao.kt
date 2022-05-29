@@ -21,6 +21,7 @@ interface TagDao {
     @Query("SELECT * FROM $TABLE_NAME WHERE $NOTE_ID = :noteId")
     suspend fun select(noteId: NoteId): List<RoomTag>
 
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(vararg tags: RoomTag)
 

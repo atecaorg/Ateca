@@ -1,9 +1,6 @@
 package com.ateca.data.local.room.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.ateca.data.local.room.model.RoomNote
 import com.ateca.data.local.room.model.RoomNote.Companion.ARCHIVED
 import com.ateca.data.local.room.model.RoomNote.Companion.NOTE_ID
@@ -33,6 +30,7 @@ interface NoteDao {
     @Query("SELECT $NOTE_ID FROM $TABLE_NAME WHERE $TITLE = :title LIMIT 1")
     suspend fun selectIdByTitle(title: String): NoteId
 
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(vararg notes: RoomNote)
 

@@ -22,6 +22,7 @@ interface LinkDao {
     @Query("SELECT * FROM $TABLE_NAME WHERE $LINKED_NOTE_ID = :linkedNoteId")
     suspend fun selectBacklinks(linkedNoteId: NoteId): List<RoomLink>
 
+    @Transaction
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(vararg links: RoomLink)
 
