@@ -8,6 +8,8 @@ import com.ateca.data.local.room.model.RoomNote.Companion.TABLE_NAME
 import com.ateca.data.local.room.model.RoomNote.Companion.TITLE
 import com.ateca.domain.constants.NoteConstants.BASE_TITLE
 import com.ateca.domain.models.NoteId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
 
 /**
  * Updated by dronpascal on 18.05.2022.
@@ -20,6 +22,12 @@ interface NoteDao {
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $NOTE_ID = :noteId LIMIT 1")
     suspend fun select(noteId: NoteId): RoomNote
+
+    @Query("SELECT * FROM $TABLE_NAME")
+    fun getAllFlow(): Flow<List<RoomNote>>
+
+    fun getAllDistinctUntilChanged() =
+        getAllFlow().distinctUntilChanged()
 
     @Query("UPDATE $TABLE_NAME SET $ARCHIVED = :isArchived WHERE $NOTE_ID = :id")
     suspend fun setArchived(id: NoteId, isArchived: Boolean)
