@@ -54,7 +54,7 @@ class MainActivity : ComponentActivity() {
                 }
             )
 
-            AtecaTheme(darkTheme = isDark.value) {
+            AtecaTheme(isDarkTheme = isDark.value) {
                 AtecaApp()
             }
         }
