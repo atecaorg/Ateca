@@ -11,8 +11,8 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AtecaApp() {
-
     val navController = rememberAnimatedNavController()
+
     SetUpNavGraph(
         navController = navController,
         modifier = Modifier.background(color = MaterialTheme.colors.background)
