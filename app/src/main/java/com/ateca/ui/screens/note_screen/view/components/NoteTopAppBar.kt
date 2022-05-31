@@ -1,4 +1,4 @@
-package com.ateca.ui.screens.note_screen
+package com.ateca.ui.screens.note_screen.view.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
