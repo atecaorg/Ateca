@@ -25,6 +25,7 @@ fun NoteTopAppBar(
     onNavigationButtonClick: () -> Unit
 ) {
     val showMenu = remember { mutableStateOf(false) }
+    val visibilityState = remember { mutableStateOf(false) }
 
     ScrollAwareTopAppBar(
         title = {
@@ -44,6 +45,16 @@ fun NoteTopAppBar(
             }
         },
         actions = {
+            IconButton(onClick = { visibilityState.value = !visibilityState.value }) {
+                Icon(
+                    if (visibilityState.value) {
+                        painterResource(R.drawable.ic_icon_visibility)
+                    } else {
+                        painterResource(R.drawable.ic_icon_pencil)
+                    },
+                    contentDescription = null
+                )
+            }
             IconButton(
                 onClick = { showMenu.value = true }
             ) {
