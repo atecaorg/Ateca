@@ -1,7 +1,10 @@
 package com.ateca.ui.screens.note_screen
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldDefaults
@@ -79,12 +82,14 @@ private fun NoteTextField(
 @Composable
 private fun NoteContentPreview() {
     AtecaTheme {
-        NoteContent(noteState = MutableStateFlow(
-            Note(
-                title = "SpaceX",
-                text = "Space Exploration Technologies Corp. is an American space manufacturer, a provider of space transportation services, and a communications corporation headquartered in Hawthorne, California. SpaceX was founded in 2002 by Elon Musk with the goal of reducing space transportation costs to enable the colonization of Mars."
+        NoteContent(
+            noteState = MutableStateFlow(
+                Note(
+                    title = "SpaceX",
+                    text = "Space Exploration Technologies Corp. is an American space manufacturer, a provider of space transportation services, and a communications corporation headquartered in Hawthorne, California. SpaceX was founded in 2002 by Elon Musk with the goal of reducing space transportation costs to enable the colonization of Mars."
+                )
             )
-        )) { _, _, _, _ ->
+        ) { _, _, _, _ ->
         }
     }
 }

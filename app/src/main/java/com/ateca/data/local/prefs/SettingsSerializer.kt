@@ -1,4 +1,4 @@
-package com.ateca.data.local.datastore
+package com.ateca.data.local.prefs
 
 import android.util.Log
 import androidx.datastore.core.CorruptionException
