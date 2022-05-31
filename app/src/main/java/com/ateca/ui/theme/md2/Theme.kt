@@ -35,7 +35,7 @@ fun AtecaTheme(
 
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = colors.surface,
+            color = colors.background,
             darkIcons = useDarkIcons
         )
     }
