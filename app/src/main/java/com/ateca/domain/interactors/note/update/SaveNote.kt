@@ -3,12 +3,11 @@ package com.ateca.domain.interactors.note.update
 import com.ateca.R
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
-import com.ateca.domain.core.UIComponent
-import com.ateca.domain.core.UIText
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
 import com.ateca.domain.interactors.ISaveNote
-import com.ateca.domain.interactors.debugBehavior
+import com.ateca.domain.interactors.util.debugBehavior
+import com.ateca.domain.interactors.util.genericDialogResponse
 import com.ateca.domain.models.Link
 import com.ateca.domain.models.Note
 import kotlinx.coroutines.flow.Flow
@@ -45,16 +44,7 @@ class SaveNote(
             emit(DataState.Data())
         } catch (e: Exception) {
             e.printStackTrace()
-            emit(
-                DataState.Response(
-                    uiComponent = UIComponent.Dialog(
-                        title = UIText.StringResource(R.string.error),
-                        description = e.message
-                            ?.let { UIText.DynamicString(it) }
-                            ?: UIText.StringResource(R.string.save_note_error_msg)
-                    )
-                )
-            )
+            emit(genericDialogResponse(e, R.string.error, R.string.save_note_error_msg))
         } finally {
             emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }
