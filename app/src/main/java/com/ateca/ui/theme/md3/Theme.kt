@@ -5,8 +5,10 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.platform.LocalContext
 import com.ateca.ui.theme.*
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 val AtecaLightColorScheme = lightColorScheme(
     primary = md_theme_light_primary,
@@ -82,6 +84,16 @@ fun AtecaTheme(
         }
         isDarkTheme -> AtecaDarkColorScheme
         else -> AtecaLightColorScheme
+    }
+
+    val systemUiController = rememberSystemUiController()
+    val useDarkIcons: Boolean = !isDarkTheme
+
+    SideEffect {
+        systemUiController.setSystemBarsColor(
+            color = atecaColorScheme.surface,
+            darkIcons = useDarkIcons
+        )
     }
 
     CompositionLocalProvider(
