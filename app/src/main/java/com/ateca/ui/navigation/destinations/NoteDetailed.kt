@@ -2,6 +2,7 @@ package com.ateca.ui.navigation.destinations
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
@@ -43,13 +44,17 @@ fun NavGraphBuilder.addNoteDetailed(
             navController
                 .getBackStackEntry(Screen.NoteList.route)
         )
+        val saveState = viewModel.saveState.collectAsState()
+
+        if (saveState.value) {
+            listViewModel.onTriggerEvent(NoteListEvents.GetAllNotes)
+        }
 
         NoteScreen(
             note = viewModel.note,
             onNavigationButtonClick = {
                 viewModel.saveNote()
                 navController.popBackStack()
-                listViewModel.onTriggerEvent(NoteListEvents.GetAllNotes)
             },
             onNoteUpdate = { title, text, folder, tags ->
                 viewModel.updateNote(
