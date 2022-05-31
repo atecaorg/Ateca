@@ -1,4 +1,4 @@
-package com.ateca.domain.interactors
+package com.ateca.domain.interactors.util
 
 import com.ateca.BuildConfig
 
