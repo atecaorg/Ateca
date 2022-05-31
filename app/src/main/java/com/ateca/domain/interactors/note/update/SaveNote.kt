@@ -42,6 +42,7 @@ class SaveNote(
                     tags = tags
                 )
             )
+            emit(DataState.Data())
         } catch (e: Exception) {
             e.printStackTrace()
             emit(
