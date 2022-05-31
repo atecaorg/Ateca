@@ -35,8 +35,19 @@ fun NavGraphBuilder.addNoteDetailed(
     ) {
         val viewModel: NoteViewModel = hiltViewModel()
         NoteScreen(
-            viewModel = viewModel,
-            navController = navController
+            note = viewModel.note,
+            onNavigationButtonClick = {
+                viewModel.saveNote()
+                navController.popBackStack()
+            },
+            onNoteUpdate = { title, text, folder, tags ->
+                viewModel.updateNote(
+                    title = title,
+                    text = text,
+                    folder = folder,
+                    tags = tags
+                )
+            }
         )
     }
 }
