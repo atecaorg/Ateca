@@ -7,10 +7,7 @@ import com.ateca.domain.interactors.note.FilterNotes
 import com.ateca.domain.interactors.note.delete.DeleteNote
 import com.ateca.domain.interactors.note.delete.DeleteNotes
 import com.ateca.domain.interactors.note.insert.CreateNote
-import com.ateca.domain.interactors.note.select.GetAllNotes
-import com.ateca.domain.interactors.note.select.GetNoteBacklinks
-import com.ateca.domain.interactors.note.select.GetNoteById
-import com.ateca.domain.interactors.note.select.GetNoteLinks
+import com.ateca.domain.interactors.note.select.*
 import com.ateca.domain.interactors.note.update.ArchiveNote
 import com.ateca.domain.interactors.note.update.SaveNote
 
@@ -20,6 +17,7 @@ import com.ateca.domain.interactors.note.update.SaveNote
 data class NoteInteractors(
     // Select
     val getAllNotes: IGetAllNotes,
+    val getAllNotesFlow: IGetAllNotesFlow,
     val getNoteById: IGetNoteById,
     val getNoteLinks: IGetNoteLinks,
     val getNoteBacklinks: IGetNoteBacklinks,
@@ -42,6 +40,7 @@ data class NoteInteractors(
         ): NoteInteractors =
             NoteInteractors(
                 getAllNotes = GetAllNotes(noteDataSource),
+                getAllNotesFlow = GetAllNotesFlow(noteDataSource),
                 getNoteById = GetNoteById(noteDataSource),
                 getNoteLinks = GetNoteLinks(linkDataSource),
                 getNoteBacklinks = GetNoteBacklinks(linkDataSource),
