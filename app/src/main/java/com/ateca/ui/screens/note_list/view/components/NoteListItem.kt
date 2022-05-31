@@ -80,9 +80,23 @@ fun NoteListItem(
             verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.tiny)
         ) {
             val titleIsNotBlank = noteItem.title.isNotBlank()
-            if (titleIsNotBlank) {
+            val textIsNotBlank = noteItem.text.isNotBlank()
+            val textLines = noteItem.text.split("\n")
+            val textIsMultiline = textLines.size > 1
+            val firstLine = when {
+                titleIsNotBlank -> noteItem.title
+                textIsNotBlank -> textLines[0]
+                else -> ""
+            }
+            val secondLine = when {
+                titleIsNotBlank && textIsNotBlank -> textLines[0]
+                !titleIsNotBlank && textIsMultiline -> textLines[1]
+                else -> ""
+            }
+
+            if (firstLine.isNotEmpty()) {
                 Text(
-                    text = noteItem.title,
+                    text = firstLine,
                     color = MaterialTheme.colors.onBackground,
                     style = MaterialTheme.typography.body1,
                     fontWeight = FontWeight.Bold,
@@ -90,24 +104,17 @@ fun NoteListItem(
                     overflow = TextOverflow.Ellipsis
                 )
             }
-            if (noteItem.text.isNotBlank()) {
+            if (secondLine.isNotEmpty()) {
                 Text(
-                    text = noteItem.text,
-                    color = MaterialTheme.colors.onBackground.run {
-                        if (titleIsNotBlank) copy(alpha = 0.4f)
-                        else this
-                    },
+                    text = secondLine,
+                    color = MaterialTheme.colors.onBackground.copy(alpha = 0.4f),
                     style = MaterialTheme.typography.body1,
-                    fontWeight = when {
-                        titleIsNotBlank -> FontWeight.Normal
-                        else -> FontWeight.Bold
-                    },
+                    fontWeight = FontWeight.Normal,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
             }
             Text(
-                //modifier = Modifier.padding(top = MaterialTheme.spacing.small),
                 text = getFormatDate(noteItem.modifiedAt),
                 color = MaterialTheme.colors.onBackground.copy(alpha = 0.4f),
                 style = MaterialTheme.typography.body2,

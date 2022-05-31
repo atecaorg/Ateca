@@ -11,8 +11,8 @@ import com.ateca.domain.constants.NavigationConstants
 import com.ateca.ui.navigation.Animations.enterTransition
 import com.ateca.ui.navigation.Animations.exitTransition
 import com.ateca.ui.navigation.Screen
-import com.ateca.ui.screens.note_screen.view.NoteScreen
 import com.ateca.ui.screens.note_screen.veiwmodel.NoteViewModel
+import com.ateca.ui.screens.note_screen.view.NoteScreen
 import com.google.accompanist.navigation.animation.composable
 
 /**
