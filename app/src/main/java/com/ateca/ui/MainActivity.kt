@@ -58,7 +58,7 @@ class MainActivity : ComponentActivity() {
                 Box(
                     modifier = Modifier.fillMaxSize()
                         .background(
-                            color = MaterialTheme.colors.surface
+                            color = MaterialTheme.colors.background
                         )
                 ) {
                     AtecaApp()
