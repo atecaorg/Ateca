@@ -7,8 +7,6 @@ import com.ateca.domain.models.Note
  */
 sealed class NoteListEvents {
 
-    object GetAllNotes : NoteListEvents()
-
     object OnRemoveHeadFromQueue : NoteListEvents()
 
     data class OnNoteLongPress(val note: Note) : NoteListEvents()

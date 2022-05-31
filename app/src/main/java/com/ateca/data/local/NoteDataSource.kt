@@ -9,6 +9,8 @@ import com.ateca.data.local.room.model.RoomTag
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 /**
@@ -18,6 +20,9 @@ class NoteDataSource @Inject constructor(
     private val noteDao: NoteDao,
     private val noteDatabase: NoteDatabase
 ) : INoteDataSource {
+
+    override fun getAllDistinctUntilChanged(): Flow<List<Note>> =
+        noteDao.getAllDistinctUntilChanged().map { it.toModel() }
 
     override suspend fun selectAll(): List<Note> =
         noteDao.selectAll().toModel()

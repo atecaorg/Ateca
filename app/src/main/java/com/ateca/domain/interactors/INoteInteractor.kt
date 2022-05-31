@@ -15,6 +15,18 @@ sealed interface INoteInteractor<T, R> {
     fun execute(param: T): Flow<DataState<R>>
 }
 
+interface IGetAllNotes : INoteInteractor<Unit, List<Note>> {
+    override fun execute(param: Unit): Flow<DataState<List<Note>>>
+}
+
+interface IGetAllNotesFlow : INoteInteractor<Unit, Flow<List<Note>>> {
+    override fun execute(param: Unit): Flow<DataState<Flow<List<Note>>>>
+}
+
+interface IGetNoteById : INoteInteractor<NoteId, Note> {
+    override fun execute(param: NoteId): Flow<DataState<Note>>
+}
+
 interface IDeleteNote : INoteInteractor<NoteId, Nothing> {
     override fun execute(param: NoteId): Flow<DataState<Nothing>>
 }
@@ -25,19 +37,10 @@ interface IDeleteNotes : INoteInteractor<List<NoteId>, Nothing> {
 
 interface ICreateNote : INoteInteractor<ICreateNote.Parameter, Note> {
     override fun execute(param: Parameter): Flow<DataState<Note>>
-
     class Parameter(
         val id: NoteId? = null,
         val title: String? = null
     )
-}
-
-interface IGetAllNotes : INoteInteractor<Unit, List<Note>> {
-    override fun execute(param: Unit): Flow<DataState<List<Note>>>
-}
-
-interface IGetNoteById : INoteInteractor<NoteId, Note> {
-    override fun execute(param: NoteId): Flow<DataState<Note>>
 }
 
 interface IGetNoteBacklinks : INoteInteractor<NoteId, List<Link>> {

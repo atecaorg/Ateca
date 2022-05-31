@@ -1,10 +1,15 @@
 package com.ateca.domain.interactors.note
 
 import com.ateca.R
-import com.ateca.domain.core.*
+import com.ateca.domain.core.DataState
+import com.ateca.domain.core.ProgressBarState
+import com.ateca.domain.core.SortOrder
+import com.ateca.domain.core.SortType
 import com.ateca.domain.interactors.IFilterNotes
-import com.ateca.domain.interactors.debugBehavior
+import com.ateca.domain.interactors.util.debugBehavior
+import com.ateca.domain.interactors.util.genericDialogResponse
 import com.ateca.domain.models.Note
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -30,6 +35,10 @@ class FilterNotes : IFilterNotes {
         try {
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
+            if (textFilter.isBlank()) {
+                emit(DataState.Data(notesToFilter))
+                throw CancellationException("Nothing to filter.")
+            }
 
             val filteredList: MutableList<Note> = notesToFilter.filter {
                 val fullText = it.text + " " + it.title
@@ -39,17 +48,9 @@ class FilterNotes : IFilterNotes {
 
             emit(DataState.Data(Collections.unmodifiableList(filteredList)))
         } catch (e: Exception) {
+            if (e is CancellationException) throw e
             e.printStackTrace()
-            emit(
-                DataState.Response(
-                    uiComponent = UIComponent.Dialog(
-                        title = UIText.StringResource(R.string.error),
-                        description = e.message
-                            ?.let { UIText.DynamicString(it) }
-                            ?: UIText.StringResource(R.string.filter_note_error_msg)
-                    )
-                )
-            )
+            emit(genericDialogResponse(e, R.string.error, R.string.filter_note_error_msg))
         } finally {
             emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }

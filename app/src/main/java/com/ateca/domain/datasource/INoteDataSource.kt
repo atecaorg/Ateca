@@ -2,8 +2,11 @@ package com.ateca.domain.datasource
 
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
+import kotlinx.coroutines.flow.Flow
 
 interface INoteDataSource {
+
+    fun getAllDistinctUntilChanged(): Flow<List<Note>>
 
     suspend fun selectAll(): List<Note>
 

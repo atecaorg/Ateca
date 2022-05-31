@@ -5,6 +5,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ateca.domain.constants.SearchConstants.DEBOUNCE_DELAY_TIME_MS
+import com.ateca.domain.constants.SearchConstants.EMPTY_QUERY
 import com.ateca.domain.core.*
 import com.ateca.domain.interactors.ICreateNote
 import com.ateca.domain.interactors.IFilterNotes
@@ -27,30 +29,16 @@ class NoteListViewModel @Inject constructor(
 
     val state: MutableState<NoteListState> = mutableStateOf(NoteListState())
 
-    private val currentQuery = MutableStateFlow("")
+    private val currentQuery = MutableStateFlow(EMPTY_QUERY)
     private var currentSearchJob: Job? = null
 
     init {
-        onTriggerEvent(NoteListEvents.GetAllNotes)
+        subscribeAllNotesFlow()
         initSearchFlow()
-    }
-
-    @OptIn(FlowPreview::class)
-    private fun initSearchFlow() {
-        currentQuery
-            .debounce(300)
-            .distinctUntilChanged()
-            .onEach { query ->
-                // Interrupt previous search job before new one.
-                currentSearchJob?.cancel()
-                getFilteredNotes(query)
-            }
-            .launchIn(viewModelScope)
     }
 
     fun onTriggerEvent(event: NoteListEvents) {
         when (event) {
-            is NoteListEvents.GetAllNotes -> getAllNoteItems()
             is NoteListEvents.OnRemoveHeadFromQueue -> removeHeadMessage()
             is NoteListEvents.OnAddTestNoteClicked -> onAddTestNote()
             is NoteListEvents.OnNoteLongPress -> onNoteLongPress(event.note)
@@ -61,17 +49,32 @@ class NoteListViewModel @Inject constructor(
         }
     }
 
-    private fun getAllNoteItems() {
-        noteInteractors.getAllNotes.execute(Unit).onEach { dataState ->
+    private fun subscribeAllNotesFlow() {
+        noteInteractors.getAllNotesFlow.execute(Unit).onEach { dataState ->
             when (dataState) {
                 is DataState.Response -> dataState.handle()
                 is DataState.Data -> {
-                    state.value = state.value.copy(noteItems = dataState.data ?: listOf())
-                    state.value = state.value.copy(filteredNoteItems = state.value.noteItems)
+                    dataState.data?.onEach { newList ->
+                        state.value = state.value.copy(noteItems = newList)
+                        getFilteredNotes(currentQuery.value)
+                    }?.launchIn(viewModelScope)
                 }
                 is DataState.Loading -> dataState applyTo state
             }
         }.launchIn(viewModelScope)
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun initSearchFlow() {
+        currentQuery
+            .debounce(DEBOUNCE_DELAY_TIME_MS)
+            .distinctUntilChanged()
+            .onEach { query ->
+                // Interrupt previous search job before new one.
+                currentSearchJob?.cancel()
+                getFilteredNotes(query)
+            }
+            .launchIn(viewModelScope)
     }
 
     private fun onQueryChanged(newQuery: String) {
@@ -84,6 +87,7 @@ class NoteListViewModel @Inject constructor(
      *  Otherwise notesToFilter = state.value.noteItems
      */
     private fun getFilteredNotes(query: String) {
+        if (query.isBlank()) return
         currentSearchJob = noteInteractors.filterNotes.execute(
             IFilterNotes.Parameter(
                 notesToFilter = state.value.noteItems,
@@ -112,11 +116,7 @@ class NoteListViewModel @Inject constructor(
             .onEach { dataState ->
                 when (dataState) {
                     is DataState.Response -> dataState.handle()
-                    is DataState.Data -> {
-                        val newList = state.value.noteItems.toMutableList()
-                        dataState.data?.let { newList.add(0, it) }
-                        state.value = state.value.copy(noteItems = newList)
-                    }
+                    is DataState.Data -> {}
                     is DataState.Loading -> dataState applyTo state
                 }
             }.launchIn(viewModelScope)
@@ -158,7 +158,7 @@ class NoteListViewModel @Inject constructor(
             noteInteractors.deleteNotes.execute(selectedIds).onEach { dataState ->
                 when (dataState) {
                     is DataState.Response -> dataState.handle()
-                    is DataState.Data -> onTriggerEvent(NoteListEvents.GetAllNotes)
+                    is DataState.Data -> {}
                     is DataState.Loading -> dataState applyTo state
                 }
             }.launchIn(viewModelScope)

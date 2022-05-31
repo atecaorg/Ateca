@@ -4,30 +4,32 @@ import com.ateca.R
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.datasource.INoteDataSource
-import com.ateca.domain.interactors.IGetNoteById
+import com.ateca.domain.interactors.IGetAllNotesFlow
 import com.ateca.domain.interactors.util.debugBehavior
 import com.ateca.domain.interactors.util.genericDialogResponse
 import com.ateca.domain.models.Note
-import com.ateca.domain.models.NoteId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 /**
- * Created by dronpascal on 17.05.2022.
+ * Created by dronpascal on 31.05.2022.
  */
-class GetNoteById(
+class GetAllNotesFlow(
     private val noteSource: INoteDataSource,
-) : IGetNoteById {
+) : IGetAllNotesFlow {
 
-    override fun execute(id: NoteId): Flow<DataState<Note>> = flow {
+    override fun execute(param: Unit): Flow<DataState<Flow<List<Note>>>> = flow {
         try {
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
-            val note: Note = noteSource.select(id)
-            emit(DataState.Data(note))
+            val notesFlow = noteSource.getAllDistinctUntilChanged().map { list ->
+                list.sortedByDescending { it.createdAt }
+            }
+            emit(DataState.Data(notesFlow))
         } catch (e: Exception) {
             e.printStackTrace()
-            emit(genericDialogResponse(e, R.string.error, R.string.get_note_error_msg))
+            emit(genericDialogResponse(e, R.string.error, R.string.get_all_notes_error_msg))
         } finally {
             emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }
