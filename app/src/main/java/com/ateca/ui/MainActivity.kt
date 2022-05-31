@@ -55,14 +55,7 @@ class MainActivity : ComponentActivity() {
             )
 
             AtecaTheme(darkTheme = isDark.value) {
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                        .background(
-                            color = MaterialTheme.colors.background
-                        )
-                ) {
-                    AtecaApp()
-                }
+                AtecaApp()
             }
         }
     }
