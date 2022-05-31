@@ -18,6 +18,7 @@ import com.ateca.ui.components.AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUN
 import com.ateca.ui.components.dialog.GenericDialog
 import com.ateca.ui.components.progress.CircularIndeterminateProgressBar
 import com.ateca.ui.theme.md2.AtecaTheme
+import com.ateca.ui.util.asString
 
 /**
  * Created by dronpascal on 20.05.2022.
