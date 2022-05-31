@@ -1,4 +1,4 @@
-package com.ateca.data.settings
+package com.ateca.data.local.prefs
 
 import androidx.datastore.core.DataStore
 import com.ateca.domain.datasource.ISettingsDataSource

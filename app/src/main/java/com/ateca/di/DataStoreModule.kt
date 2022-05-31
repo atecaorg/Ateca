@@ -3,8 +3,8 @@ package com.ateca.di
 import android.app.Application
 import androidx.datastore.core.DataStore
 import androidx.datastore.core.DataStoreFactory
-import com.ateca.data.local.datastore.SettingsSerializer
-import com.ateca.data.settings.SettingsDataSourceImpl
+import com.ateca.data.local.prefs.SettingsDataSourceImpl
+import com.ateca.data.local.prefs.SettingsSerializer
 import com.ateca.domain.datasource.ISettingsDataSource
 import com.ateca.domain.models.ApplicationSettings
 import dagger.Module

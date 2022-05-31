@@ -10,12 +10,9 @@ import com.ateca.domain.interactors.NoteInteractors
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
@@ -26,17 +23,12 @@ class NoteViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val ioDispatcher = Dispatchers.IO
-    private val scope = CoroutineScope(ioDispatcher)
 
     private val noteId: NoteId =
         savedStateHandle.get<String>(NOTE_ID_ARGUMENT_KEY) ?: UUID.randomUUID().toString()
 
     private var _note: MutableStateFlow<Note> = MutableStateFlow(Note())
     val note: StateFlow<Note> = _note
-
-    private var _saveState: MutableStateFlow<Boolean> =
-        MutableStateFlow(false)
-    val saveState: StateFlow<Boolean> = _saveState
 
     private val noteDataState: MutableStateFlow<DataState<Note>> =
         MutableStateFlow(DataState.Loading())
@@ -70,11 +62,7 @@ class NoteViewModel @Inject constructor(
 
     fun saveNote() {
         viewModelScope.launch(ioDispatcher) {
-            noteInteractors.saveNote.execute(note.value).collect { it ->
-                if (it is DataState.Data) {
-                    _saveState.value = true
-                }
-            }
+            noteInteractors.saveNote.execute(note.value).collect {}
         }
     }
 

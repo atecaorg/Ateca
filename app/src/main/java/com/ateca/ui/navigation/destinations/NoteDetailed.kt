@@ -2,8 +2,6 @@ package com.ateca.ui.navigation.destinations
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -13,10 +11,8 @@ import com.ateca.domain.constants.NavigationConstants
 import com.ateca.ui.navigation.Animations.enterTransition
 import com.ateca.ui.navigation.Animations.exitTransition
 import com.ateca.ui.navigation.Screen
-import com.ateca.ui.screens.note_list.viewmodel.NoteListEvents
-import com.ateca.ui.screens.note_list.viewmodel.NoteListViewModel
-import com.ateca.ui.screens.note_screen.NoteScreen
 import com.ateca.ui.screens.note_screen.veiwmodel.NoteViewModel
+import com.ateca.ui.screens.note_screen.view.NoteScreen
 import com.google.accompanist.navigation.animation.composable
 
 /**
@@ -40,16 +36,6 @@ fun NavGraphBuilder.addNoteDetailed(
         }
     ) {
         val viewModel: NoteViewModel = hiltViewModel()
-        val listViewModel: NoteListViewModel = hiltViewModel(
-            navController
-                .getBackStackEntry(Screen.NoteList.route)
-        )
-        val saveState = viewModel.saveState.collectAsState()
-
-        if (saveState.value) {
-            listViewModel.onTriggerEvent(NoteListEvents.GetAllNotes)
-        }
-
         NoteScreen(
             note = viewModel.note,
             onNavigationButtonClick = {

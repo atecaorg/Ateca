@@ -1,4 +1,4 @@
-package com.ateca.ui.screens.note_screen
+package com.ateca.ui.screens.note_screen.view
 
 import android.content.res.Configuration
 import androidx.compose.material.Scaffold
@@ -7,6 +7,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import com.ateca.domain.models.Note
 import com.ateca.ui.components.AppPreviewConstants
+import com.ateca.ui.screens.note_screen.view.components.NoteContent
+import com.ateca.ui.screens.note_screen.view.components.NoteTopAppBar
 import com.ateca.ui.theme.md2.AtecaTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
