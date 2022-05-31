@@ -9,8 +9,8 @@ import androidx.compose.animation.fadeOut
  */
 object Animations {
 
-    private const val duration = 700
-    private const val delay = 400
+    private const val duration = 300
+    private const val delay = 200
 
     val enterTransition = fadeIn(
         animationSpec = tween(durationMillis = duration, delayMillis = delay)
