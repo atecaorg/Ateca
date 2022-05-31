@@ -1,5 +1,6 @@
 package com.ateca.ui.screens.note_screen
 
+import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,6 +14,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ateca.R
+import com.ateca.ui.components.AppPreviewConstants
+import com.ateca.ui.components.topappbar.ScrollAwareTopAppBar
+import com.ateca.ui.theme.md2.AtecaTheme
 
 @Composable
 fun NoteTopAppBar(
@@ -21,8 +25,9 @@ fun NoteTopAppBar(
     onNavigationButtonClick: () -> Unit
 ) {
     val showMenu = remember { mutableStateOf(false) }
+    val visibilityState = remember { mutableStateOf(false) }
 
-    TopAppBar(
+    ScrollAwareTopAppBar(
         title = {
             NoteTitleField(
                 title = title,
@@ -40,6 +45,16 @@ fun NoteTopAppBar(
             }
         },
         actions = {
+            IconButton(onClick = { visibilityState.value = !visibilityState.value }) {
+                Icon(
+                    if (visibilityState.value) {
+                        painterResource(R.drawable.ic_icon_visibility)
+                    } else {
+                        painterResource(R.drawable.ic_icon_pencil)
+                    },
+                    contentDescription = null
+                )
+            }
             IconButton(
                 onClick = { showMenu.value = true }
             ) {
@@ -63,18 +78,7 @@ fun NoteTopAppBar(
                     Text("About")
                 }
             }
-        },
-        elevation = 0.dp
-    )
-}
-
-@Preview(backgroundColor = 0xFF00FF00, showBackground = true)
-@Composable
-private fun NoteTopAppBarPreview() {
-    NoteTopAppBar(
-        title = "SpaceX",
-        onNavigationButtonClick = {},
-        onTitleValueChange = {}
+        }
     )
 }
 
@@ -98,8 +102,42 @@ private fun NoteTitleField(
     )
 }
 
-@Preview(backgroundColor = 0xFF00FF00, showBackground = true)
+@Preview(
+    name = "NoteTopAppBarLight",
+    backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
+    showBackground = true
+)
+@Preview(
+    name = "NoteTopAppBarDark",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
+)
+@Composable
+private fun NoteTopAppBarPreview() {
+    AtecaTheme {
+        NoteTopAppBar(
+            title = "SpaceX",
+            onNavigationButtonClick = {},
+            onTitleValueChange = {}
+        )
+    }
+}
+
+@Preview(
+    name = "NoteTitleLight",
+    backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
+    showBackground = true
+)
+@Preview(
+    name = "NoteTitleDark",
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    backgroundColor = AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR,
+    showBackground = true
+)
 @Composable
 private fun NoteTitlePreview() {
-    NoteTitleField(title = "Title") {}
+    AtecaTheme {
+        NoteTitleField(title = "Title") {}
+    }
 }
