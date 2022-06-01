@@ -58,7 +58,7 @@ fun EditModeTopBar(
                 IconButton(onClick = onSelectAllClicked) {
                     ThemedIcon(
                         Icons.Filled.Checklist,
-                        contentDescription = "Select all"
+                        contentDescription = stringResource(id = R.string.select_all)
                     )
                 }
             }

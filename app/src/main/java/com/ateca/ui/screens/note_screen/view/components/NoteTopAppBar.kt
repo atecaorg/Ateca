@@ -5,6 +5,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +41,7 @@ fun NoteTopAppBar(
                 onClick = onNavigationButtonClick
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_icon_arrow),
+                    imageVector = Icons.Filled.ArrowBack,
                     contentDescription = null,
                 )
             }
@@ -48,9 +50,9 @@ fun NoteTopAppBar(
             IconButton(onClick = { visibilityState.value = !visibilityState.value }) {
                 Icon(
                     if (visibilityState.value) {
-                        painterResource(R.drawable.ic_icon_visibility)
+                        Icons.Filled.Visibility
                     } else {
-                        painterResource(R.drawable.ic_icon_pencil)
+                        Icons.Filled.ModeEdit
                     },
                     contentDescription = null
                 )
@@ -59,7 +61,7 @@ fun NoteTopAppBar(
                 onClick = { showMenu.value = true }
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_icon_menu),
+                    imageVector = Icons.Filled.MoreVert,
                     contentDescription = null
                 )
             }
@@ -93,6 +95,7 @@ private fun NoteTitleField(
         onValueChange = onValueChange,
         textStyle = MaterialTheme.typography.h6,
         colors = TextFieldDefaults.outlinedTextFieldColors(
+            textColor = MaterialTheme.colors.onBackground,
             unfocusedBorderColor = Color.Transparent,
             focusedBorderColor = Color.Transparent
         ),
