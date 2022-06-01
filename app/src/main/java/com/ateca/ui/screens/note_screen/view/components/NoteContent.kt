@@ -14,11 +14,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.ateca.domain.entity.NoteAtecaBlockExtension
+import com.ateca.domain.entity.YamlFrontMatterBlockExtension
 import com.ateca.domain.models.Note
 import com.ateca.ui.components.AppPreviewConstants
 import com.ateca.ui.theme.md2.AtecaTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import org.commonmark.Extension
+import org.commonmark.node.Document
+import org.commonmark.node.Text
+import org.commonmark.parser.Parser
+import java.util.*
 
 @Composable
 fun NoteContent(
@@ -31,6 +38,8 @@ fun NoteContent(
         tags: List<String>
     ) -> Unit
 ) {
+
+
     val note = noteState.collectAsState()
 
     Column(
@@ -54,18 +63,31 @@ private fun NoteTextField(
     text: String,
     onValueChange: (String) -> Unit
 ) {
-    OutlinedTextField(
-        value = text,
-        onValueChange = onValueChange,
-        textStyle = MaterialTheme.typography.body1,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            textColor = MaterialTheme.colors.onBackground
-        ),
-        modifier = Modifier
-            .fillMaxSize()
-    )
+
+    val xExtension: Set<Extension> = Collections.singleton(NoteAtecaBlockExtension.create())
+//        val xExtension: Set<Extension> = Collections.singleton(YamlFrontMatterBlockExtension.create())
+    val xPARSER = Parser.builder().extensions(xExtension).build()
+
+//        val textThis = input
+    val textThis = MIXED_MD
+//        val textThis = MIXED_MY_CUSTOM_LINC
+
+    val root = xPARSER.parse(textThis) as Document
+
+    MDDocument(root)
+
+//    OutlinedTextField(
+//        value = textThis,
+//        onValueChange = onValueChange,
+//        textStyle = MaterialTheme.typography.body1,
+//        colors = TextFieldDefaults.outlinedTextFieldColors(
+//            unfocusedBorderColor = Color.Transparent,
+//            focusedBorderColor = Color.Transparent,
+//            textColor = MaterialTheme.colors.onBackground
+//        ),
+//        modifier = Modifier
+//            .fillMaxSize()
+//    )
 }
 
 @Preview(

@@ -9,4 +9,10 @@ object Markdown {
      */
     private const val version = "0.64.0"
     const val flexmark = "com.vladsch.flexmark:flexmark:$version"
+
+    /**
+     * @see <a href="https://github.com/commonmark/commonmark-java"> commonmark</a>
+     */
+    private const val versionMD = "0.18.1"
+    const val commonmark = "org.commonmark:commonmark:$versionMD"
 }

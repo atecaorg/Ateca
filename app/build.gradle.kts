@@ -166,6 +166,7 @@ dependencies {
 
     // Markdown processor
     implementation(Markdown.flexmark)
+    implementation(Markdown.commonmark)
 
     // Window
     implementation(AndroidX.Window.window)
