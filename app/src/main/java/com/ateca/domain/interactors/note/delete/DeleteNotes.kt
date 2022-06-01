@@ -18,7 +18,10 @@ class DeleteNotes(
     private val noteSource: INoteDataSource,
 ) : IDeleteNotes {
 
-    override fun execute(ids: List<NoteId>): Flow<DataState<Nothing>> = flow {
+    @Suppress("UnnecessaryVariable")
+    override fun execute(param: List<NoteId>): Flow<DataState<Nothing>> = flow {
+        val ids = param
+
         try {
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))

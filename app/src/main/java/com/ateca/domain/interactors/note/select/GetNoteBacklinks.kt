@@ -19,7 +19,10 @@ class GetNoteBacklinks(
     private val linkSource: ILinkDataSource,
 ) : IGetNoteBacklinks {
 
-    override fun execute(id: NoteId): Flow<DataState<List<Link>>> = flow {
+    @Suppress("UnnecessaryVariable")
+    override fun execute(param: NoteId): Flow<DataState<List<Link>>> = flow {
+        val id = param
+
         try {
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))

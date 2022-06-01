@@ -19,7 +19,10 @@ class GetNoteById(
     private val noteSource: INoteDataSource,
 ) : IGetNoteById {
 
-    override fun execute(id: NoteId): Flow<DataState<Note>> = flow {
+    @Suppress("UnnecessaryVariable")
+    override fun execute(param: NoteId): Flow<DataState<Note>> = flow {
+        val id = param
+
         try {
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))

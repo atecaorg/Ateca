@@ -21,7 +21,10 @@ class SaveNote(
     private val markdownParser: IMarkdownProcessor
 ) : ISaveNote {
 
-    override fun execute(note: Note): Flow<DataState<Nothing>> = flow {
+    @Suppress("UnnecessaryVariable")
+    override fun execute(param: Note): Flow<DataState<Nothing>> = flow {
+        val note = param
+
         try {
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
@@ -41,7 +44,6 @@ class SaveNote(
                     tags = tags
                 )
             )
-            emit(DataState.Data())
         } catch (e: Exception) {
             e.printStackTrace()
             emit(genericDialogResponse(e, R.string.error, R.string.save_note_error_msg))

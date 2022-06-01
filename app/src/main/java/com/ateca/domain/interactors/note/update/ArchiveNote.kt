@@ -18,7 +18,10 @@ class ArchiveNote(
     private val noteSource: INoteDataSource,
 ) : IArchiveNote {
 
-    override fun execute(id: NoteId): Flow<DataState<Nothing>> = flow {
+    @Suppress("UnnecessaryVariable")
+    override fun execute(param: NoteId): Flow<DataState<Nothing>> = flow {
+        val id = param
+
         try {
             debugBehavior()
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))

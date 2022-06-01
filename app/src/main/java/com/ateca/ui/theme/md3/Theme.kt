@@ -1,5 +1,7 @@
 package com.ateca.ui.theme.md3
 
+import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
@@ -68,6 +70,7 @@ val AtecaDarkColorScheme = darkColorScheme(
     inversePrimary = md_theme_dark_inversePrimary,
 )
 
+@TargetApi(Build.VERSION_CODES.S)
 @Composable
 fun AtecaTheme(
     isDarkTheme: Boolean = isSystemInDarkTheme(),
