@@ -1,5 +1,6 @@
 package com.ateca.domain.interactors
 
+import com.ateca.domain.core.AppDispatchers
 import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
@@ -36,20 +37,21 @@ data class NoteInteractors(
         fun build(
             noteDataSource: INoteDataSource,
             linkDataSource: ILinkDataSource,
-            markdownProcessor: IMarkdownProcessor
+            markdownProcessor: IMarkdownProcessor,
+            dispatchers: AppDispatchers,
         ): NoteInteractors =
             NoteInteractors(
-                getAllNotes = GetAllNotes(noteDataSource),
-                getAllNotesFlow = GetAllNotesFlow(noteDataSource),
-                getNoteById = GetNoteById(noteDataSource),
-                getNoteLinks = GetNoteLinks(linkDataSource),
-                getNoteBacklinks = GetNoteBacklinks(linkDataSource),
-                createNote = CreateNote(noteDataSource),
-                archiveNote = ArchiveNote(noteDataSource),
-                saveNote = SaveNote(noteDataSource, markdownProcessor),
-                deleteNote = DeleteNote(noteDataSource),
-                deleteNotes = DeleteNotes(noteDataSource),
-                filterNotes = FilterNotes(),
+                getAllNotes = GetAllNotes(noteDataSource, dispatchers),
+                getAllNotesFlow = GetAllNotesFlow(noteDataSource, dispatchers),
+                getNoteById = GetNoteById(noteDataSource, dispatchers),
+                getNoteLinks = GetNoteLinks(linkDataSource, dispatchers),
+                getNoteBacklinks = GetNoteBacklinks(linkDataSource, dispatchers),
+                createNote = CreateNote(noteDataSource, dispatchers),
+                archiveNote = ArchiveNote(noteDataSource, dispatchers),
+                saveNote = SaveNote(noteDataSource, markdownProcessor, dispatchers),
+                deleteNote = DeleteNote(noteDataSource, dispatchers),
+                deleteNotes = DeleteNotes(noteDataSource, dispatchers),
+                filterNotes = FilterNotes(dispatchers),
             )
     }
 }

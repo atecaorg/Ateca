@@ -1,6 +1,7 @@
 package com.ateca.domain.interactors.note.select
 
 import com.ateca.R
+import com.ateca.domain.core.AppDispatchers
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.datasource.INoteDataSource
@@ -11,16 +12,18 @@ import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /**
  * Created by dronpascal on 17.05.2022.
  */
 class GetNoteById(
     private val noteSource: INoteDataSource,
+    private val dispatchers: AppDispatchers,
 ) : IGetNoteById {
 
-    @Suppress("UnnecessaryVariable")
     override fun execute(param: NoteId): Flow<DataState<Note>> = flow {
+        @Suppress("UnnecessaryVariable")
         val id = param
 
         try {
@@ -34,5 +37,5 @@ class GetNoteById(
         } finally {
             emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }
-    }
+    }.flowOn(dispatchers.io)
 }

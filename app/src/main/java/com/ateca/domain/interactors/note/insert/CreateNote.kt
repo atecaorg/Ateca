@@ -3,6 +3,7 @@ package com.ateca.domain.interactors.note.insert
 import androidx.core.text.isDigitsOnly
 import com.ateca.R
 import com.ateca.domain.constants.NoteConstants.BASE_TITLE
+import com.ateca.domain.core.AppDispatchers
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.datasource.INoteDataSource
@@ -12,9 +13,9 @@ import com.ateca.domain.interactors.util.genericDialogResponse
 import com.ateca.domain.models.Note
 import com.ateca.domain.models.NoteId
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import java.util.*
 
@@ -23,6 +24,7 @@ import java.util.*
  */
 class CreateNote(
     private val noteSource: INoteDataSource,
+    private val dispatchers: AppDispatchers,
 ) : ICreateNote {
 
     override fun execute(
@@ -36,10 +38,9 @@ class CreateNote(
             emit(DataState.Loading(progressBarState = ProgressBarState.Loading))
 
             val noteId = id ?: UUID.randomUUID().toString()
-            val noteTitle = title
-                ?: withContext(Dispatchers.Default) {
-                    getLessUniqueTitle()
-                }
+            val noteTitle = title ?: withContext(dispatchers.default) {
+                getLessUniqueTitle()
+            }
             val newNote = Note(
                 id = noteId,
                 title = noteTitle
@@ -53,7 +54,7 @@ class CreateNote(
         } finally {
             emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }
-    }
+    }.flowOn(dispatchers.io)
 
     /**
      * Search less base unique title for new note.

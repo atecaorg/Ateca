@@ -1,16 +1,12 @@
 package com.ateca.domain.interactors.note
 
 import com.ateca.R
-import com.ateca.domain.core.DataState
-import com.ateca.domain.core.ProgressBarState
-import com.ateca.domain.core.SortOrder
-import com.ateca.domain.core.SortType
+import com.ateca.domain.core.*
 import com.ateca.domain.interactors.IFilterNotes
 import com.ateca.domain.interactors.util.debugBehavior
 import com.ateca.domain.interactors.util.genericDialogResponse
 import com.ateca.domain.models.Note
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -22,7 +18,9 @@ import java.util.*
  * Does not access any DataSources.
  * This helps to keep the filtering logic isolated.
  */
-class FilterNotes : IFilterNotes {
+class FilterNotes(
+    private val dispatchers: AppDispatchers,
+) : IFilterNotes {
 
     override fun execute(
         param: IFilterNotes.Parameter
@@ -54,7 +52,7 @@ class FilterNotes : IFilterNotes {
         } finally {
             emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }
-    }.flowOn(Dispatchers.Default)
+    }.flowOn(dispatchers.default)
 
     private fun applySort(
         filteredList: MutableList<Note>,
@@ -78,9 +76,9 @@ class FilterNotes : IFilterNotes {
         }
     }
 
-    private fun <T, R : Comparable<R>> MutableList<T>.applySortOrder(
+    private inline fun <T, R : Comparable<R>> MutableList<T>.applySortOrder(
         sortOrder: SortOrder,
-        sortLambda: (T) -> R?
+        crossinline sortLambda: (T) -> R?
     ) {
         when (sortOrder) {
             is SortOrder.Idle -> {}

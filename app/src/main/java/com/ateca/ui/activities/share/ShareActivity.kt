@@ -17,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.ateca.R
 import com.ateca.domain.datasource.ISettingsDataSource
 import com.ateca.domain.entity.Theme
 import com.ateca.domain.interactors.NoteInteractors
@@ -30,7 +31,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import com.ateca.R
 
 @AndroidEntryPoint
 class ShareActivity : ComponentActivity() {
