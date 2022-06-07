@@ -1,5 +1,6 @@
 package com.ateca.di.note
 
+import com.ateca.domain.core.AppDispatchers
 import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
@@ -27,12 +28,13 @@ object NoteInteractorsModule {
     fun provideNoteInteractors(
         noteDataSource: INoteDataSource,
         linkDataSource: ILinkDataSource,
-        markdownProcessor: IMarkdownProcessor
+        markdownProcessor: IMarkdownProcessor,
     ): NoteInteractors {
         return NoteInteractors.build(
             noteDataSource,
             linkDataSource,
-            markdownProcessor
+            markdownProcessor,
+            AppDispatchers()
         )
     }
 }
