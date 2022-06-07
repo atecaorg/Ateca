@@ -1,6 +1,5 @@
 package com.ateca.ui.theme.md3
 
-import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

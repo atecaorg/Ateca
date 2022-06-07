@@ -2,7 +2,7 @@ name: Lint Feature Branch
 
 on:
   push:
-    branches: 
+    branches:
       - 'feature/**'
       - 'improvement/**'
       - 'fix/**'
@@ -24,7 +24,7 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-          
+
       - name: Restore Cache
         uses: actions/cache@v2
         with:
@@ -34,7 +34,7 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-            
+
       - name: Run Debug Lint
         run: ./gradlew lintDebug
 

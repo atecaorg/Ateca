@@ -2,7 +2,7 @@ name: Build Feature Branch
 
 on:
   push:
-    branches: 
+    branches:
       - 'feature/**'
       - 'improvement/**'
       - 'fix/**'
@@ -11,28 +11,28 @@ on:
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-  
+
 jobs:
 
   build_job:
-      name: Build
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout the code
-          uses: actions/checkout@v2
-          
-        - name: Make gradlew executable
-          run: chmod +x ./gradlew
-          
-        - name: Restore Cache
-          uses: actions/cache@v2
-          with:
-            path: |
-              ~/.gradle/caches
-              ~/.gradle/wrapper
-            key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-            restore-keys: |
-              ${{ runner.os }}-gradle-
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
 
-        - name: Build the app
-          run: ./gradlew buildDebug
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Restore Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Build the app
+        run: ./gradlew buildDebug
