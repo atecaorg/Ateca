@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "25300069741",
+    "project_id": "ateca-68023",
+    "storage_bucket": "ateca-68023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25300069741:android:dc1f36944d94ac7a3cfe64",
+        "android_client_info": {
+          "package_name": "com.ateca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "25300069741-r26063f4j7gi5le8gqme902mf3n9675m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ateca",
+            "certificate_hash": "8478b86258b2092b190bf233e876b9b7e3393821"
+          }
+        },
+        {
+          "client_id": "25300069741-p7aj1thutadc6u6qorg0vup677t8e1sh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE4EfOH-2TIC78E8xgNqv3N4YGCfAHRTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "25300069741-p7aj1thutadc6u6qorg0vup677t8e1sh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
