@@ -30,7 +30,9 @@ class NoteListViewModel @Inject constructor(
     val state: MutableState<NoteListState> = mutableStateOf(NoteListState())
 
     private val currentQuery = MutableStateFlow(EMPTY_QUERY)
+    private var previousSearchJob: Job? = null
     private var currentSearchJob: Job? = null
+    private var isQueryClarified: Boolean = true
 
     init {
         subscribeAllNotesFlow()
@@ -50,10 +52,12 @@ class NoteListViewModel @Inject constructor(
     }
 
     private fun subscribeAllNotesFlow() {
+        // Get notes flow
         noteInteractors.getAllNotesFlow.execute(Unit).onEach { dataState ->
             when (dataState) {
                 is DataState.Response -> dataState.handle()
                 is DataState.Data -> {
+                    // Subscribe on notes flow
                     dataState.data?.onEach { newList ->
                         state.value = state.value.copy(noteItems = newList)
                         getFilteredNotes(currentQuery.value)
@@ -69,28 +73,29 @@ class NoteListViewModel @Inject constructor(
         currentQuery
             .debounce(DEBOUNCE_DELAY_TIME_MS)
             .distinctUntilChanged()
-            .onEach { query ->
-                // Interrupt previous search job before new one.
-                currentSearchJob?.cancel()
-                getFilteredNotes(query)
-            }
+            .onEach { query -> getFilteredNotes(query) }
             .launchIn(viewModelScope)
     }
 
     private fun onQueryChanged(newQuery: String) {
+        isQueryClarified = newQuery.contains(currentQuery.value)
         currentQuery.value = newQuery
     }
 
-    /**
-     * TODO Optimization - Handle case when list is only shrinking.
-     *  In this case we have to use notesToFilter = state.value.filteredNoteItems
-     *  Otherwise notesToFilter = state.value.noteItems
-     */
     private fun getFilteredNotes(query: String) {
-        if (query.isBlank()) return
+        if (query.isBlank()) {
+            state.value = state.value.copy(filteredNoteItems = state.value.noteItems)
+            return
+        }
+        previousSearchJob?.cancel()  // max 2 active search job
+        previousSearchJob = currentSearchJob
         currentSearchJob = noteInteractors.filterNotes.execute(
             IFilterNotes.Parameter(
-                notesToFilter = state.value.noteItems,
+                notesToFilter = if (isQueryClarified) {
+                    state.value.filteredNoteItems
+                } else {
+                    state.value.noteItems
+                },
                 textFilter = query,
                 sortType = SortType.Modified,
                 sortOrder = SortOrder.Descending
@@ -99,6 +104,7 @@ class NoteListViewModel @Inject constructor(
             when (dataState) {
                 is DataState.Response -> dataState.handle()
                 is DataState.Data -> {
+                    previousSearchJob?.run { if (isActive) cancel() }
                     state.value = state.value.copy(
                         filteredNoteItems = dataState.data ?: emptyList()
                     )
