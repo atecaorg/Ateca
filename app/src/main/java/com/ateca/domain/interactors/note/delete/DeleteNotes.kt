@@ -1,6 +1,7 @@
 package com.ateca.domain.interactors.note.delete
 
 import com.ateca.R
+import com.ateca.domain.core.AppDispatchers
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.datasource.INoteDataSource
@@ -10,16 +11,18 @@ import com.ateca.domain.interactors.util.genericDialogResponse
 import com.ateca.domain.models.NoteId
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /**
  * Created by dronpascal on 24.05.2022.
  */
 class DeleteNotes(
     private val noteSource: INoteDataSource,
+    private val dispatchers: AppDispatchers,
 ) : IDeleteNotes {
 
-    @Suppress("UnnecessaryVariable")
     override fun execute(param: List<NoteId>): Flow<DataState<Nothing>> = flow {
+        @Suppress("UnnecessaryVariable")
         val ids = param
 
         try {
@@ -35,5 +38,5 @@ class DeleteNotes(
         } finally {
             emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }
-    }
+    }.flowOn(dispatchers.io)
 }

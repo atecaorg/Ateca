@@ -1,6 +1,7 @@
 package com.ateca.domain.interactors.note.update
 
 import com.ateca.R
+import com.ateca.domain.core.AppDispatchers
 import com.ateca.domain.core.DataState
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.datasource.INoteDataSource
@@ -12,17 +13,19 @@ import com.ateca.domain.models.Link
 import com.ateca.domain.models.Note
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 /**
  * Created by dronpascal on 17.05.2022.
  */
 class SaveNote(
     private val noteSource: INoteDataSource,
-    private val markdownParser: IMarkdownProcessor
+    private val markdownParser: IMarkdownProcessor,
+    private val dispatchers: AppDispatchers,
 ) : ISaveNote {
 
-    @Suppress("UnnecessaryVariable")
-    override fun execute(param: Note): Flow<DataState<Nothing>> = flow {
+    override fun execute(param: Note): Flow<DataState<Nothing>> = flow<DataState<Nothing>> {
+        @Suppress("UnnecessaryVariable")
         val note = param
 
         try {
@@ -50,5 +53,5 @@ class SaveNote(
         } finally {
             emit(DataState.Loading(progressBarState = ProgressBarState.Idle))
         }
-    }
+    }.flowOn(dispatchers.io)
 }
