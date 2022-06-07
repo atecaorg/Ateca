@@ -1,0 +1,15 @@
+package com.ateca.domain.core
+
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.MainCoroutineDispatcher
+
+/**
+ * Created by dronpascal on 07.06.2022.
+ */
+class AppDispatchers(
+    val main: MainCoroutineDispatcher = Dispatchers.Main,
+    val default: CoroutineDispatcher = Dispatchers.Default,
+    val io: CoroutineDispatcher = Dispatchers.IO,
+    val unconfined: CoroutineDispatcher = Dispatchers.Unconfined,
+)
