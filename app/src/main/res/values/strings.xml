@@ -9,6 +9,7 @@
     <string name="search">Search</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 
     <!-- Stub -->
     <string name="work_in_progress">This is currently work in progress</string>
@@ -44,5 +45,7 @@
     <string name="light">Light</string>
     <string name="system">System</string>
     <string name="theme">Theme</string>
+    <string name="note_saved">Note saved…</string>
+    <string name="no_data_share">No data for share..</string>
 
 </resources>
