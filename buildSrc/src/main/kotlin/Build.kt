@@ -17,4 +17,10 @@ object Build {
     const val kotlinSerialization = "org.jetbrains.kotlin:kotlin-serialization:${Kotlin.version}"
 
     const val hiltAndroid = "com.google.dagger:hilt-android-gradle-plugin:${Hilt.version}"
+
+    private const val googleServicesVersion = "4.3.10"
+    const val googleServices = "com.google.gms:google-services:$googleServicesVersion"
+
+    private const val crashlyticsVersion = "2.9.0"
+    const val crashlytics = "com.google.firebase:firebase-crashlytics-gradle:$crashlyticsVersion"
 }
