@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import com.ateca.BuildConfig
 import com.ateca.R
 import com.ateca.domain.entity.Theme
 import com.ateca.domain.models.ApplicationSettings
@@ -97,6 +98,15 @@ fun SettingsScreen(
                 settingsTitle = stringResource(R.string.software_license),
                 onClick = { showLicenseDialog = true }
             )
+            if (BuildConfig.DEBUG) {
+                SettingsGroup(
+                    text = "Debug"
+                )
+                SettingsTile(
+                    settingsTitle = "Crash the app",
+                    onClick = { throw RuntimeException("Test Crash") }
+                )
+            }
         }
 
     }

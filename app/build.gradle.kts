@@ -4,6 +4,8 @@ plugins {
     id("kotlinx-serialization")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -166,6 +168,11 @@ dependencies {
 
     // Window
     implementation(AndroidX.Window.window)
+
+    // Firebase
+    implementation(platform(Google.Firebase.core))
+    implementation(Google.Firebase.analyticsKtx)
+    implementation(Google.Firebase.crashlyticsKtx)
 
     // Test
     androidTestImplementation(Junit.junit4)

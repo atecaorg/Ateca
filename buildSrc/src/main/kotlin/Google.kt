@@ -10,4 +10,14 @@ object Google {
         const val material3 = "com.google.android.material:material:$version"
     }
 
+    /**
+     * @see <a href="https://firebase.google.com/docs/android/setup#available-libraries">Firebase</a>
+     */
+    object Firebase {
+        private const val version = "30.1.0"
+        const val core = "com.google.firebase:firebase-bom:$version"
+        const val analyticsKtx = "com.google.firebase:firebase-analytics-ktx"
+        const val crashlyticsKtx = "com.google.firebase:firebase-crashlytics-ktx"
+    }
+
 }
