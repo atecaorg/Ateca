@@ -41,6 +41,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25300069741:android:9c5e0b890e4dd54b3cfe64",
+        "android_client_info": {
+          "package_name": "com.ateca.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "25300069741-1qid0tknhapj7euvsc7osg9qj5nhai4i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ateca.dev",
+            "certificate_hash": "8478b86258b2092b190bf233e876b9b7e3393821"
+          }
+        },
+        {
+          "client_id": "25300069741-p7aj1thutadc6u6qorg0vup677t8e1sh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE4EfOH-2TIC78E8xgNqv3N4YGCfAHRTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "25300069741-p7aj1thutadc6u6qorg0vup677t8e1sh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"
