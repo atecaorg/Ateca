@@ -5,27 +5,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ateca.domain.entity.NoteAtecaBlockExtension
-import com.ateca.domain.entity.YamlFrontMatterBlockExtension
 import com.ateca.domain.models.Note
 import com.ateca.ui.components.AppPreviewConstants
 import com.ateca.ui.theme.md2.AtecaTheme
+import com.vladsch.flexmark.parser.Parser
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import org.commonmark.Extension
-import org.commonmark.node.Document
-import org.commonmark.node.Text
-import org.commonmark.parser.Parser
-import java.util.*
 
 @Composable
 fun NoteContent(
@@ -64,15 +54,11 @@ private fun NoteTextField(
     onValueChange: (String) -> Unit
 ) {
 
-    val xExtension: Set<Extension> = Collections.singleton(NoteAtecaBlockExtension.create())
-//        val xExtension: Set<Extension> = Collections.singleton(YamlFrontMatterBlockExtension.create())
-    val xPARSER = Parser.builder().extensions(xExtension).build()
+    val markParser = Parser.builder().build()
 
-//        val textThis = input
     val textThis = MIXED_MD
-//        val textThis = MIXED_MY_CUSTOM_LINC
 
-    val root = xPARSER.parse(textThis) as Document
+    val root = markParser.parse(textThis)
 
     MDDocument(root)
 

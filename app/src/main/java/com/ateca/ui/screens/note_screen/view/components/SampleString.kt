@@ -29,7 +29,9 @@ const val input = "---" +
 const val MIXED_MD = """
 ### Markdown Header
 
-This is regular text without formatting in a single paragraph.
+This is regular text without formatting in a single paragraph. [[The_car|http://hellsoft.se]]
+
+[[The_car|http://hellsoft.se]]
 
 ![!!!!!!!!Seriousdfgdfgdfg](file:///android_asset/serios.jpg)
 

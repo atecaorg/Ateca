@@ -21,7 +21,13 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.text.*
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.Placeholder
+import androidx.compose.ui.text.PlaceholderVerticalAlign
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLayoutResult
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -29,9 +35,29 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import coil.size.OriginalSize
-import com.ateca.domain.entity.NoteAtecaBlock
-import org.commonmark.node.*
-import org.commonmark.node.Paragraph
+import com.vladsch.flexmark.ast.BlockQuote
+import com.vladsch.flexmark.ast.BulletList
+import com.vladsch.flexmark.ast.Code
+import com.vladsch.flexmark.ast.Emphasis
+import com.vladsch.flexmark.ast.FencedCodeBlock
+import com.vladsch.flexmark.ast.HardLineBreak
+import com.vladsch.flexmark.ast.Heading
+import com.vladsch.flexmark.ast.HtmlBlock
+import com.vladsch.flexmark.ast.Image
+import com.vladsch.flexmark.ast.IndentedCodeBlock
+import com.vladsch.flexmark.ast.Link
+import com.vladsch.flexmark.ast.ListBlock
+import com.vladsch.flexmark.ast.OrderedList
+import com.vladsch.flexmark.ast.Paragraph
+import com.vladsch.flexmark.ast.StrongEmphasis
+import com.vladsch.flexmark.ast.Text
+import com.vladsch.flexmark.ast.ThematicBreak
+import com.vladsch.flexmark.util.ast.Document
+import com.vladsch.flexmark.util.ast.Node
+
+/**
+ * These functions will render flexmark
+ */
 
 private const val TAG_URL = "url"
 private const val TAG_IMAGE_URL = "imageUrl"
@@ -89,7 +115,7 @@ fun MDImage(image: Image, modifier: Modifier = Modifier) {
     Box(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
         Image(
             painter = rememberImagePainter(
-                data = image.destination,
+                data = image.url.normalizeEOL(),
                 builder = {
                     size(OriginalSize)
                 },
@@ -101,7 +127,7 @@ fun MDImage(image: Image, modifier: Modifier = Modifier) {
 
 @Composable
 fun MDBulletList(bulletList: BulletList, modifier: Modifier = Modifier) {
-    val marker = bulletList.bulletMarker
+    val marker = bulletList.openingMarker///////////////?
     MDListItems(bulletList, modifier = modifier) {
         val text = buildAnnotatedString {
             pushStyle(MaterialTheme.typography.body1.toSpanStyle())
@@ -204,24 +230,8 @@ fun MDBlockChildren(parent: Node) {
             is BulletList -> MDBulletList(child)
             is OrderedList -> MDOrderedList(child)
             is HtmlBlock -> MDOHtmlBlock(child)
-            is NoteAtecaBlock -> MDNoteAtecaBlock(child)
         }
         child = child.next
-    }
-}
-
-
-@Composable
-fun MDNoteAtecaBlock(noteAtecaBlock: NoteAtecaBlock, modifier: Modifier = Modifier) {
-    val padding = if (noteAtecaBlock.parent is Document) 8.dp else 0.dp
-
-    Box(modifier = modifier.padding(bottom = padding)) {
-        val styledText = buildAnnotatedString {
-            pushStyle(MaterialTheme.typography.body1.toSpanStyle())
-            appendMarkdownChildren(noteAtecaBlock, MaterialTheme.colors)
-            pop()
-        }
-        MarkdownText(styledText, MaterialTheme.typography.body1)
     }
 }
 
@@ -232,7 +242,7 @@ fun MDOHtmlBlock(htmlBlock: HtmlBlock, modifier: Modifier = Modifier) {
     val padding = if (htmlBlock.parent is Document) 8.dp else 0.dp
     Box(modifier = modifier.padding(start = 8.dp, bottom = padding)) {
         Text(
-            text = htmlBlock.literal,
+            text = htmlBlock.chars.normalizeEOL(),//Проверить?
             style = TextStyle(fontFamily = FontFamily.Monospace, color = Color.Green),
             modifier = modifier
         )
@@ -244,7 +254,7 @@ fun MDFencedCodeBlock(fencedCodeBlock: FencedCodeBlock, modifier: Modifier = Mod
     val padding = if (fencedCodeBlock.parent is Document) 8.dp else 0.dp
     Box(modifier = modifier.padding(start = 8.dp, bottom = padding)) {
         Text(
-            text = fencedCodeBlock.literal,
+            text = fencedCodeBlock.chars.normalizeEOL(),//Проверить?
             style = TextStyle(fontFamily = FontFamily.Monospace, color = Color.Red),
             modifier = modifier
         )
@@ -259,9 +269,8 @@ fun AnnotatedString.Builder.appendMarkdownChildren(
     while (child != null) {
         when (child) {
             is Paragraph -> appendMarkdownChildren(child, colors)
-            is NoteAtecaBlock -> appendMarkdownChildren(child, colors)
-            is Text -> append(child.literal)
-            is Image -> appendInlineContent(TAG_IMAGE_URL, child.destination)
+            is Text -> append(child.chars.normalizeEOL())
+            is Image -> appendInlineContent(TAG_IMAGE_URL, child.url.normalizeEOL())//////+++
             is Emphasis -> {
                 pushStyle(SpanStyle(fontStyle = FontStyle.Italic))
                 appendMarkdownChildren(child, colors)
@@ -274,7 +283,7 @@ fun AnnotatedString.Builder.appendMarkdownChildren(
             }
             is Code -> {
                 pushStyle(TextStyle(fontFamily = FontFamily.Monospace).toSpanStyle())
-                append(child.literal)
+                append(child.chars.normalizeEOL())///////вроде норм
                 pop()
             }
             is HardLineBreak -> {
@@ -283,7 +292,7 @@ fun AnnotatedString.Builder.appendMarkdownChildren(
             is Link -> {
                 val underline = SpanStyle(colors.primary, textDecoration = TextDecoration.Underline)
                 pushStyle(underline)
-                pushStringAnnotation(TAG_URL, child.destination)
+                pushStringAnnotation(TAG_URL, child.url.normalizeEOL())//+++
                 appendMarkdownChildren(child, colors)
                 pop()
                 pop()
