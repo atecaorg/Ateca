@@ -166,7 +166,8 @@ dependencies {
     implementation(AndroidX.DataStore.dataStore)
 
     // Markdown processor
-    implementation(Markdown.flexmark)
+    implementation(Markdown.Flexmark.core)
+    implementation(Markdown.Flexmark.wikilink)
 
     // Window
     implementation(AndroidX.Window.window)
