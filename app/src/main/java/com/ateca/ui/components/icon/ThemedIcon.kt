@@ -29,7 +29,7 @@ fun ThemedIcon(
     imageVector: ImageVector,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = MaterialTheme.colors.onSurface
+    tint: Color = MaterialTheme.colors.onBackground
 ) {
     val fontScale = LocalDensity.current.fontScale
     val scaleValue = when {
@@ -45,7 +45,7 @@ fun ThemedIcon(
     painter: Painter,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = MaterialTheme.colors.onSurface
+    tint: Color = MaterialTheme.colors.onBackground
 ) {
     val fontScale = LocalDensity.current.fontScale
     val scaleValue = when {

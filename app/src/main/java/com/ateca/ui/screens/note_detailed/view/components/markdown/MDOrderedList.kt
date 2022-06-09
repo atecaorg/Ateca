@@ -1,4 +1,4 @@
-package com.ateca.ui.screens.note_screen.view.components.markdown
+package com.ateca.ui.screens.note_detailed.view.components.markdown
 
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable

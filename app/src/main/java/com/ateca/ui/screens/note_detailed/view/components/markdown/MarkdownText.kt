@@ -1,4 +1,4 @@
-package com.ateca.ui.screens.note_screen.view.components.markdown
+package com.ateca.ui.screens.note_detailed.view.components.markdown
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image
@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.rememberAsyncImagePainter
 import com.ateca.R
 import com.ateca.ui.components.AppPreviewConstants
-import com.ateca.ui.screens.note_screen.view.constants.MDTags.TAG_IMAGE_URL
-import com.ateca.ui.screens.note_screen.view.constants.MDTags.TAG_URL
+import com.ateca.ui.screens.note_detailed.view.constants.MDTags.TAG_IMAGE_URL
+import com.ateca.ui.screens.note_detailed.view.constants.MDTags.TAG_URL
 import com.ateca.ui.theme.md2.AtecaTheme
 
 /**

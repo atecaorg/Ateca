@@ -1,4 +1,4 @@
-package com.ateca.ui.screens.note_screen.view.components.markdown
+package com.ateca.ui.screens.note_detailed.view.components.markdown
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.ateca.ui.components.AppPreviewConstants
-import com.ateca.ui.screens.note_screen.view.constants.NotePreviewConstants
+import com.ateca.ui.screens.note_detailed.view.constants.NotePreviewConstants
 import com.ateca.ui.theme.md2.AtecaTheme
 import com.vladsch.flexmark.ast.*
 import com.vladsch.flexmark.ext.wikilink.WikiLinkExtension
@@ -15,7 +15,6 @@ import com.vladsch.flexmark.parser.Parser
 import com.vladsch.flexmark.util.ast.Document
 import com.vladsch.flexmark.util.ast.Node
 import com.vladsch.flexmark.util.data.MutableDataSet
-import com.vladsch.flexmark.util.sequence.BasedSequence
 
 /**
  * Created by st989-ks on 02.06.2022.
@@ -84,7 +83,7 @@ private fun MDThematicBreak(
 @Composable
 private fun MDDocumentPreview() {
     AtecaTheme {
-        Box(modifier = Modifier.fillMaxSize()){
+        Box(modifier = Modifier.fillMaxSize()) {
             val options = MutableDataSet()
             options.set(Parser.EXTENSIONS, listOf(WikiLinkExtension.create()))
             val parser = Parser.builder(options).build()

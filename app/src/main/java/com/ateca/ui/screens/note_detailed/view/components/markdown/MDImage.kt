@@ -1,4 +1,4 @@
-package com.ateca.ui.screens.note_screen.view.components.markdown
+package com.ateca.ui.screens.note_detailed.view.components.markdown
 
 import android.content.res.Configuration
 import androidx.compose.foundation.Image

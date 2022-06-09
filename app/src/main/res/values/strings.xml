@@ -27,6 +27,7 @@
     <string name="delete_note_error_msg">Failed to delete note</string>
     <string name="get_note_links_error_msg">Failed to get note links</string>
     <string name="get_note_backlinks_error_msg">Failed to get note backlinks</string>
+    <string name="get_note_id_parameter_error_msg">Unable to retrieve the details for this note.</string>
 
     <!-- NoteList -->
     <!-- TopBar -->

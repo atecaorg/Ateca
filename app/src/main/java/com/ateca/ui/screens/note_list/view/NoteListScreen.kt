@@ -70,7 +70,7 @@ fun NoteListScreen(
 
     DefaultScreenUI(
         queue = state.errorQueue,
-        onRemoveHeadFromQueue = { events(NoteListEvents.OnRemoveHeadFromQueue) },
+        onRemoveHeadFromQueue = { events(NoteListEvents.RemoveHeadFromMessageQueue) },
         progressBarState = state.progressBarState,
     ) {
         val lazyListState: LazyListState = rememberLazyListState()
@@ -93,7 +93,7 @@ fun NoteListScreen(
                     selectedNote = state.selectedNote,
                     isScrollInInitialState = { lazyListState.isScrollInInitialState() },
                     onSettingIconClicked = onNavigateToSettingsScreen,
-                    onAddTestNoteClicked = { events(NoteListEvents.OnAddTestNoteClicked) },
+                    onAddTestNoteClicked = { events(NoteListEvents.AddTestNoteClicked) },
                     onCloseSelectModeClicked = { events(NoteListEvents.UnselectAll) },
                     onSelectAllClicked = { events(NoteListEvents.SelectAll) }
                 )
