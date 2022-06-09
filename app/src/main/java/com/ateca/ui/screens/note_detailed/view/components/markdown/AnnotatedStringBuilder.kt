@@ -1,4 +1,4 @@
-package com.ateca.ui.screens.note_screen.view.components.markdown
+package com.ateca.ui.screens.note_detailed.view.components.markdown
 
 import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material.Colors
@@ -9,8 +9,8 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import com.ateca.ui.screens.note_screen.view.constants.MDTags.TAG_IMAGE_URL
-import com.ateca.ui.screens.note_screen.view.constants.MDTags.TAG_URL
+import com.ateca.ui.screens.note_detailed.view.constants.MDTags.TAG_IMAGE_URL
+import com.ateca.ui.screens.note_detailed.view.constants.MDTags.TAG_URL
 import com.vladsch.flexmark.ast.*
 import com.vladsch.flexmark.ext.wikilink.WikiNode
 import com.vladsch.flexmark.util.ast.Node

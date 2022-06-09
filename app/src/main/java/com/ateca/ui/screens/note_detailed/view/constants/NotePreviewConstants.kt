@@ -1,4 +1,4 @@
-package com.ateca.ui.screens.note_screen.view.constants
+package com.ateca.ui.screens.note_detailed.view.constants
 
 import org.intellij.lang.annotations.Language
 
