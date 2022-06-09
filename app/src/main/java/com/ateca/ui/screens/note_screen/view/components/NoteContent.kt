@@ -5,18 +5,19 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ateca.domain.models.Note
 import com.ateca.ui.components.AppPreviewConstants
+import com.ateca.ui.screens.note_screen.view.components.markdown.MDDocument
+import com.ateca.ui.screens.note_screen.view.constants.NotePreviewConstants
 import com.ateca.ui.theme.md2.AtecaTheme
+import com.vladsch.flexmark.ext.wikilink.WikiLinkExtension
+import com.vladsch.flexmark.parser.Parser
+import com.vladsch.flexmark.util.data.MutableDataSet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -32,7 +33,6 @@ fun NoteContent(
     ) -> Unit
 ) {
     val note = noteState.collectAsState()
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,18 +54,24 @@ private fun NoteTextField(
     text: String,
     onValueChange: (String) -> Unit
 ) {
-    OutlinedTextField(
-        value = text,
-        onValueChange = onValueChange,
-        textStyle = MaterialTheme.typography.body1,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            textColor = MaterialTheme.colors.onBackground
-        ),
-        modifier = Modifier
-            .fillMaxSize()
-    )
+    val options = MutableDataSet()
+    options.set(Parser.EXTENSIONS, listOf(WikiLinkExtension.create()))
+    val parser = Parser.builder(options).build()
+    val textThis = NotePreviewConstants.MIXED_MD
+    val root = parser.parse(textThis)
+    MDDocument(root)
+//    OutlinedTextField(
+//        value = textThis,
+//        onValueChange = onValueChange,
+//        textStyle = MaterialTheme.typography.body1,
+//        colors = TextFieldDefaults.outlinedTextFieldColors(
+//            unfocusedBorderColor = Color.Transparent,
+//            focusedBorderColor = Color.Transparent,
+//            textColor = MaterialTheme.colors.onBackground
+//        ),
+//        modifier = Modifier
+//            .fillMaxSize()
+//    )
 }
 
 @Preview(
@@ -91,23 +97,5 @@ private fun NoteContentPreview() {
             )
         ) { _, _, _, _ ->
         }
-    }
-}
-
-@Preview(
-    name = "NoteTextLight",
-    backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
-    showBackground = true
-)
-@Preview(
-    name = "NoteTextDark",
-    uiMode = Configuration.UI_MODE_NIGHT_YES,
-    backgroundColor = AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR,
-    showBackground = true
-)
-@Composable
-private fun NoteTextPreview() {
-    AtecaTheme {
-        NoteTextField(text = "Text") {}
     }
 }

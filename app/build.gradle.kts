@@ -91,6 +91,7 @@ android {
     packagingOptions {
         resources.excludes.add("META-INF/AL2.0")
         resources.excludes.add("META-INF/LGPL2.1")
+        resources.excludes.add("META-INF/LGPL3")
     }
 
     kapt {
@@ -165,7 +166,8 @@ dependencies {
     implementation(AndroidX.DataStore.dataStore)
 
     // Markdown processor
-    implementation(Markdown.flexmark)
+    implementation(Markdown.Flexmark.core)
+    implementation(Markdown.Flexmark.wikilink)
 
     // Window
     implementation(AndroidX.Window.window)

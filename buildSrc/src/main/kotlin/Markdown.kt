@@ -7,6 +7,11 @@ object Markdown {
     /**
      * @see <a href="https://mvnrepository.com/artifact/com.vladsch.flexmark/flexmark"> Flexmark</a>
      */
-    private const val version = "0.64.0"
-    const val flexmark = "com.vladsch.flexmark:flexmark:$version"
+    object Flexmark {
+        private const val version = "0.64.0"
+        private const val lib = "com.vladsch.flexmark"
+
+        const val core = "$lib:flexmark:$version"
+        const val wikilink = "$lib:flexmark-ext-wikilink:$version"
+    }
 }
