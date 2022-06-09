@@ -11,8 +11,8 @@ import com.ateca.domain.constants.NavigationConstants
 import com.ateca.ui.navigation.Animations.enterTransition
 import com.ateca.ui.navigation.Animations.exitTransition
 import com.ateca.ui.navigation.Screen
-import com.ateca.ui.screens.note_screen.veiwmodel.NoteViewModel
-import com.ateca.ui.screens.note_screen.view.NoteScreen
+import com.ateca.ui.screens.note_detailed.veiwmodel.NoteDetailedViewModel
+import com.ateca.ui.screens.note_detailed.view.NoteDetailed
 import com.google.accompanist.navigation.animation.composable
 
 /**
@@ -35,21 +35,11 @@ fun NavGraphBuilder.addNoteDetailed(
             exitTransition
         }
     ) {
-        val viewModel: NoteViewModel = hiltViewModel()
-        NoteScreen(
-            note = viewModel.note,
-            onNavigationButtonClick = {
-                viewModel.saveNote()
-                navController.popBackStack()
-            },
-            onNoteUpdate = { title, text, folder, tags ->
-                viewModel.updateNote(
-                    title = title,
-                    text = text,
-                    folder = folder,
-                    tags = tags
-                )
-            }
+        val viewModel: NoteDetailedViewModel = hiltViewModel()
+        NoteDetailed(
+            state = viewModel.state.value,
+            events = viewModel::onTriggerEvent,
+            onNavigateBack = { navController.popBackStack() }
         )
     }
 }
