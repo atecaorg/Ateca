@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ateca.domain.constants.SearchConstants.DEBOUNCE_DELAY_TIME_MS
 import com.ateca.domain.constants.SearchConstants.EMPTY_QUERY
-import com.ateca.domain.core.*
+import com.ateca.domain.core.DataState
+import com.ateca.domain.core.SortOrder
+import com.ateca.domain.core.SortType
+import com.ateca.domain.core.UIComponent
 import com.ateca.domain.interactors.ICreateNote
 import com.ateca.domain.interactors.IFilterNotes
 import com.ateca.domain.interactors.NoteInteractors
@@ -41,13 +44,13 @@ class NoteListViewModel @Inject constructor(
 
     fun onTriggerEvent(event: NoteListEvents) {
         when (event) {
-            is NoteListEvents.OnRemoveHeadFromQueue -> removeHeadMessage()
-            is NoteListEvents.OnAddTestNoteClicked -> onAddTestNote()
+            is NoteListEvents.AddTestNoteClicked -> onAddTestNote()
             is NoteListEvents.OnNoteLongPress -> onNoteLongPress(event.note)
             is NoteListEvents.SelectAll -> onSelectAll()
             is NoteListEvents.UnselectAll -> onUnselectAll()
             is NoteListEvents.DeleteSelected -> onDeleteSelected()
             is NoteListEvents.OnQueryChanged -> onQueryChanged(event.query)
+            is NoteListEvents.RemoveHeadFromMessageQueue -> onRemoveHeadMessage()
         }
     }
 
@@ -174,17 +177,13 @@ class NoteListViewModel @Inject constructor(
     private fun appendToMessageQueue(uiComponent: UIComponent) {
         val queue = state.value.errorQueue
         queue.add(uiComponent)
-        // TODO delete line below if recompose bug fixed
-        state.value = state.value.copy(errorQueue = Queue(mutableListOf()))
         state.value = state.value.copy(errorQueue = queue)
     }
 
-    private fun removeHeadMessage() {
+    private fun onRemoveHeadMessage() {
         try {
             val queue = state.value.errorQueue
             queue.remove()
-            // TODO delete line below if recompose bug fixed
-            state.value = state.value.copy(errorQueue = Queue(mutableListOf()))
             state.value = state.value.copy(errorQueue = queue)
         } catch (e: Exception) {
             Log.i("NoteListViewModel", "Nothing to remove from MessageQueue")

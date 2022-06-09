@@ -7,7 +7,7 @@ import com.ateca.domain.models.Note
  */
 sealed class NoteListEvents {
 
-    object OnRemoveHeadFromQueue : NoteListEvents()
+    object RemoveHeadFromMessageQueue : NoteListEvents()
 
     data class OnNoteLongPress(val note: Note) : NoteListEvents()
 
@@ -19,5 +19,5 @@ sealed class NoteListEvents {
 
     data class OnQueryChanged(val query: String) : NoteListEvents()
 
-    object OnAddTestNoteClicked : NoteListEvents()
+    object AddTestNoteClicked : NoteListEvents()
 }
