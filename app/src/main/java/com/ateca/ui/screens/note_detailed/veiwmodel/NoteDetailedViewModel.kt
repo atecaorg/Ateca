@@ -68,7 +68,8 @@ class NoteDetailedViewModel @Inject constructor(
                 is DataState.Data -> dataState.data?.let { note ->
                     state.value = state.value.copy(
                         note = note,
-                        textValue = TextFieldValue(note.text)
+                        textValue = TextFieldValue(note.text),
+                        mode = NoteUIMode.ViewMode
                     )
                     Log.d("NoteDetailedViewModel", "$note")
                 }
