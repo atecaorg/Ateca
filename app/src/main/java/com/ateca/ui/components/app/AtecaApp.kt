@@ -2,6 +2,8 @@ package com.ateca.ui.components.app
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -15,6 +17,9 @@ fun AtecaApp() {
 
     SetUpNavGraph(
         navController = navController,
-        modifier = Modifier.background(color = MaterialTheme.colors.background)
+        modifier = Modifier
+            .background(color = MaterialTheme.colors.background)
+            .statusBarsPadding()
+            .navigationBarsPadding()
     )
 }
