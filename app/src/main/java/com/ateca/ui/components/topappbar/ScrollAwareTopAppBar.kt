@@ -73,6 +73,8 @@ fun ScrollAwareTopAppBar(
         contentColor = contentColor,
         elevation = toolbarElevation
     )
+
+
 }
 
 @Preview(

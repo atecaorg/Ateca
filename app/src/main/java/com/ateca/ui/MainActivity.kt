@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.view.WindowCompat
 import com.ateca.domain.datasource.ISettingsDataSource
 import com.ateca.domain.entity.Theme
 import com.ateca.domain.models.ApplicationSettings
@@ -31,7 +32,7 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("UnrememberedMutableState")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         scope.launch {
             dataStore.getSetting().collect {
                 settings.value = it

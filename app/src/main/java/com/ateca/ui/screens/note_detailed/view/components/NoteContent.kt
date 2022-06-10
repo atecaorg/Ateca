@@ -1,10 +1,8 @@
 package com.ateca.ui.screens.note_detailed.view.components
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
@@ -33,14 +31,20 @@ import com.vladsch.flexmark.util.data.MutableDataSet
  */
 @Composable
 fun NoteContent(
+    modifier: Modifier = Modifier,
     textValue: TextFieldValue,
     events: (NoteDetailedEvents) -> Unit,
     uiMode: NoteUIMode,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = MaterialTheme.spacing.medium)
+            .imePadding()
+            .padding(MaterialTheme.spacing.small)
+            .background(
+                color = MaterialTheme.colors.onSurface.copy(alpha = 0.025f),
+                shape = MaterialTheme.shapes.large
+            )
             .verticalScroll(rememberScrollState())
     ) {
         when (uiMode) {
@@ -49,20 +53,24 @@ fun NoteContent(
                 options.set(Parser.EXTENSIONS, listOf(WikiLinkExtension.create()))
                 val parser = Parser.builder(options).build()
                 val root = parser.parse(textValue.text)
-                MDDocument(root)
+                Column(Modifier.padding(horizontal = MaterialTheme.spacing.small)) {
+                    MDDocument(root)
+                }
             }
             NoteUIMode.EditMode -> {
                 NoteTextField(
                     textValue = textValue,
                     events = events,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
+                        .padding(horizontal = MaterialTheme.spacing.small)
                         .weight(1f)
                 )
             }
         }
     }
 }
+
 
 @Composable
 private fun NoteTextField(

@@ -3,6 +3,7 @@ package com.ateca.ui.screens.note_detailed.view.components
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ModeEdit
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
@@ -23,6 +25,7 @@ import com.ateca.ui.components.icon.ThemedIcon
 import com.ateca.ui.components.topappbar.ScrollAwareTopAppBar
 import com.ateca.ui.screens.note_detailed.veiwmodel.NoteUIMode
 import com.ateca.ui.theme.md2.AtecaTheme
+import com.ateca.ui.theme.spacing
 
 /**
  * Created by eugenics on 20.05.2022.
@@ -82,14 +85,18 @@ private fun NoteTitleField(
         value = title,
         singleLine = isSingleLine,
         onValueChange = onValueChange,
-        textStyle = MaterialTheme.typography.h6
+        textStyle = MaterialTheme.typography.h5
             .copy(
                 color = MaterialTheme.colors.onBackground,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
             ),
         cursorBrush = SolidColor(MaterialTheme.colors.onBackground.copy(alpha = 0.5f)),
         decorationBox = { innerTextField ->
-            Box {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = MaterialTheme.spacing.tiny),
+                contentAlignment = Alignment.CenterStart
+            ) {
                 innerTextField()
                 if (title.isEmpty()) {
                     Text(
