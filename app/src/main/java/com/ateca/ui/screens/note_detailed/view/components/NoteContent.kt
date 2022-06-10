@@ -1,19 +1,24 @@
 package com.ateca.ui.screens.note_detailed.view.components
 
 import android.content.res.Configuration
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import com.ateca.R
 import com.ateca.ui.components.AppPreviewConstants
+import com.ateca.ui.screens.note_detailed.veiwmodel.NoteDetailedEvents
 import com.ateca.ui.screens.note_detailed.veiwmodel.NoteUIMode
 import com.ateca.ui.screens.note_detailed.view.components.markdown.MDDocument
 import com.ateca.ui.theme.md2.AtecaTheme
@@ -28,9 +33,9 @@ import com.vladsch.flexmark.util.data.MutableDataSet
  */
 @Composable
 fun NoteContent(
-    text: String,
+    textValue: TextFieldValue,
+    events: (NoteDetailedEvents) -> Unit,
     uiMode: NoteUIMode,
-    onNoteTextChanged: (text: String) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -43,16 +48,16 @@ fun NoteContent(
                 val options = MutableDataSet()
                 options.set(Parser.EXTENSIONS, listOf(WikiLinkExtension.create()))
                 val parser = Parser.builder(options).build()
-                val root = parser.parse(text)
+                val root = parser.parse(textValue.text)
                 MDDocument(root)
             }
             NoteUIMode.EditMode -> {
                 NoteTextField(
-                    text = text,
-                    onValueChange = { value ->
-                        onNoteTextChanged(value)
-                    },
-                    modifier = Modifier.fillMaxSize()
+                    textValue = textValue,
+                    events = events,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(1f)
                 )
             }
         }
@@ -61,21 +66,50 @@ fun NoteContent(
 
 @Composable
 private fun NoteTextField(
-    text: String,
-    onValueChange: (String) -> Unit,
-    modifier: Modifier
+    modifier: Modifier = Modifier,
+    textValue: TextFieldValue,
+    events: (NoteDetailedEvents) -> Unit = {},
 ) {
-    OutlinedTextField(
-        value = text,
-        onValueChange = onValueChange,
-        textStyle = MaterialTheme.typography.body1,
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            unfocusedBorderColor = Color.Transparent,
-            focusedBorderColor = Color.Transparent,
-            textColor = MaterialTheme.colors.onBackground
-        ),
-        modifier = modifier
+    BasicTextField(
+        modifier = modifier,
+        value = textValue,
+        onValueChange = { textFieldValue ->
+            events(NoteDetailedEvents.UpdateText(textFieldValue))
+        },
+        textStyle = MaterialTheme.typography.body1
+            .copy(color = MaterialTheme.colors.onBackground),
+        cursorBrush = SolidColor(MaterialTheme.colors.onBackground.copy(alpha = 0.5f)),
+        decorationBox = { innerTextField ->
+            Box {
+                innerTextField()
+                if (textValue.text.isEmpty()) {
+                    Text(
+                        text = stringResource(id = R.string.note_text_hint),
+                        color = MaterialTheme.colors.onBackground.copy(alpha = 0.4f)
+                    )
+                }
+            }
+        }
     )
+
+}
+
+@Preview(
+    name = "NoteContentHintLight",
+    backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
+    showBackground = true,
+    widthDp = 400,
+    heightDp = 150
+)
+@Composable
+private fun NoteContentHintPreview() {
+    AtecaTheme {
+        NoteContent(
+            textValue = TextFieldValue(""),
+            uiMode = NoteUIMode.EditMode,
+            events = {}
+        )
+    }
 }
 
 @Preview(
@@ -83,7 +117,7 @@ private fun NoteTextField(
     backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true,
     widthDp = 400,
-    heightDp = 300
+    heightDp = 150
 )
 @Preview(
     name = "NoteContentDark",
@@ -91,7 +125,7 @@ private fun NoteTextField(
     backgroundColor = AppPreviewConstants.PREVIEW_DARK_THEME_BACKGROUND_COLOR,
     showBackground = true,
     widthDp = 400,
-    heightDp = 300
+    heightDp = 150
 )
 @Preview(
     name = "NoteContentLargeFont",
@@ -99,14 +133,15 @@ private fun NoteTextField(
     backgroundColor = AppPreviewConstants.PREVIEW_LIGHT_THEME_BACKGROUND_COLOR,
     showBackground = true,
     widthDp = 400,
-    heightDp = 300
+    heightDp = 150
 )
 @Composable
 private fun NoteContentPreview() {
     AtecaTheme {
         NoteContent(
-            text = AppPreviewConstants.text,
-            uiMode = NoteUIMode.ViewMode,
-        ) {}
+            textValue = TextFieldValue(AppPreviewConstants.text),
+            uiMode = NoteUIMode.EditMode,
+            events = {}
+        )
     }
 }

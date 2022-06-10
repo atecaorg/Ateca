@@ -37,6 +37,10 @@
     <string name="search_note">Search note</string>
     <string name="delete_notes_title">Delete selected notes?</string>
 
+    <!-- NoteDetailed -->
+    <string name="note_title_hint">Title</string>
+    <string name="note_text_hint">" Start typing"</string>
+
     <!-- Settings -->
     <string name="About">About</string>
     <string name="software_license">Software Licenses</string>
@@ -46,6 +50,8 @@
     <string name="light">Light</string>
     <string name="system">System</string>
     <string name="theme">Theme</string>
+
+    <!-- Share -->
     <string name="note_saved">Note saved…</string>
     <string name="no_data_share">No data for share..</string>
 

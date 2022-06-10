@@ -1,22 +1,23 @@
 package com.ateca.ui.screens.note_detailed.view.components
 
 import android.content.res.Configuration
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ModeEdit
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.ateca.R
 import com.ateca.ui.components.AppPreviewConstants
 import com.ateca.ui.components.icon.ThemedIcon
 import com.ateca.ui.components.topappbar.ScrollAwareTopAppBar
@@ -75,17 +76,29 @@ private fun NoteTitleField(
     onValueChange: (String) -> Unit,
     modifier: Modifier
 ) {
+    val isSingleLine = true
     BasicTextField(
+        modifier = modifier,
         value = title,
-        singleLine = true,
+        singleLine = isSingleLine,
         onValueChange = onValueChange,
         textStyle = MaterialTheme.typography.h6
             .copy(
                 color = MaterialTheme.colors.onBackground,
                 fontWeight = FontWeight.Bold
             ),
-        modifier = modifier
-            .border(BorderStroke(width = 0.dp, color = Color.Transparent))
+        cursorBrush = SolidColor(MaterialTheme.colors.onBackground.copy(alpha = 0.5f)),
+        decorationBox = { innerTextField ->
+            Box {
+                innerTextField()
+                if (title.isEmpty()) {
+                    Text(
+                        text = stringResource(id = R.string.note_title_hint),
+                        color = MaterialTheme.colors.onBackground.copy(alpha = 0.4f)
+                    )
+                }
+            }
+        }
     )
 }
 
@@ -110,7 +123,7 @@ private fun NoteTitleField(
 private fun NoteTopAppBarPreview() {
     AtecaTheme {
         NoteTopAppBar(
-            title = AppPreviewConstants.title,
+            title = "",
             onTitleValueChange = {},
             onNavigationButtonClick = {},
             uiMode = NoteUIMode.ViewMode,

@@ -1,5 +1,6 @@
 package com.ateca.ui.screens.note_detailed.veiwmodel
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.Queue
 import com.ateca.domain.core.UIComponent
@@ -13,5 +14,6 @@ data class NoteDetailedState(
     val errorQueue: Queue<UIComponent> = Queue(mutableListOf()),
 
     val note: Note = Note(),
+    val textValue: TextFieldValue = TextFieldValue(""),
     val mode: NoteUIMode = NoteUIMode.EditMode
 )
