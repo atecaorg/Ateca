@@ -8,8 +8,17 @@ import kotlinx.coroutines.MainCoroutineDispatcher
  * Created by dronpascal on 07.06.2022.
  */
 class AppDispatchers(
-    val main: MainCoroutineDispatcher = Dispatchers.Main,
-    val default: CoroutineDispatcher = Dispatchers.Default,
-    val io: CoroutineDispatcher = Dispatchers.IO,
-    val unconfined: CoroutineDispatcher = Dispatchers.Unconfined,
-)
+    override val main: MainCoroutineDispatcher = Dispatchers.Main,
+    override val mainImmediate: MainCoroutineDispatcher = Dispatchers.Main.immediate,
+    override val default: CoroutineDispatcher = Dispatchers.Default,
+    override val io: CoroutineDispatcher = Dispatchers.IO,
+    override val unconfined: CoroutineDispatcher = Dispatchers.Unconfined,
+) : IAppDispatchers
+
+interface IAppDispatchers {
+    val main: CoroutineDispatcher
+    val mainImmediate: CoroutineDispatcher
+    val default: CoroutineDispatcher
+    val io: CoroutineDispatcher
+    val unconfined: CoroutineDispatcher
+}
