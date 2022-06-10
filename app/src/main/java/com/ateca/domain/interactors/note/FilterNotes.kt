@@ -19,7 +19,7 @@ import java.util.*
  * This helps to keep the filtering logic isolated.
  */
 class FilterNotes(
-    private val dispatchers: AppDispatchers,
+    private val dispatchers: IAppDispatchers,
 ) : IFilterNotes {
 
     override fun execute(

@@ -1,6 +1,6 @@
 package com.ateca.domain.interactors
 
-import com.ateca.domain.core.AppDispatchers
+import com.ateca.domain.core.IAppDispatchers
 import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.entity.IMarkdownProcessor
@@ -38,7 +38,7 @@ data class NoteInteractors(
             noteDataSource: INoteDataSource,
             linkDataSource: ILinkDataSource,
             markdownProcessor: IMarkdownProcessor,
-            dispatchers: AppDispatchers,
+            dispatchers: IAppDispatchers,
         ): NoteInteractors =
             NoteInteractors(
                 getAllNotes = GetAllNotes(noteDataSource, dispatchers),

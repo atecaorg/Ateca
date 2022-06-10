@@ -1,8 +1,8 @@
 package com.ateca.domain.interactors.note.select
 
 import com.ateca.R
-import com.ateca.domain.core.AppDispatchers
 import com.ateca.domain.core.DataState
+import com.ateca.domain.core.IAppDispatchers
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.datasource.ILinkDataSource
 import com.ateca.domain.interactors.IGetNoteBacklinks
@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.flowOn
  */
 class GetNoteBacklinks(
     private val linkSource: ILinkDataSource,
-    private val dispatchers: AppDispatchers,
+    private val dispatchers: IAppDispatchers,
 ) : IGetNoteBacklinks {
 
     override fun execute(param: NoteId): Flow<DataState<List<Link>>> = flow {
