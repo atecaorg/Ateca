@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.tooling.preview.Preview
 import com.ateca.domain.models.Note
 import com.ateca.ui.components.AppPreviewConstants
@@ -20,6 +22,7 @@ import com.ateca.ui.theme.md2.AtecaTheme
  * Created by eugenics on 20.05.2022.
  * Modified by dronpascal on 09.06.2022.
  */
+@OptIn(ExperimentalComposeUiApi::class)
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun NoteDetailed(
@@ -27,6 +30,8 @@ fun NoteDetailed(
     events: (NoteDetailedEvents) -> Unit = {},
     onNavigateBack: () -> Unit = {}
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     DefaultScreenUI(
         queue = state.errorQueue,
         onRemoveHeadFromQueue = { events(NoteDetailedEvents.RemoveHeadFromMessageQueue) },
@@ -49,11 +54,10 @@ fun NoteDetailed(
             }
         ) {
             NoteContent(
-                text = state.note.text,
+                textValue = state.textValue,
+                events = events,
                 uiMode = state.mode
-            ) { text ->
-                events(NoteDetailedEvents.UpdateText(text))
-            }
+            )
         }
     }
 }
