@@ -69,7 +69,7 @@ fun ScrollAwareTopAppBar(
         modifier = modifier,
         navigationIcon = navigationIcon,
         actions = actions,
-        backgroundColor = MaterialTheme.colors.onSurface.copy(alpha = 0.025f),
+        backgroundColor = backgroundColor,
         contentColor = contentColor,
         elevation = toolbarElevation
     )

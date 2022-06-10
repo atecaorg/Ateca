@@ -31,23 +31,21 @@ import com.vladsch.flexmark.util.data.MutableDataSet
  */
 @Composable
 fun NoteContent(
+    modifier: Modifier = Modifier,
     textValue: TextFieldValue,
     events: (NoteDetailedEvents) -> Unit,
     uiMode: NoteUIMode,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
-            .padding(
-                horizontal = MaterialTheme.spacing.small,
-                vertical = MaterialTheme.spacing.small
-            )
-            .verticalScroll(rememberScrollState())
+            .imePadding()
+            .padding(MaterialTheme.spacing.small)
             .background(
                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.025f),
                 shape = MaterialTheme.shapes.large
             )
-            .imePadding(),
+            .verticalScroll(rememberScrollState())
     ) {
         when (uiMode) {
             NoteUIMode.ViewMode -> {
@@ -55,11 +53,7 @@ fun NoteContent(
                 options.set(Parser.EXTENSIONS, listOf(WikiLinkExtension.create()))
                 val parser = Parser.builder(options).build()
                 val root = parser.parse(textValue.text)
-                Column(
-                    modifier = Modifier.padding(
-                        horizontal = MaterialTheme.spacing.small,
-                    )
-                ) {
+                Column(Modifier.padding(horizontal = MaterialTheme.spacing.small)) {
                     MDDocument(root)
                 }
             }
@@ -68,16 +62,15 @@ fun NoteContent(
                     textValue = textValue,
                     events = events,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
+                        .padding(horizontal = MaterialTheme.spacing.small)
                         .weight(1f)
-                        .padding(
-                            horizontal = MaterialTheme.spacing.small,
-                        )
                 )
             }
         }
     }
 }
+
 
 @Composable
 private fun NoteTextField(

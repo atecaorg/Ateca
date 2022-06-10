@@ -45,9 +45,7 @@ fun NoteTopAppBar(
             NoteTitleField(
                 title = title,
                 onValueChange = onTitleValueChange,
-                modifier = Modifier
-                    .fillMaxWidth()
-
+                modifier = Modifier.fillMaxWidth()
             )
         },
         navigationIcon = {
@@ -90,7 +88,6 @@ private fun NoteTitleField(
         textStyle = MaterialTheme.typography.h5
             .copy(
                 color = MaterialTheme.colors.onBackground,
-//                fontSize = MaterialTheme.,
                 fontWeight = FontWeight.Bold,
             ),
         cursorBrush = SolidColor(MaterialTheme.colors.onBackground.copy(alpha = 0.5f)),
