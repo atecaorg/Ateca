@@ -1,8 +1,8 @@
 package com.ateca.domain.interactors.note.update
 
 import com.ateca.R
-import com.ateca.domain.core.AppDispatchers
 import com.ateca.domain.core.DataState
+import com.ateca.domain.core.IAppDispatchers
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.interactors.IArchiveNote
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.flowOn
  */
 class ArchiveNote(
     private val noteSource: INoteDataSource,
-    private val dispatchers: AppDispatchers,
+    private val dispatchers: IAppDispatchers,
 ) : IArchiveNote {
 
     override fun execute(param: NoteId): Flow<DataState<Nothing>> = flow<DataState<Nothing>> {

@@ -3,8 +3,8 @@ package com.ateca.domain.interactors.note.insert
 import androidx.core.text.isDigitsOnly
 import com.ateca.R
 import com.ateca.domain.constants.NoteConstants.BASE_TITLE
-import com.ateca.domain.core.AppDispatchers
 import com.ateca.domain.core.DataState
+import com.ateca.domain.core.IAppDispatchers
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.interactors.ICreateNote
@@ -24,7 +24,7 @@ import java.util.*
  */
 class CreateNote(
     private val noteSource: INoteDataSource,
-    private val dispatchers: AppDispatchers,
+    private val dispatchers: IAppDispatchers,
 ) : ICreateNote {
 
     override fun execute(

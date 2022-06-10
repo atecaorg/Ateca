@@ -1,8 +1,8 @@
 package com.ateca.domain.interactors.note.delete
 
 import com.ateca.R
-import com.ateca.domain.core.AppDispatchers
 import com.ateca.domain.core.DataState
+import com.ateca.domain.core.IAppDispatchers
 import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.datasource.INoteDataSource
 import com.ateca.domain.interactors.IDeleteNotes
@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.flowOn
  */
 class DeleteNotes(
     private val noteSource: INoteDataSource,
-    private val dispatchers: AppDispatchers,
+    private val dispatchers: IAppDispatchers,
 ) : IDeleteNotes {
 
     override fun execute(param: List<NoteId>): Flow<DataState<Nothing>> = flow {
