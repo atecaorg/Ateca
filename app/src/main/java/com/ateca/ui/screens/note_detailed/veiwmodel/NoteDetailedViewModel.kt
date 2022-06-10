@@ -3,17 +3,22 @@ package com.ateca.ui.screens.note_detailed.veiwmodel
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ateca.R
+import com.ateca.di.qualifiers.ApplicationScope
 import com.ateca.domain.constants.NavigationConstants.NOTE_ID_ARGUMENT_KEY
 import com.ateca.domain.constants.NoteConstants
 import com.ateca.domain.core.DataState
+import com.ateca.domain.core.ProgressBarState
 import com.ateca.domain.core.UIComponent
 import com.ateca.domain.core.UIText
 import com.ateca.domain.interactors.NoteInteractors
+import com.ateca.domain.models.NoteId
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
@@ -25,7 +30,8 @@ import javax.inject.Inject
 @HiltViewModel
 class NoteDetailedViewModel @Inject constructor(
     private val interactors: NoteInteractors,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    @ApplicationScope private val appScope: CoroutineScope
 ) : ViewModel() {
 
     val state: MutableState<NoteDetailedState> = mutableStateOf(NoteDetailedState())
@@ -48,7 +54,7 @@ class NoteDetailedViewModel @Inject constructor(
         when (event) {
             is NoteDetailedEvents.GetNoteById -> onGetNoteById(event.noteId)
             is NoteDetailedEvents.UpdateTitle -> onUpdateTitle(event.title)
-            is NoteDetailedEvents.UpdateText -> onUpdateText(event.text)
+            is NoteDetailedEvents.UpdateText -> onUpdateText(event.textValue)
             is NoteDetailedEvents.SaveNote -> onSaveNote()
             is NoteDetailedEvents.ChangeUIMode -> onChangeUIMode()
             is NoteDetailedEvents.RemoveHeadFromMessageQueue -> onRemoveHeadMessage()
@@ -60,7 +66,10 @@ class NoteDetailedViewModel @Inject constructor(
             when (dataState) {
                 is DataState.Response -> dataState.handle()
                 is DataState.Data -> dataState.data?.let { note ->
-                    state.value = state.value.copy(note = note)
+                    state.value = state.value.copy(
+                        note = note,
+                        textValue = TextFieldValue(note.text)
+                    )
                     Log.d("NoteDetailedViewModel", "$note")
                 }
                 is DataState.Loading -> dataState applyTo state
@@ -73,22 +82,46 @@ class NoteDetailedViewModel @Inject constructor(
         state.value = state.value.copy(note = updatedNote)
     }
 
-    private fun onUpdateText(newText: String) {
-        val updatedNote = state.value.note.copy(text = newText)
-        state.value = state.value.copy(note = updatedNote)
+    private fun onUpdateText(newTextValue: TextFieldValue) {
+        val updatedNote = state.value.note.copy(text = newTextValue.text)
+        state.value = state.value.copy(
+            note = updatedNote,
+            textValue = newTextValue
+        )
     }
 
     // TODO Add title uniqueness check
     private fun onSaveNote() {
         val note = state.value.note
-        if (note.title.isEmpty() && note.text.isEmpty()) return
+        if (note.title.isEmpty() && note.text.isEmpty()) {
+            ifNoteSavedThenDeleteIt(note.id)
+            return
+        }
         interactors.saveNote.execute(note).onEach { dataState ->
             when (dataState) {
                 is DataState.Response -> dataState.handle()
                 is DataState.Data -> {}
-                is DataState.Loading -> dataState applyTo state
+                is DataState.Loading -> {
+                    if (dataState.progressBarState is ProgressBarState.Idle)
+                        Log.d("NoteDetailedViewModel", "Note Saved.")
+                    dataState applyTo state
+                }
             }
-        }.launchIn(viewModelScope)
+        }.launchIn(appScope)
+    }
+
+    private fun ifNoteSavedThenDeleteIt(id: NoteId) {
+        interactors.deleteNote.execute(id).onEach { dataState ->
+            when (dataState) {
+                is DataState.Response -> dataState.handle()
+                is DataState.Data -> {}
+                is DataState.Loading -> {
+                    if (dataState.progressBarState is ProgressBarState.Idle)
+                        Log.d("NoteDetailedViewModel", "Note Deleted.")
+                    dataState applyTo state
+                }
+            }
+        }.launchIn(appScope)
     }
 
     private fun onChangeUIMode() {
@@ -130,6 +163,6 @@ class NoteDetailedViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
-        Log.d("NoteDetailedViewModel", "VM Cleared!!!!!!!!!!!!")
+        Log.d("NoteDetailedViewModel", "VM Cleared!")
     }
 }
