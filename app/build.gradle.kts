@@ -47,16 +47,30 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "$project.rootDir/proguard-rules.pro"
+                "proguard-rules.pro"
             )
         }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+            isCrunchPngs = true
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "$project.rootDir/proguard-rules.pro"
+                "proguard-rules.pro"
+            )
+        }
+        create("benchmark") {
+            isDebuggable = false
+            initWith(
+                buildTypes.getByName("release") {
+                    signingConfig = signingConfigs.getByName("debug")
+                    matchingFallbacks += "release"
+                }
+            )
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-benchmark-rules.pro"
             )
         }
     }
