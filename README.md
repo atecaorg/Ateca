@@ -2,10 +2,10 @@
 
 
 <p align="center">
-  <img src="images/ic_launcher2600.png" alt="Now in Android" width="200"/>
+  <img src="images/ic_launcher2600.png" alt="Now in Android" width="150"/>
 </p>
 
-О приложении Ateca _[Работа не завершена 🚧]_
+О приложении Ateca _[Ведутся работы 🚧]_
 ==================
 
 ## Основная идея быстрые заметки
