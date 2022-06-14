@@ -1,6 +1,9 @@
 [![build](https://github.com/Eugenics/Ateca/actions/workflows/build_gitflow_branch.yml/badge.svg)](https://github.com/Eugenics/Ateca/actions/workflows/build_gitflow_branch.yml)
 
-![Now in Android](images/ic_launcher2600.png)
+
+<p align="center">
+  <img src="images/ic_launcher2600.png" alt="Now in Android" width="200"/>
+</p>
 
 О приложении Ateca _[Работа не завершена 🚧]_
 ==================
@@ -21,24 +24,21 @@
 
 Экран для формирования списка, поиск заметок по тексту, удаление и создание заметок
 
-<img src="images/black_list.jpg" alt="Экран со списком" width="200"/>
-<img src="images/delete_check.jpg" alt="Выделение заметок" width="200"/>
-<img src="images/delete.jpg" alt="Удаление" width="200"/>
+<img src="images/black_list.jpg" alt="Экран со списком" width="300"/> <img src="images/delete_check.jpg" alt="Выделение заметок" width="300"/> <img src="images/delete.jpg" alt="Удаление" width="300"/>
+
+
 
 
 
 Второй экран для ведения заметок и также режим просмотра
 
-![Редактирование заметок](images/marck_note_go.jpg)
-![Просмотр заметок](images/marck_note.jpg)
+<img src="images/marck_note_go.jpg" alt="Редактирование заметок" width="300"/> <img src="images/marck_note.jpg" alt="Просмотр заметок" width="300"/>
 
 > Реализован почти весь базовый синтаксис Markdown
 
 ### Гифки
 
-![Screenshot showing first](images/creat_note.gif "Создание заметки и основной функционал")
-![Screenshot showing second](images/search_note.gif "Поиск заметки")
-
+<img src="images/creat_note.gif" alt="Screenshot showing first" width="300"/> <img src="images/search_note.gif" alt="Screenshot showing second" width="300"/>
 
 ## Используемый стек
 
