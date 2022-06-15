@@ -5,6 +5,8 @@
  * p.eugenics@gmail.com
  */
 
+package com.ateca.ui.screens.note_detailed.view.components.buttonbar
+
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.horizontalScroll
@@ -20,9 +22,6 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.ateca.ui.components.AppPreviewConstants
 import com.ateca.ui.screens.note_detailed.veiwmodel.NoteDetailedEvents
-import com.ateca.ui.screens.note_detailed.view.components.buttonbar.LinkDialog
-import com.ateca.ui.screens.note_detailed.view.components.buttonbar.MarkButton
-import com.ateca.ui.screens.note_detailed.view.components.buttonbar.TitleDialog
 import com.ateca.ui.screens.note_detailed.view.constants.*
 import com.ateca.ui.theme.md2.AtecaTheme
 

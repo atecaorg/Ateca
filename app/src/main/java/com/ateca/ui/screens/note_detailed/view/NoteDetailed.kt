@@ -1,6 +1,5 @@
 package com.ateca.ui.screens.note_detailed.view
 
-import ButtonBar
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.material.Scaffold
