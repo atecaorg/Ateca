@@ -51,6 +51,18 @@ fun NoteDetailed(
                         events(NoteDetailedEvents.UpdateTitle(value))
                     }
                 )
+            },
+            bottomBar = {
+//                when (state.mode) {
+//                    NoteUIMode.EditMode -> {
+//                        val text = state.note.text
+//                        ButtonBar(
+//                            state = state,
+//                            events = events
+//                        )
+//                    }
+//                    else -> {}
+//                }
             }
         ) {
             NoteContent(

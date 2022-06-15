@@ -18,6 +18,7 @@ import com.ateca.R
 import com.ateca.ui.components.AppPreviewConstants
 import com.ateca.ui.screens.note_detailed.veiwmodel.NoteDetailedEvents
 import com.ateca.ui.screens.note_detailed.veiwmodel.NoteUIMode
+import com.ateca.ui.screens.note_detailed.view.components.buttonbar.ButtonBar
 import com.ateca.ui.screens.note_detailed.view.components.markdown.MDDocument
 import com.ateca.ui.theme.md2.AtecaTheme
 import com.ateca.ui.theme.spacing
@@ -65,6 +66,11 @@ fun NoteContent(
                         .fillMaxWidth()
                         .padding(horizontal = MaterialTheme.spacing.small)
                         .weight(1f)
+                )
+
+                ButtonBar(
+                    textValue = textValue,
+                    events = events
                 )
             }
         }
