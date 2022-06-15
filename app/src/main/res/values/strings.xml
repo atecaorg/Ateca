@@ -40,6 +40,8 @@
     <!-- NoteDetailed -->
     <string name="note_title_hint">Title</string>
     <string name="note_text_hint">" Start typing"</string>
+    <string name="title_level">Title level</string>
+    <string name="title_l1">Level 1</string>
 
     <!-- Settings -->
     <string name="About">About</string>
@@ -54,5 +56,10 @@
     <!-- Share -->
     <string name="note_saved">Note saved…</string>
     <string name="no_data_share">No data for share..</string>
+    <string name="link">Link</string>
+    <string name="link_description">Description</string>
+    <string name="title_l2">Level 2</string>
+    <string name="title_l3">Level 3</string>
+    <string name="title_l4">Level 4</string>
 
 </resources>

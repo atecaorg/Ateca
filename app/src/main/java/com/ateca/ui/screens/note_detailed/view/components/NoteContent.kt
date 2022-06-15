@@ -1,5 +1,6 @@
 package com.ateca.ui.screens.note_detailed.view.components
 
+import ButtonBar
 import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -65,6 +66,11 @@ fun NoteContent(
                         .fillMaxWidth()
                         .padding(horizontal = MaterialTheme.spacing.small)
                         .weight(1f)
+                )
+
+                ButtonBar(
+                    textValue = textValue,
+                    events = events
                 )
             }
         }

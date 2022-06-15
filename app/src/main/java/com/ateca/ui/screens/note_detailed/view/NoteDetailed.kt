@@ -1,5 +1,6 @@
 package com.ateca.ui.screens.note_detailed.view
 
+import ButtonBar
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.material.Scaffold
@@ -51,6 +52,18 @@ fun NoteDetailed(
                         events(NoteDetailedEvents.UpdateTitle(value))
                     }
                 )
+            },
+            bottomBar = {
+//                when (state.mode) {
+//                    NoteUIMode.EditMode -> {
+//                        val text = state.note.text
+//                        ButtonBar(
+//                            state = state,
+//                            events = events
+//                        )
+//                    }
+//                    else -> {}
+//                }
             }
         ) {
             NoteContent(
