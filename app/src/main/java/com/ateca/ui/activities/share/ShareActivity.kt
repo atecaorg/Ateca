@@ -3,6 +3,8 @@ package com.ateca.ui.activities.share
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.util.Patterns
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,6 +32,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.util.regex.Pattern
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -128,10 +131,40 @@ class ShareActivity : ComponentActivity() {
         if (intent.hasExtra(Intent.EXTRA_TEXT)) {
             intentTextData[SUBJECT_KEY] =
                 intent.getStringExtra(Intent.EXTRA_SUBJECT) ?: EMPTY_STRING
-            intentTextData[TEXT_KEY] = intent.getStringExtra(Intent.EXTRA_TEXT) ?: EMPTY_STRING
+
+            val text = intent.getStringExtra(Intent.EXTRA_TEXT) ?: EMPTY_STRING
+            intentTextData[TEXT_KEY] = parseTextForLinks(text = text)
         }
         return intentTextData
     }
+
+    private fun parseTextForLinks(text: String): String {
+        val pattern = Patterns.WEB_URL
+        val regex = Regex("\\s+")
+        val words: MutableList<String> = text.split(regex = regex) as MutableList<String>
+        val newWords: MutableList<String> = mutableListOf()
+
+        try {
+            for (word in words) {
+                if (pattern.matcher(word).find()) {
+                    if (word.contains("http://") || word.contains("https://")) {
+                        newWords.add("[$word]($word)")
+                    } else {
+                        newWords.add("[$word](http://$word)")
+                    }
+                } else {
+                    newWords.add(word)
+                }
+            }
+        } catch (e: Exception) {
+            Log.d("PARSE_ERROR", e.message.toString())
+        }
+
+        return newWords.joinToString(
+            separator = " "
+        )
+    }
+
 
     companion object {
         private const val SUBJECT_KEY = "SUBJECT"
