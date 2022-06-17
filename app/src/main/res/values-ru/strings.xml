@@ -1,0 +1,65 @@
+<resources>
+    <string name="app_name">Ateca</string>
+
+    <!-- General -->
+    <string name="error">Ошибка</string>
+    <string name="close">Закрыть</string>
+    <string name="select_all">Выбрать всё</string>
+    <string name="back">Назад</string>
+    <string name="search">Поиск</string>
+    <string name="delete">Удалить</string>
+    <string name="cancel">Отменить</string>
+    <string name="save">Сохранить</string>
+
+    <!-- Stub -->
+    <string name="work_in_progress">Работы в процессе</string>
+    <string name="grab_beverage">Приходите завтра!</string>
+    <!-- Stub Popup -->
+    <string name="stub_popup">Функционал не доступен 🙈</string>
+
+    <!-- Dialogs error messages -->
+    <string name="get_all_notes_error_msg">Ошибка получения заметок</string>
+    <string name="get_note_error_msg">Ошибка получения заметки</string>
+    <string name="create_note_error_msg">Ошибка создания заметки</string>
+    <string name="save_note_error_msg">Ошибка сохранения заметки</string>
+    <string name="filter_note_error_msg">Ошибка фильтрации</string>
+    <string name="archive_note_error_msg">Ошибка архивации</string>
+    <string name="delete_note_error_msg">Ошибка удаления заметки</string>
+    <string name="get_note_links_error_msg">Ошибка получения ссылок заметки</string>
+    <string name="get_note_backlinks_error_msg">Ошибка получения бэклиста для заметки</string>
+    <string name="get_note_id_parameter_error_msg">Невозможно получить детализацию заметки</string>
+
+    <!-- NoteList -->
+    <!-- TopBar -->
+    <string name="note_selected_count_template">Выбрано: %s</string>
+    <string name="select_objects">Выберите объекты</string>
+    <!-- SearchBar -->
+    <string name="search_note">Поиск заметки</string>
+    <string name="delete_notes_title">Удалить выбранные заметки?</string>
+
+    <!-- NoteDetailed -->
+    <string name="note_title_hint">Заголовок</string>
+    <string name="note_text_hint">" Начните ввод текста"</string>
+    <string name="title_level">Уровень заголовка</string>
+    <string name="title_l1">Уровень 1</string>
+    <string name="title_l2">Уровень 2</string>
+    <string name="title_l3">Уровень 3</string>
+    <string name="title_l4">Уровень 4</string>
+    <string name="link">Ссылка</string>
+    <string name="link_description">Описание</string>
+
+    <!-- Settings -->
+    <string name="About">О программе</string>
+    <string name="software_license">Лицензия</string>
+    <string name="settings">Настройки</string>
+    <string name="choose_theme">Выбор темы</string>
+    <string name="dark">Тёмная</string>
+    <string name="light">Светлая</string>
+    <string name="system">Системная</string>
+    <string name="theme">Тема</string>
+
+    <!-- Share -->
+    <string name="note_saved">Сохранено</string>
+    <string name="no_data_share">Нет данных</string>
+
+</resources>
