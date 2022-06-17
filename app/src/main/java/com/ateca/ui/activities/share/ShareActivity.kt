@@ -2,7 +2,11 @@ package com.ateca.ui.activities.share
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
@@ -32,7 +36,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import java.util.regex.Pattern
+import java.io.*
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -128,13 +134,35 @@ class ShareActivity : ComponentActivity() {
 
     private fun getTextIntentData(): Map<String, String> {
         val intentTextData = mutableMapOf<String, String>()
-        if (intent.hasExtra(Intent.EXTRA_TEXT)) {
-            intentTextData[SUBJECT_KEY] =
-                intent.getStringExtra(Intent.EXTRA_SUBJECT) ?: EMPTY_STRING
+        if (intent.type == TEXT_PLAIN_TYPE) {
+            if (intent.hasExtra(Intent.EXTRA_TEXT)) {
+                intentTextData[SUBJECT_KEY] =
+                    intent.getStringExtra(Intent.EXTRA_SUBJECT) ?: EMPTY_STRING
 
-            val text = intent.getStringExtra(Intent.EXTRA_TEXT) ?: EMPTY_STRING
-            intentTextData[TEXT_KEY] = parseTextForLinks(text = text)
+                val text = intent.getStringExtra(Intent.EXTRA_TEXT) ?: EMPTY_STRING
+                intentTextData[TEXT_KEY] = parseTextForLinks(text = text)
+            }
         }
+
+        if (intent.type?.startsWith(IMAGE_TYPE) == true) {
+            (intent.getParcelableExtra<Parcelable>(Intent.EXTRA_STREAM) as Uri?)?.let { imageUri ->
+                val inputStream = contentResolver.openInputStream(imageUri)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+
+                try {
+                    val savedPath = bitmap?.let { saveImageFile(bitmap) } ?: ""
+
+                    intentTextData[SUBJECT_KEY] =
+                        intent.getStringExtra(Intent.EXTRA_SUBJECT) ?: EMPTY_STRING
+                    intentTextData[TEXT_KEY] = "![image]($savedPath)"
+                } catch (e: IOException) {
+                    Log.d("SAVE_ERROR", e.message.toString())
+                } finally {
+                    inputStream?.close()
+                }
+            }
+        }
+
         return intentTextData
     }
 
@@ -165,10 +193,29 @@ class ShareActivity : ComponentActivity() {
         )
     }
 
+    @Throws(IOException::class)
+    private fun saveImageFile(bitmap: Bitmap): String {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val dir = File(filesDir, "images")
+        if (!dir.exists()) {
+            dir.mkdir()
+        }
+        val saveFile = File.createTempFile("image_${timeStamp}", ".jpg", dir)
+        val outputStream = FileOutputStream(saveFile)
+
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        outputStream.flush()
+        outputStream.close()
+
+        return saveFile.absolutePath
+    }
+
 
     companion object {
         private const val SUBJECT_KEY = "SUBJECT"
         private const val TEXT_KEY = "TEXT"
         private const val EMPTY_STRING = ""
+        private const val TEXT_PLAIN_TYPE = "text/plain"
+        private const val IMAGE_TYPE = "image/"
     }
 }
