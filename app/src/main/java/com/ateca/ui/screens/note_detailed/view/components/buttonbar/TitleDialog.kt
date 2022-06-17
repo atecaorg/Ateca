@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2022. Eugenics
- *
- * Created by Eugene Podzorov;
+  * Created by Eugene Podzorov;
  * p.eugenics@gmail.com
  */
 
