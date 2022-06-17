@@ -1,6 +1,4 @@
 /*
- * Copyright (c) 2022. Eugenics
- *
  * Created by Eugene Podzorov;
  * p.eugenics@gmail.com
  */
@@ -24,8 +22,6 @@ import com.ateca.ui.components.AppPreviewConstants
 import com.ateca.ui.screens.note_detailed.veiwmodel.NoteDetailedEvents
 import com.ateca.ui.screens.note_detailed.view.constants.*
 import com.ateca.ui.theme.md2.AtecaTheme
-
-
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
