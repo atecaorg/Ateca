@@ -51,8 +51,8 @@ android {
             )
         }
         getByName("release") {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
+            isShrinkResources = false
             isCrunchPngs = true
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(
