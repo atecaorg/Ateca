@@ -1,6 +1,7 @@
 package com.ateca.ui.screens.note_detailed.view.components.markdown
 
 import android.content.res.Configuration
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.text.InlineTextContent
@@ -22,8 +23,10 @@ import coil.compose.rememberAsyncImagePainter
 import com.ateca.R
 import com.ateca.ui.components.AppPreviewConstants
 import com.ateca.ui.screens.note_detailed.view.constants.MDTags.TAG_IMAGE_URL
+import com.ateca.ui.screens.note_detailed.view.constants.MDTags.TAG_NOTE_LINK
 import com.ateca.ui.screens.note_detailed.view.constants.MDTags.TAG_URL
 import com.ateca.ui.theme.md2.AtecaTheme
+import kotlinx.coroutines.launch
 
 /**
  * Created by st989-ks on 02.06.2022.
@@ -46,9 +49,14 @@ fun MarkdownText(
                     text.getStringAnnotations(position, position)
                         .firstOrNull()
                         ?.let { sa ->
-                            if (sa.tag == TAG_URL) {
-                                uriHandler.openUri(sa.item)
+                            when (sa.tag){
+                                in TAG_URL -> uriHandler.openUri(sa.item)
+                                in TAG_NOTE_LINK -> {
+                                    // TODO Add App link
+                                    Log.d(TAG_NOTE_LINK, "${sa.item}")
+                                }
                             }
+
                         }
                 }
             }

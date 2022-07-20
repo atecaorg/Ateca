@@ -6,4 +6,5 @@ package com.ateca.ui.screens.note_detailed.view.constants
 object MDTags {
     const val TAG_URL = "url"
     const val TAG_IMAGE_URL = "imageUrl"
+    const val TAG_NOTE_LINK = "noteLink"
 }

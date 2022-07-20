@@ -24,7 +24,7 @@
 
 Экран для формирования списка, поиск заметок по тексту, удаление и создание заметок
 
-<img src="images/black_list.jpg" alt="Экран со списком" width="300"/> <img src="images/delete_check.jpg" alt="Выделение заметок" width="300"/> <img src="images/delete.jpg" alt="Удаление" width="300"/>
+<img src="images/black_list.jpg" alt="Экран со списком" width="200"/> <img src="images/delete_check.jpg" alt="Выделение заметок" width="200"/> <img src="images/delete.jpg" alt="Удаление" width="200"/>
 
 
 
@@ -32,13 +32,13 @@
 
 Второй экран для ведения заметок и также режим просмотра
 
-<img src="images/marck_note_go.jpg" alt="Редактирование заметок" width="300"/> <img src="images/marck_note.jpg" alt="Просмотр заметок" width="300"/>
+<img src="images/marck_note_go.jpg" alt="Редактирование заметок" width="200"/> <img src="images/marck_note.jpg" alt="Просмотр заметок" width="200"/>
 
 > Реализован почти весь базовый синтаксис Markdown
 
 ### Гифки
 
-<img src="images/creat_note.gif" alt="Screenshot showing first" width="300"/> <img src="images/search_note.gif" alt="Screenshot showing second" width="300"/>
+<img src="images/creat_note.gif" alt="Screenshot showing first" width="200"/> <img src="images/search_note.gif" alt="Screenshot showing second" width="200"/>
 
 ## Используемый стек
 
